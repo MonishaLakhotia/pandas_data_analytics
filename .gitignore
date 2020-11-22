@@ -66,4 +66,4 @@ target/
 # pyenv
 .python-version
 
-pickles/
+*.pkl

@@ -17,9 +17,11 @@ pandas = "*"
 python01 = {editable = true, path = "."}
 seaborn = "*"
 scipy = "*"
+nltk = "*"
 
 [dev-packages]
 pylint = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.8"
