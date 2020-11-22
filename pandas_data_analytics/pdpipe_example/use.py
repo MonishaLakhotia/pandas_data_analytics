@@ -1,4 +1,5 @@
 import joblib
+import pandas_data_analytics.pdpipe_example.clean as c
 import pandas_data_analytics.pdpipe_example.pipe_utils as pu
 import os
 import pandas as pd
@@ -16,12 +17,7 @@ pipeline = joblib.load(config['file_locations']['pipeline'])
 csv_loc = config['file_locations']['user_query']
 user_query = pd.read_csv(csv_loc)
 
-cdf = pipeline(user_query)
-cdf = cdf.rename(columns={element: re.sub(r'^Avg. Area ', r'', element,
-                                          flags=re.I) for element in user_query.columns.tolist()})
-cdf = cdf.rename(columns={element: re.sub(r'\s+', r'_', element,
-                                          flags=re.I) for element in cdf.columns.tolist()})
-
+cdf = c.clean_dataframe(user_query, pipeline)
 
 X = cdf.drop('Price', inplace=False, axis=1)
 

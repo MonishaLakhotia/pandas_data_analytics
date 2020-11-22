@@ -1,4 +1,3 @@
-import re
 import toml
 from pandas_data_analytics import *
 import os
@@ -13,34 +12,21 @@ from sklearn.model_selection import train_test_split
 from sklearn import ensemble
 from sklearn.metrics import mean_absolute_error
 import pandas_data_analytics.pdpipe_example.pipe_utils as pu
+import pandas_data_analytics.pdpipe_example.clean as c
 
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
 config = toml.load(os.path.join(this_dir, 'config.toml'))
 
 pu.set_full_paths(config, this_dir)
-
-
 csv_loc = config['file_locations']['training_data']
 
 df = pd.read_csv(csv_loc)
 p(df)
+pipeline = c.get_pipeline()
 
-colsToInt = ['Price', 'Avg. Area Income', 'Avg. Area House Age',
-             'Avg. Area Number of Rooms', 'Avg. Area Number of Bedrooms', 'Area Population']
-pipeline = pdp.ColDrop(['Address'])
-pipeline += pdp.ApplyByCols(colsToInt, pu.toInt, colsToInt, drop=True)
-pipeline += pdp.ApplyByCols('Avg. Area Number of Rooms',
-                            pu.size, 'House_Size', drop=False)
-pipeline += pdp.OneHotEncode('House_Size', drop=True)
+cdf = c.clean_dataframe(df, pipeline)
 
-
-cdf = pipeline(df)
-
-cdf = cdf.rename(columns={element: re.sub(r'^Avg. Area ', r'', element,
-                                          flags=re.I) for element in df.columns.tolist()})
-cdf = cdf.rename(columns={element: re.sub(r'\s+', r'_', element,
-                                          flags=re.I) for element in cdf.columns.tolist()})
 p(cdf)
 
 
