@@ -1,0 +1,34 @@
+model_file = "pokemon/tpot/model.pkl"
+
+data.connectionstring = "~/Downloads/PokeTypeMatchupData.csv"
+data.format = "csv"
+
+[[dataframe.inputs]]
+name = "Fire"
+ftype = "category"
+[[dataframe.inputs.preprocess_steps]]
+algo = "substitution"
+settings.pattern = "\\*"
+settings.replace = "."
+[[dataframe.inputs.encoding_steps]]
+algo = "label_encoding"
+
+[[dataframe.inputs]]
+name = "Water"
+ftype = "category"
+[[dataframe.inputs.preprocess_steps]]
+algo = "substitution"
+settings.pattern = "\\*"
+settings.replace = "."
+[[dataframe.inputs.encoding_steps]]
+algo = "label_encoding"
+
+[[dataframe.outputs]]
+name = "Grass"
+ftype = "category"
+[[dataframe.outputs.preprocess_steps]]
+algo = "substitution"
+settings.pattern = "\\*"
+settings.replace = "."
+[[dataframe.outputs.encoding_steps]]
+algo = "label_encoding"
