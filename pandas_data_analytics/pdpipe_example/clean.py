@@ -23,3 +23,14 @@ def clean_dataframe(df, pipeline):
     cdf = cdf.rename(columns={element: re.sub(r'\s+', r'_', element,
                                               flags=re.I) for element in cdf.columns.tolist()})
     return cdf
+
+
+def filter_quantile_extremes(df):
+    Q1 = df.quantile(0.25)
+    Q3 = df.quantile(0.75)
+    IQR = Q3-Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+    df = df[~((df < lower_bound) | (
+        df > upper_bound)).any(axis=1)]
+    return df

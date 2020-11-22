@@ -27,25 +27,12 @@ pipeline = c.get_pipeline()
 
 cdf = c.clean_dataframe(df, pipeline)
 
+cdf = c.filter_quantile_extremes(cdf)
+
 p(cdf)
 
-
-Q1 = cdf.quantile(0.25)
-Q3 = cdf.quantile(0.75)
-IQR = Q3-Q1
-lower_bound = Q1 - 1.5 * IQR
-upper_bound = Q3 + 1.5 * IQR
-
-cdf = cdf[~((cdf < lower_bound) | (
-    cdf > upper_bound)).any(axis=1)]
-
-sns.boxplot(x=cdf['Price'])
-# plt.show()
-
-r = cdf
-
-X = r.drop('Price', axis=1)
-y = r['Price']
+X = cdf.drop('Price', axis=1)
+y = cdf['Price']
 
 # Split data
 X_train, X_test, y_train, y_test = train_test_split(
