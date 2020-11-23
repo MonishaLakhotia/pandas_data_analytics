@@ -19,5 +19,11 @@ csv_loc = config['file_locations']['training_data']
 
 df = pd.read_csv(csv_loc)
 
+print(df.isnull().sum())
+print(df.isna().sum())
+print(df.mode())
+print(df.mean())
+print(df.median())
+
 # sns.boxplot(x=cdf['Price'])
 # plt.show()

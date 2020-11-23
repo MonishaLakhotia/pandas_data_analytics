@@ -14,10 +14,11 @@ pdpipe = "*"
 pdpipewrench = "*"
 numpy = "*"
 pandas = "*"
-python01 = {editable = true, path = "."}
 seaborn = "*"
 scipy = "*"
 nltk = "*"
+xgboost = "==1.1.0"
+pycaret = "*"
 
 [dev-packages]
 pylint = "*"
