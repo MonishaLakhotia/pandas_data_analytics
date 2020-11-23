@@ -25,6 +25,14 @@ def foreach(action, iterable):
 
 
 def general_df_stats(df):
+    def count_of_unique_members_per_column(df):
+        s = ''
+        for (columnName, columnData) in df.iteritems():
+            s += 'Colunm Name: ' + columnName+'\n'
+            s += 'Number of unique members: ' + \
+                str((len(columnData.unique()))) + '\n'
+        return s
+
     l = [
         '------------------------------- GENERAL DF STATS BEGIN -------------------------------',
         'Top 5 entries',
@@ -39,6 +47,8 @@ def general_df_stats(df):
         df.isnull().sum(),
         'Nan counts',
         df.isna().sum(),
+        'Unique member counts',
+        count_of_unique_members_per_column(df),
         '------------------------------- GENERAL DF STATS END -------------------------------'
     ]
 
