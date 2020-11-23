@@ -26,9 +26,8 @@ sns.relplot(
     data=dots, kind="line",
     x="time", y="firing_rate", col="align",
     hue="choice", size="coherence", style="choice",
-    facet_kws=dict(sharex=False),
+    facet_kws={'sharex': False},
 )
 
 
-
-# plt.show()
+plt.show()
