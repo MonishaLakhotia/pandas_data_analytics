@@ -22,3 +22,21 @@ def p(df):
 def foreach(action, iterable):
     for element in iterable:
         action(element)
+
+
+def general_df_stats(df):
+    l = [
+        '------------------------------- GENERAL DF STATS BEGIN -------------------------------',
+        'Top 5 entries',
+        df.head(),
+        'Types',
+        df.dtypes,
+        'Descriptions',
+        df.describe(include='all'),
+        'Null counts',
+        df.isnull().sum(),
+        'Nan counts',
+        df.isna().sum(),
+        '------------------------------- GENERAL DF STATS END -------------------------------'
+    ]
+    foreach(print, l)
