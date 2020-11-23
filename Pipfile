@@ -19,6 +19,8 @@ scipy = "*"
 nltk = "*"
 xgboost = "==1.1.0"
 pycaret = "*"
+plotly = "*"
+cufflinks = "*"
 
 [dev-packages]
 pylint = "*"
