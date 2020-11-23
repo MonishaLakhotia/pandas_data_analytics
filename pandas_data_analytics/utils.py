@@ -31,6 +31,8 @@ def general_df_stats(df):
         df.head(),
         'Types',
         df.dtypes,
+        'Shape',
+        df.shape,
         'Descriptions',
         df.describe(include='all'),
         'Null counts',
@@ -39,4 +41,8 @@ def general_df_stats(df):
         df.isna().sum(),
         '------------------------------- GENERAL DF STATS END -------------------------------'
     ]
-    foreach(print, l)
+
+    def p(o):
+        print('<<<>>>')
+        print(o)
+    foreach(p, l)
