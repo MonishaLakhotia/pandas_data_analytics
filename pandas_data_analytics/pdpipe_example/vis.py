@@ -46,18 +46,18 @@ df['Price_Quartile'] = pd.qcut(df['Price'], q=4)
 # 20% buckets with labels
 bin_labels_5 = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond']
 df['Quantile_Desc_Labels'] = pd.qcut(df['Price'],
-                              q=5,
-                            #   q=[0, .2, .4, .6, .8, 1],
-                              labels=bin_labels_5)
+                                     q=5,
+                                     #   q=[0, .2, .4, .6, .8, 1],
+                                     labels=bin_labels_5)
 # print(df['Quantile_Desc_Labels'].value_counts())
 # print(df.describe(include='category'))
 # describes each column with percentile ranges aswell
 # print(df.describe(percentiles=[0, 1/3, 2/3, 1]))
 
 df['Quantile_Number_Labels'] = pd.qcut(df['Price'],
-                            q=[0, .2, .4, .6, .8, 1],
-                            labels=False,
-                            precision=0)
+                                       q=[0, .2, .4, .6, .8, 1],
+                                       labels=False,
+                                       precision=0)
 # print(df.head())
 
 
@@ -66,7 +66,7 @@ df['Quantile_Number_Labels'] = pd.qcut(df['Price'],
 # df['Price_Bins'] = pd.cut(df['Price'], bins=5)
 # bins of 500k range sizes
 bins = np.linspace(0, 2500000, 6)
-df['Price_Bins'] = pd.cut(df['Price'], bins=bins)#.astype(str)
+df['Price_Bins'] = pd.cut(df['Price'], bins=bins)  # .astype(str)
 
 # in place binning
 # df['ext price'].value_counts(bins=4, sort=False)
@@ -108,8 +108,10 @@ print(cdf["Price_Bins"].value_counts())
 #                                   })
 
 
-barplot = sns.barplot(x="Price_Bins", y='Price', data=cdf)
-barplot.set_xticklabels(barplot.get_xticklabels(),rotation=30)
+gdf = cdf.groupby('Price_Bins')
+print(gdf.head(10))
+barplot = sns.countplot(x="Price_Bins", data=cdf)
+barplot.set_xticklabels(barplot.get_xticklabels(), rotation=30)
 # [plt.setp(ax.get_xticklabels(), rotation=90) for ax in barplot.axes.flat]
 plt.show()
 

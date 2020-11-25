@@ -49,6 +49,8 @@ def general_df_stats(df):
         df.isna().sum(),
         '=Unique member counts=',
         count_of_unique_members_per_column(df),
+        # '=DF info=',
+        # df.info(),
         '------------------------------- GENERAL DF STATS END -------------------------------'
     ]
 
@@ -56,3 +58,9 @@ def general_df_stats(df):
         print('<<<>>>')
         print(o)
     foreach(p, l)
+
+
+# def top_n_per_group(df_groups):
+#     for name, group in grouped:
+#         print name
+#         print group
