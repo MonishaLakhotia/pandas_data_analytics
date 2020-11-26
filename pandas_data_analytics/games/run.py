@@ -112,13 +112,20 @@ print(sumdf)
 #     x="Year", y="Global_Sales", hue='Platform_Bin'
 # )
 
+
 def countplot(x, hue, **kwargs):
     sns.countplot(x=x, hue=hue, **kwargs)
 
-df['Year_Bin'] = pd.cut(df['Year'], bins=bins).astype(str)
 
-g = sns.FacetGrid(df, col="Platform_Bin")
-g.map(countplot, 'Year_Bin', 'Genre')
+df['Year_Bin_Str'] = pd.cut(df['Year'], bins=bins).astype(str)
+
+cats = [str(c)
+        for c in list(df['Year_Bin'].unique().sort_values(ascending=True))[0:-1]]
+
+print(cats)
+
+g = sns.FacetGrid(df, col="Platform_Bin", hue='Genre')
+g.map(sns.countplot, 'Year_Bin')
 # g = sns.PairGrid(df, x_vars=["Platform_Bin"], hue='Genre')
 # g.map(countplot)
 g.add_legend()
