@@ -1,4 +1,5 @@
 from sklearn import preprocessing
+import functools as ft
 
 # https://www.kaggle.com/herozerp/viz-rule-mining-for-groceries-dataset
 
@@ -58,6 +59,19 @@ def general_df_stats(df):
         print('<<<>>>')
         print(o)
     foreach(p, l)
+
+
+def create_cat_bins(bin_to_value_dictionary):
+    def g(s):
+        def f(acc, e):
+            acc[e] = s
+            return acc
+        return f
+    value_to_bin_dictionary = {}
+    for key, value in bin_to_value_dictionary.items():
+        value_to_bin_dictionary = ft.reduce(
+            g(key), value, value_to_bin_dictionary)
+    return value_to_bin_dictionary
 
 
 # def top_n_per_group(df_groups):
