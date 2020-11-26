@@ -89,7 +89,10 @@ sumdf = dfgr.agg(np.sum)
 print(sumdf)
 
 # aplot = sns.countplot(x="Platform_Bin", data=df, hue='Genre')
+
+# data distribution over time
 # aplot = sns.kdeplot(x="Year", data=df)
+
 # aplot = sns.histplot(x="Platform_Bin", data=df, hue='Genre')
 # aplot = sns.boxplot(
 #     x="Global_Sales", data=df)
@@ -109,9 +112,26 @@ print(sumdf)
 #     x="Year", y="Global_Sales", hue='Platform_Bin'
 # )
 
+def countplot(x, hue, **kwargs):
+    sns.countplot(x=x, hue=hue, **kwargs)
+
+df['Year_Bin'] = pd.cut(df['Year'], bins=bins).astype(str)
+
+g = sns.FacetGrid(df, col="Platform_Bin")
+g.map(countplot, 'Year_Bin', 'Genre')
+# g = sns.PairGrid(df, x_vars=["Platform_Bin"], hue='Genre')
+# g.map(countplot)
+g.add_legend()
+for ax in g.axes.flat:
+    for label in ax.get_xticklabels():
+        label.set_rotation(30)
+
+# aplot = sns.histplot(data=df, x='Year_Bin')
+
 # sns.countplot(
-#     data=grdf,
-#     x="Year_Bin", hue='Platform_Bin'
+#     data=df,
+#     x="Year_Bin", hue='Genre',
+#     palette=sns.color_palette('hls', 8)
 # )
 
 # sns.barplot(
@@ -121,4 +141,4 @@ print(sumdf)
 #     hue='Platform_Bin'
 # )
 
-# plt.show()
+plt.show()
