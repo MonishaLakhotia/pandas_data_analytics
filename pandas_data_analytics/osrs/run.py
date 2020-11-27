@@ -13,6 +13,7 @@ import joblib
 import pandas_data_analytics.pdpipe_example.pipe_utils as pu
 import pandas_data_analytics.pdpipe_example.clean as c
 import functools as ft
+import re
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
 config = toml.load(os.path.join(this_dir, 'config.toml'))
@@ -43,6 +44,11 @@ def remove_exp(s):
 
 
 mdf.rename(columns={'value': 'exp', 'variable': 'skill'}, inplace=True)
+mdf['skill_bin'] = mdf['skill'].apply(lambda skill:
+                                      'combat' if re.search(
+                                          '(attack|str|hp|def|rang|mage|pray)', skill)
+                                      else 'noncombat'
+                                      )
 print(mdf.head())
 mdf['exp'] = mdf['exp'].apply(r)
 mdf['skill'] = mdf['skill'].apply(remove_exp)
