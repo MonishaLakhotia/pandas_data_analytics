@@ -31,7 +31,7 @@ print(sdf)
 # u.general_df_stats(sdf)
 exps = df.filter(regex=(".*_exp"))
 print(exps)
-mdf = pd.melt(df, id_vars=['char_link'], value_vars=exps)
+mdf = pd.melt(df.head(5), id_vars=['char_link'], value_vars=exps)
 
 
 def r(s):
@@ -48,6 +48,8 @@ mdf['exp'] = mdf['exp'].apply(r)
 mdf['skill'] = mdf['skill'].apply(remove_exp)
 mdf['exp'] = mdf['exp'].astype('int64')
 print(mdf)
-bplot = sns.barplot(x='char_link', y='exp', hue='skill', data=mdf)
-# bplot.set_xticklabels(bplot.get_xticklabels(), rotation=10)
+
+bplot = sns.barplot(x='char_link', y='exp', hue='skill',
+                    data=mdf, palette=sns.color_palette('hls', 30))
+bplot.set_xticklabels(bplot.get_xticklabels(), rotation=10)
 plt.show()
