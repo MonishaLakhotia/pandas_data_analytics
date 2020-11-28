@@ -100,8 +100,6 @@ def general_df_stats(df):
         '=Descriptions=',
         df.describe(include='all'),
         '=Null counts=',
-        df.isnull().sum(),
-        '=Nan counts=',
         df.isna().sum(),
         '=Unique member counts=',
         count_of_unique_members_per_column(df),
