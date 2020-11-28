@@ -64,7 +64,16 @@ mdf['exp'] = mdf['exp'].astype('int64')
 #                     data=mdf)  # , palette=sns.color_palette('hls', 30))
 # bplot.set_xticklabels(bplot.get_xticklabels(), rotation=10)
 
-bplot = sns.barplot(x='skill', y='exp',
-                    data=mdf)  # , palette=sns.color_palette('hls', 30))
-bplot.set_xticklabels(bplot.get_xticklabels(), rotation=10)
+# bplot = sns.barplot(x='skill', y='exp',
+#                     data=mdf)  # , palette=sns.color_palette('hls', 30))
+# bplot.set_xticklabels(bplot.get_xticklabels(), rotation=10)
+
+# NOT WORKING!
+# g = sns.FacetGrid(mdf, col="skill_bin")
+# g.map(sns.barplot, 'skill', 'exp')
+# g.add_legend()
+# for ax in g.axes.flat:
+#     for label in ax.get_xticklabels():
+#         label.set_rotation(30)
+
 plt.show()
