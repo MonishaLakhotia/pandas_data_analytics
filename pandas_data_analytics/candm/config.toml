@@ -1,0 +1,4 @@
+file_locations.model = "pickles/model.pkl"
+file_locations.pipeline = "pickles/pipeline.pkl"
+file_locations.training_data = "data/vgsales.csv"
+file_locations.user_query = "data/user_query.csv"
