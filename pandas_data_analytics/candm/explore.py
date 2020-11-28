@@ -1,8 +1,6 @@
 import pandas_data_analytics.utils as u
 import toml
-from pandas_data_analytics import *
 import os
-import pdpipe as pdp
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import stats
@@ -25,9 +23,9 @@ df = pd.read_csv(csv_loc)
 # Apply the default theme
 sns.set_theme()
 
-# u.general_df_stats(df)
+u.general_df_stats(df)
 
-# print(df.groupby('brand').agg(['count', 'mean']))
+print(df.groupby('brand').agg(['count', 'mean']))
 
 
 # plt.show()
