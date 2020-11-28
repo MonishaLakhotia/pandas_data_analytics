@@ -34,6 +34,39 @@ import functools as ft
 # top_occs = occ_counts[occ_counts >= 5].index
 # filtered_df = df[df['occ'].isin(top_occs)]
 
+# reverse order and reset index
+# df.loc[::-1].reset_index(drop=True)
+
+# reverse column order
+# df.loc[:, ::-1]
+
+# select columns by data type
+# df.select_dtype(include='number')
+# df.select_dtype(include=['number', 'category'])
+# df.select_dtype(exclude=['number', 'category'])
+
+# convert string to numbers with strings that do not look like numbers converted to NAN
+# pd.to_numeric(df['col'], errors='coerce')
+
+# memory reduction step
+# only read the columns you need from a csv
+# cols = ['a', 'b']
+# df = pd.read_csv('path/to/csv.csv', usecols=cols)
+
+# memory reduction step
+# specify categories up front
+# cols = ['a', 'b']
+# dtypes = {'a', 'category'}
+# df = pd.read_csv('path/to/csv.csv', usecols=cols, dtype=dtypes)
+
+# show memory usage of df
+# df.info(memory_usage='deep')
+
+# read from multiple csv's into 1 df (row wise)
+# from glob import glob
+# files = sorted(glob('data/stocks*.csv'))
+# pd.concat((pd.read_csv(file) for file in files), ignore_index=True)
+
 
 def l(df): return [df.head(), df.dtypes, df.shape, df.columns, df.index]
 
