@@ -80,3 +80,67 @@
 
 # filter a dataframe by multiple categories
 # df[df['genre'].isin(['action', 'scifi'])]
+
+# Filter a dataframe by the largest categories
+# counts = df['genre'].value_counts()
+# counts.nlargest(3).index
+# df[df['genre'].isin(counts.nlargest(3).index)]
+
+# Handle missing values
+# total columns with mv
+# df.isna().sum()
+# percentage of mv
+# df.isna().mean()
+# drop columns where more than 10% of values are missing
+# df.dropna(thresh=len(df)*0.9, axis='columns')
+
+# split a string into multiple columns
+# df[['first', 'middle', 'last']] = df['name'].str.split(' ', expand=True)
+# save only the first of the split columns
+# df['city'] = df['location'].str.split(', ', expand=True)[0]
+
+# example a series of lists into a dataframe
+# df2 = df1['col_two'].apply(pd.Series)
+# df3 = pd.concat([df1, df2], axis='columns')
+
+# combine the output of an aggregation with a dataframe
+# total_price = df.groupby('order_id')['item_price'].transform('sum')
+# len(total_price)
+# df['total_price'] = total_price
+# df['percent_of_total'] = df['item_price'] / df['total_price']
+
+# select a slice of rows and columns describes
+# df.describe().loc(['min':'max'])
+# slice the stats by columns aswell
+# df.describe().loc(['min':'max', 'Pclass': 'Parch'])
+
+# reshape a multi indexed series (multi index refers to having multi grouped series/df)
+# df.groupby(['Sex', 'Pclass'])['Survived'].mean()
+# df.groupby(['Sex', 'Pclass'])['Survived'].mean().unstack()
+
+# create a pivot table
+# df.pivot_table(index='Sex', columns='Pclass', values='Survived', aggfunc='mean')
+# shows overall survival rate aswell
+# df.pivot_table(index='Sex', columns='Pclass', values='Survived', aggfunc='mean', margins=True)
+
+# convert continuonus data into categorical data
+# pd.cut(df['Age'], bins=[0,18,25,99], labels=['child', 'young adult', 'adult'])
+
+# change display options
+# all floats will use 2 dec places
+# pd.set_option('display.float_format', '{:f}'.format)
+# pd.reset_option('display.float_format')
+
+# style a dataframe
+# format_dict = {'Date': '{:%m/%d/%y}', 'Close': '${:.2f}', 'Volume': '{:,}'}
+# stocks.style.format(format_dict)
+# (stocks.style.format(format_dict)
+#   .hide_index()
+#   .highlight_min('Close', color='red')
+#   .highlight_max('Close', color='lightgreen')
+# )
+
+# Profile a dataframe. Amazing!!! Shows correlations, general info and plots of the dataframe
+# import pandas_profiling
+# pandas_profiling.ProfileReport(df)
+
