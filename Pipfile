@@ -23,7 +23,6 @@ cufflinks = "*"
 py-linq = "*"
 jupyter = "*"
 jupyter-contrib-nbextensions = "*"
-ipython = "*"
 qtconsole = "*"
 pyqt5 = "*"
 
