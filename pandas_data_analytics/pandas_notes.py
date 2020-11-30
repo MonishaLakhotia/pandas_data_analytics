@@ -1,9 +1,6 @@
 # https://www.kaggle.com/herozerp/viz-rule-mining-for-groceries-dataset
 
-# shows number of null values per column
-# df.isnull().sum()
-
-# shows number of nan values per column
+# shows number of nan/null values per column
 # df.isna().sum()
 
 # number of unique entries for the itemDescription column
@@ -141,6 +138,29 @@
 # )
 
 # Profile a dataframe. Amazing!!! Shows correlations, general info and plots of the dataframe
+# seems to rely on Jupiter notebooks
 # import pandas_profiling
 # pandas_profiling.ProfileReport(df)
 
+
+# get value counts as a percentage
+# df['genre'].value_counts(normalize=True)
+# df.groupby('driver_gender')['violation'].value_counts(normalize=True)
+
+# combine string columns that rep a date time together
+# df['date'] = df['stop_date'].str.cat(df['stop_time'], sep=' ')
+# df['stop_datetime'] = pd.to_datetime(df['date'])
+# df['stop_datetime'].dt.year
+
+# groupby can also work with pandas expressions as the groupby subject
+# df.groupby(df['stop_datetime'].dt.hour)['drugs_related_stop'].agg(['mean'])
+
+# .sort_index to sort by index of a series. sorts by hour here
+# df['stop_datetime'].dt.hour.value_counts().sort_index()
+
+# df filter conditions: (~ is not, & is and, and | is or)
+
+# df value assignment. requires use of loc
+# matches rows that match the conditions around '1' and '2' and the column 'stop_duration'
+# import numpy as np
+# df.loc[((df['stop_duration'] == '1') | (df['stop_duration'] == '2')), 'stop duration'] = np.nan
