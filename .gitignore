@@ -67,3 +67,5 @@ target/
 .python-version
 
 *.pkl
+
+pandas_data_analytics/wine/data/*

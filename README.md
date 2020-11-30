@@ -10,3 +10,9 @@ In project root:
 
 setup.py with the follow line of code is required for references project files in other project files for import statements
 packages=find_packages(include=['python01', 'python01.*']),
+
+
+# Interactive qtconsole shell
+> $ jupyter qtconsole
+## loading a python file into the interactive
+>> in qtconsole ---> %run <path/to/pythonfile>
