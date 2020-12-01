@@ -1,3 +1,6 @@
+# filter
+# model_library = [k for k, v in _all_models.items() if v.is_turbo]
+
 # https://www.kaggle.com/herozerp/viz-rule-mining-for-groceries-dataset
 
 # shows number of nan/null values per column

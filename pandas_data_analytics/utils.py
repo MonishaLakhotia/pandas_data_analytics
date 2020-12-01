@@ -1,4 +1,5 @@
 from sklearn import preprocessing
+import os
 import functools as ft
 
 def l(df): return [df.head(), df.dtypes, df.shape, df.columns, df.index]
@@ -12,6 +13,9 @@ def foreach(action, iterable):
     for element in iterable:
         action(element)
 
+def set_full_paths(config, directory):
+    for key, value in config['file_locations'].items():
+        config['file_locations'][key] = os.path.join(directory, value)
 
 def general_df_stats(df):
     def count_of_unique_members_per_column(df):
