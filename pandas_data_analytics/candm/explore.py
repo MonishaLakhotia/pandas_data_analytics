@@ -1,4 +1,5 @@
 import pandas_data_analytics.utils as u
+import pandas_profiling
 import toml
 import os
 import pandas as pd
@@ -11,6 +12,7 @@ import pandas_data_analytics.pdpipe_example.clean as c
 import functools as ft
 from py_linq import Enumerable
 import re
+from glob import glob
 
 
 this_dir = os.path.dirname(os.path.realpath(__file__))

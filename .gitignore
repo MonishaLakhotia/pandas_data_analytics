@@ -69,3 +69,4 @@ target/
 *.pkl
 
 pandas_data_analytics/wine/data/*
+data
