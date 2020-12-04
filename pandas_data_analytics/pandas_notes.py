@@ -167,3 +167,18 @@
 # matches rows that match the conditions around '1' and '2' and the column 'stop_duration'
 # import numpy as np
 # df.loc[((df['stop_duration'] == '1') | (df['stop_duration'] == '2')), 'stop duration'] = np.nan
+
+
+
+#### QT CONSOLE #####
+# allows more space for column contents
+# pd.set_option('display.max_colwidth', 200)
+
+# themes:
+# dark
+  # ink-plot
+  # monokai
+  # stata-dark
+  # parais-dark
+# light
+  # perl-doc
