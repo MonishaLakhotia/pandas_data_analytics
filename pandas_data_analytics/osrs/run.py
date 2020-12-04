@@ -68,6 +68,12 @@ mdf['exp'] = mdf['exp'].astype('int64')
 #                     data=mdf)  # , palette=sns.color_palette('hls', 30))
 # bplot.set_xticklabels(bplot.get_xticklabels(), rotation=10)
 
+bplot = sns.barplot(x='skill', y='exp',data=mdf)
+bplot.set_xticklabels(bplot.get_xticklabels(), rotation=25)
+plt.show()
+# OR
+# bplot.set_xticklabels(rotation=25)
+
 # NOT WORKING!
 # g = sns.FacetGrid(mdf, col="skill_bin")
 # g.map(sns.barplot, 'skill', 'exp')
@@ -76,4 +82,13 @@ mdf['exp'] = mdf['exp'].astype('int64')
 #     for label in ax.get_xticklabels():
 #         label.set_rotation(30)
 
+# global settings of sns style
+# sns.set_style
+
+# good plotting for distribution of catagories
+sns.catplot(x='skill', y='exp', data=mdf, hue='skill_bin').set_xticklabels(rotation=30)
+# sns.violinplot(x='skill', y='exp', data=mdf)
+# sns.histplot(x='skill', y='exp', data=mdf)
+# sns.boxplot(x='skill', y='exp', data=mdf)
+# sns.jointplot is good for numeric x,y scatter plot for checking bin relationships
 plt.show()
