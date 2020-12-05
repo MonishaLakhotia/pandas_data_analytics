@@ -5,7 +5,7 @@ flags = "im"
 ordered_groups = [2]
 [[fields]]
 name = "milk"
-pattern = "(Milk solids), (\\w+?),"
+pattern = "Milk solids, ([\\w\\s]+), ([\\w\\s]+)"
 flags = "im"
-ordered_groups = [2]
+ordered_groups = [2,1]
 group_join_symbol = " - "

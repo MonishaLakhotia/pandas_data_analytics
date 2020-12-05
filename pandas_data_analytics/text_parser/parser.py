@@ -33,7 +33,7 @@ class Parser(object):
         s = self.settings
         for v in s['fields']:
             ordered_groups = Enumerable(v.get('ordered_groups', [1]))
-            pattern = '.*?'+(v['pattern'])+'.*'
+            pattern = (v['pattern'])
             m = re.search(pattern=pattern, string=txt,
                           flags=str_flags_to_regex_flags(v['flags']))
             res = v.get('group_join_symbol', '').join(
