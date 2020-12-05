@@ -18,6 +18,8 @@ parser = Parser(parser_settings)
 m = re.sub('.*?(\w+).*', '\\1', '  words ')
 m2 = re.sub('[\s\S.]*?Patient #: (\d+) Capture:[\s\S.]*\nsdf', '\\1', '  Patient #: 234234 Capture:23 ')
 m3 = re.match('[\s\S.]*?Patient #: (\d+) Capture:[\s\S.]*', '  Patient #: 234234 Capture:23 ')
+m4 = re.search('[\s\S.]*?Patient #: (\d+) Capture:[\s\S.]*', '  Patient #: 234234 Capture:23 \nasdf', re.I)
+print(m4.group(1))
 # m = re.search('.*?(\w+).*?', '\\1', '  words ')
 # m2 = ', '.join(re.findall('words (\w+)', '  words  pa'))
 # the new line character messes up the capture group
