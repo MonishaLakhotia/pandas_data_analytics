@@ -1,10 +1,10 @@
 [[fields]]
 name = "cream"
 pattern = "(Cream,)"
-flags = "i"
+flags = "im"
 [[fields]]
 name = "milk"
 pattern = "(Milk solids), (\\w+?),"
-flags = "i"
+flags = "im"
 ordered_groups = [1,2]
 group_join_symbol = " - "

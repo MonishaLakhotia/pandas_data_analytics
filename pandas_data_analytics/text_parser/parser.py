@@ -35,6 +35,7 @@ class Parser(object):
     for v in s['fields']:
       list_of_replace_strings = Enumerable(v.get('ordered_groups',[1]))\
         .select(lambda ele: '\\' + str(ele)).to_list()
-      result_dict[v['name']] = re.sub(v['pattern'], v.get('group_join_symbol','').join(list_of_replace_strings)\
-          ,txt, flags=str_flags_to_regex_flags(v['flags']))
+      repl = v.get('group_join_symbol','').join(list_of_replace_strings)
+      pattern = '.*?'+(v['pattern'])+'.*'
+      result_dict[v['name']] = re.sub(pattern=pattern,repl=repl,string=txt, flags=str_flags_to_regex_flags(v['flags']))
     return result_dict
