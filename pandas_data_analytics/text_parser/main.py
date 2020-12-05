@@ -17,7 +17,7 @@ def from_pdf(pdf_loc, settings):
     with pdfplumber.open(pdf_loc) as pdf:
         result = Enumerable(pdf.pages)\
             .select(lambda page: page.extract_text())\
-            .select(lambda page_txt: parser.parse(page_txt))\
+            .select(parser.parse)\
             .aggregate(merge_dicts)
         return result
 
