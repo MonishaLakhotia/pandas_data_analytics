@@ -1,10 +1,11 @@
 [[fields]]
 name = "cream"
-pattern = "(Cream,)"
+pattern = "(Cream,(.*?),)"
 flags = "im"
+ordered_groups = [2]
 [[fields]]
 name = "milk"
 pattern = "(Milk solids), (\\w+?),"
 flags = "im"
-ordered_groups = [1,2]
+ordered_groups = [2]
 group_join_symbol = " - "
