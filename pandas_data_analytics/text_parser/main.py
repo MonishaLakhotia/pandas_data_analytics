@@ -12,6 +12,18 @@ def from_pdf_bulk_read(pdf_loc, settings):
         return result
 
 
+def from_pdf_per_page(pdf_loc, settings):
+    # settings per page. returns a list of dicts. 1 per page
+    # same info in each dict
+    parser = Parser(parser_settings)
+    with pdfplumber.open(pdf_loc) as pdf:
+        result = Enumerable(pdf.pages)\
+            .select(lambda page: page.extract_text())\
+            .select(parser.parse)\
+            .to_list()
+        return result
+
+
 def from_pdf(pdf_loc, settings):
     parser = Parser(parser_settings)
     with pdfplumber.open(pdf_loc) as pdf:
