@@ -14,6 +14,7 @@ import pandas_data_analytics.pdpipe_example.pipe_utils as pu
 import pandas_data_analytics.pdpipe_example.clean as c
 import functools as ft
 import re
+from py_linq import Enumerable
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
 config = toml.load(os.path.join(this_dir, 'config.toml'))
@@ -27,7 +28,7 @@ df = pd.read_csv(csv_loc)
 # 1 row becomes many rows
 # sdf = df.stack().to_frame().T
 # print(sdf)
-
+df.drop(['web-scraper-order', 'web-scraper-start-url', 'char_link-href'], inplace=True, axis=1)
 df.rename(columns={'char_link': 'character'}, inplace=True)
 
 u.general_df_stats(df)
@@ -68,9 +69,9 @@ mdf['exp'] = mdf['exp'].astype('int64')
 #                     data=mdf)  # , palette=sns.color_palette('hls', 30))
 # bplot.set_xticklabels(bplot.get_xticklabels(), rotation=10)
 
-bplot = sns.barplot(x='skill', y='exp',data=mdf)
-bplot.set_xticklabels(bplot.get_xticklabels(), rotation=25)
-plt.show()
+# bplot = sns.barplot(x='skill', y='exp',data=mdf)
+# bplot.set_xticklabels(bplot.get_xticklabels(), rotation=25)
+# plt.show()
 # OR
 # bplot.set_xticklabels(rotation=25)
 
@@ -86,9 +87,19 @@ plt.show()
 # sns.set_style
 
 # good plotting for distribution of catagories
-sns.catplot(x='skill', y='exp', data=mdf, hue='skill_bin').set_xticklabels(rotation=30)
+# sns.catplot(x='skill', y='exp', data=mdf, hue='skill_bin').set_xticklabels(rotation=30)
 # sns.violinplot(x='skill', y='exp', data=mdf)
 # sns.histplot(x='skill', y='exp', data=mdf)
 # sns.boxplot(x='skill', y='exp', data=mdf)
 # sns.jointplot is good for numeric x,y scatter plot for checking bin relationships
-plt.show()
+# plt.show()
+exp_df = df.loc[:,df.columns.isin(Enumerable(df.columns).where(lambda c: re.match('.*exp', c)).to_list())]
+def keep_digits(e):
+    r = re.sub('\D', '', e)
+    return r
+exp_df = exp_df.applymap(keep_digits).astype(int)
+mean_exp = exp_df.mean().astype(int)
+# sns.heatmap(exp_df.corr())
+
+# plt.show()
+
