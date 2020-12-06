@@ -28,7 +28,7 @@ df = pd.read_csv(csv_loc)
 sns.set_theme()
 
 # print(df.head())
-u.general_df_stats(df)
+# u.general_df_stats(df)
 # print(dots['align'].unique())
 # sns.relplot(
 #     data=dots, kind="line",
@@ -69,24 +69,16 @@ df['Platform_Bin'] = df['Platform'].apply(lambda p: console_to_company[p])
 # df['Year_Bin'] = df['Year_Bin'].apply(str)
 
 dfgr = df.groupby(['Year_Bin', 'Platform_Bin'])
-print(dfgr)
 
 grdf = dfgr.apply(lambda x: x.sort_values(
     by=['Global_Sales'], ascending=False)['Global_Sales'].sum())
-
-print(grdf)
-
 sumdf = dfgr.agg(np.sum)
-
-
-print(sumdf)
-
 df['Year_Bin_Str'] = pd.cut(df['Year'], bins=bins).astype(str)
-
 cats = [str(c)
         for c in list(df['Year_Bin'].unique().sort_values(ascending=True))[0:-1]]
 
-print(cats)
+df.Year = pd.to_datetime(df.Year.astype('Int64'), format='%Y', errors='coerce')
+print(df.Year.head())
 
 
 # count distribution
@@ -151,4 +143,4 @@ sns.countplot(
 # continuous distribution of density of years
 # sns.kdeplot(x='Year', data=df)
 
-plt.show()
+# plt.show()
