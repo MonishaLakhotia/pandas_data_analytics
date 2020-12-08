@@ -25,6 +25,7 @@ jupyter-contrib-nbextensions = "*"
 qtconsole = "*"
 pyqt5 = "*"
 pdfplumber = "*"
+dask = {extras = ["complete"], version = "*"}
 
 [dev-packages]
 pylint = "*"
