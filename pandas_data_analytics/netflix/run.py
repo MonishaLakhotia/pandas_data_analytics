@@ -10,10 +10,8 @@ import numpy as np
 import functools as ft
 from py_linq import Enumerable
 
-
 this_dir = os.path.dirname(os.path.realpath(__file__))
 config = toml.load(os.path.join(this_dir, 'config.toml'))
-
 u.set_full_paths(config, this_dir)
 csv_loc = config['file_locations']['data']
 
@@ -22,22 +20,17 @@ df.type = df.type.astype('category')
 df.date_added = pd.to_datetime(df.date_added)
 df['year_added'] = df.date_added.dt.year.astype('Int64').astype('category')
 df.release_year = df.release_year.astype('category')
+# amazing!!! converts datatypes as best it can
+# string nan values become <NA>, still a rep for nan
+df = df.convert_dtypes()
 df.rating = df.rating.astype('category')
 pd.set_option('display.max_rows', df.shape[0]+1)
-pd.set_option('display.max_columns', df.shape[0]+1)
+pd.set_option('display.max_columns', df.shape[1]+1)
 
-# Apply the default theme
 def drop_filler(g):
   if(Enumerable(['tv shows', 'movies']).any(lambda e: g.lower() == e)):
     return g
   return re.sub('Movies|TV|Shows|Series|Features', '', g)
-sns.set_theme()
-
-def duration_bin(dur):
-  if(re.search('season', dur, re.I) is not None):
-    return dur
-  else:
-    return dur + '1'
 
 # creates bins for the durations, does not include season info
 # only assigns indices where duration was minute based
@@ -56,12 +49,18 @@ ps = Enumerable([
   # df.dtypes,
   # df.nunique(),
   # df.head(),
-  # df2.groupby('year_added').genre.value_counts(normalize=True),
-  df.duration_bin.value_counts(dropna=False),
-  genre_df.columns
+  # genre_df.genre.value_counts(normalize=True),
+  # genre_df.groupby('year_added').genre.value_counts(normalize=True),
+  # df.duration_bin.value_counts(dropna=False),
+  df.director.unique(),
+  # df[['director', 'title']],
+  df.columns
 ])
-
 u.foreach(print,ps)
 
+# Apply the default theme
+sns.set_theme()
 # sns.countplot(x='year_added', data=df, hue='type')
+# aplot = sns.countplot(x='duration_bin', data=df, hue='rating')
+# aplot.set_xticklabels(aplot.get_xticklabels(), rotation=30)
 # plt.show()

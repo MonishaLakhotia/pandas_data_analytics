@@ -31,10 +31,11 @@ df = pd.read_csv(csv_loc)
 df.drop(['web-scraper-order', 'web-scraper-start-url', 'char_link-href'], inplace=True, axis=1)
 df.rename(columns={'char_link': 'character'}, inplace=True)
 
-u.general_df_stats(df)
+# u.general_df_stats(df)
 
 # get columns that have exp in the name
-exps = df.filter(regex=(".*_exp"))
+exps = Enumerable(df.columns).where(lambda c: re.match('.*_exp',c,re.I)).to_list()
+# exps = df.filter(regex=(".*_exp"))
 print(exps)
 
 
@@ -46,8 +47,8 @@ def remove_exp(s):
     return re.sub('(.*)_exp$', '\\1', flags=re.I, string=s)
 
 
-mdf = pd.melt(df, id_vars=['character'], value_vars=exps)
-mdf.rename(columns={'value': 'exp', 'variable': 'skill'}, inplace=True)
+mdf = pd.melt(df, id_vars=['character'], value_vars=exps, value_name='exp', var_name='skill')
+# mdf.rename(columns={'value': 'exp', 'variable': 'skill'}, inplace=True)
 mdf['skill_bin'] = mdf['skill'].apply(lambda skill:
                                       'combat' if re.search(
                                           '(attack|str|hp|def|rang|mage|pray)', skill)
@@ -93,6 +94,7 @@ mdf['exp'] = mdf['exp'].astype('int64')
 # sns.boxplot(x='skill', y='exp', data=mdf)
 # sns.jointplot is good for numeric x,y scatter plot for checking bin relationships
 # plt.show()
+print(mdf.head(100))
 exp_df = df.loc[:,df.columns.isin(Enumerable(df.columns).where(lambda c: re.match('.*exp', c)).to_list())]
 def keep_digits(e):
     r = re.sub('\D', '', e)
