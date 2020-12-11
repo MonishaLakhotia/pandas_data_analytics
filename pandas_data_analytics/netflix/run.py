@@ -45,18 +45,18 @@ genre_df: pd.DataFrame = df[\
 genre_df.genre = genre_df.genre.apply(drop_filler).str.strip()
 
 ps = Enumerable([
-  # df.sample(5),
-  # df.dtypes,
-  # df.nunique(),
-  # df.head(),
-  # genre_df.genre.value_counts(normalize=True),
-  # genre_df.groupby('year_added').genre.value_counts(normalize=True),
-  # df.duration_bin.value_counts(dropna=False),
-  df.director.unique(),
-  # df[['director', 'title']],
-  df.columns
+  # lambda: df.sample(5),
+  # lambda: df.dtypes,
+  # lambda: df.nunique(),
+  # lambda: df.head(),
+  # lambda: genre_df.genre.value_counts(normalize=True),
+  # lambda: genre_df.groupby('year_added').genre.value_counts(normalize=True),
+  # lambda: df.duration_bin.value_counts(dropna=False),
+  lambda: df.director.unique(),
+  # lambda: df[['director', 'title']],
+  lambda: df.columns
 ])
-u.foreach(print,ps)
+u.foreach(lambda f: print(f()),ps)
 
 # Apply the default theme
 sns.set_theme()
