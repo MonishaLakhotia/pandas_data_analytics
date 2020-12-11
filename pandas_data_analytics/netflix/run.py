@@ -16,14 +16,15 @@ u.set_full_paths(config, this_dir)
 csv_loc = config['file_locations']['data']
 
 df: pd.DataFrame = pd.read_csv(csv_loc)
+# df.dropna(how='any', inplace=True)
+df = df.convert_dtypes()
 df.type = df.type.astype('category')
 df.date_added = pd.to_datetime(df.date_added)
 df['year_added'] = df.date_added.dt.year.astype('Int64').astype('category')
 df.release_year = df.release_year.astype('category')
+df.rating = df.rating.astype('category')
 # amazing!!! converts datatypes as best it can
 # string nan values become <NA>, still a rep for nan
-df = df.convert_dtypes()
-df.rating = df.rating.astype('category')
 pd.set_option('display.max_rows', df.shape[0]+1)
 pd.set_option('display.max_columns', df.shape[1]+1)
 
@@ -55,23 +56,52 @@ def director_df_sup():
   director_df.director = director_df.director.astype('category')
   return director_df
 
+def country_df_sup():
+  country_df = df[\
+    ['country', 'director', 'date_added', 'release_year', 'rating', 'duration', 'year_added']\
+    ].assign(country=df.country.str.split(', '))\
+    .explode('country')
+  country_df.country = country_df.country.astype('category')
+  return country_df
+
+
 ps = (lambda pdf, field: Enumerable([
-  # lambda: df.sample(5),
-  # lambda: df.dtypes,
-  # lambda: df.nunique(),
-  # lambda: df.head(),
+  # lambda: pdf.sample(5),
+  # lambda: pdf.dtypes,
   # lambda: genre_df.genre.value_counts(normalize=True),
   # lambda: genre_df.groupby('year_added').genre.value_counts(normalize=True),
-  lambda: pdf[field].value_counts(dropna=False),
-  lambda: len(pdf[field].unique()),
+  # lambda: pdf[field].value_counts(dropna=False, normalize=True),
+  # lambda: len(pdf[field].unique()),
+  # lambda: pdf[~(pdf.year_added == pdf.release_year)].sample(5),
+  lambda: pdf.isna().mean().sort_values(ascending=False),
   # lambda: df[['director', 'title']],
   lambda: pdf.columns
-]))(genre_df_sup(), 'genre')
+]))(df, 'country')
 u.foreach(lambda f: print(f()),ps)
+
+# good idea for analysis of top 10 cats 
+# ## Top 10 countries
+# cols_country = list(df.country.value_counts().head(10).index.values)
+# ## Top 10 genere
+# cols_genere = list(df.listed_in.value_counts().head(10).index.values)
+# mask1 = df['country'].isin(cols_country)
+# mask2 = df['listed_in'].isin(cols_genere)
+# plt.figure(figsize=(18,4))
+# sns.countplot('country', hue='listed_in', data=df[mask1 & mask2])
+# plt.title('Different type of content in Top 10 Countries')
+# plt.show()
 
 # Apply the default theme
 sns.set_theme()
+
+# show seasons in order with counts
+# df['num_of_seasons'] = df[df.duration.str.contains('Season', flags=re.I)].duration.str.split(' ', expand=True)[0].astype(int)
+# sdf = df[df.duration.str.contains('Season', flags=re.I)].sort_values(by='num_of_seasons')
+# aplot = sns.countplot(data=sdf, x='duration')
+
 # sns.countplot(x='year_added', data=df, hue='type')
 # aplot = sns.countplot(x='duration_bin', data=df, hue='rating')
+
+# General plot stuff
 # aplot.set_xticklabels(aplot.get_xticklabels(), rotation=30)
 # plt.show()
