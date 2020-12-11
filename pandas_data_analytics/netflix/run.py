@@ -38,18 +38,22 @@ df['duration_bin'] = pd.cut(df[~df.duration.str.contains('season', flags=re.I)]\
   .duration.str.split(' ', expand=True)[0].str.strip().astype('int')\
     .sort_values(), bins=np.linspace(0, 350, 8))
 
-genre_df: pd.DataFrame = df[\
-  ['date_added', 'release_year', 'rating', 'duration', 'year_added']\
-  ].assign(genre=df["listed_in"]\
-  .str.split(", ")).explode('genre')
-genre_df.genre = genre_df.genre.apply(drop_filler).str.strip()
-genre_df.genre = genre_df.genre.astype('category')
+def genre_df_sup():
+  genre_df: pd.DataFrame = df[\
+    ['date_added', 'release_year', 'rating', 'duration', 'year_added']\
+    ].assign(genre=df["listed_in"]\
+    .str.split(", ")).explode('genre')
+  genre_df.genre = genre_df.genre.apply(drop_filler).str.strip()
+  genre_df.genre = genre_df.genre.astype('category')
+  return genre_df
 
-director_df: pd.DataFrame = df[\
-  ['director', 'date_added', 'release_year', 'rating', 'duration', 'year_added']\
-  ].assign(director=df['director']\
-    .str.split(', ')).explode('director')
-director_df.director = director_df.director.astype('category')
+def director_df_sup():
+  director_df: pd.DataFrame = df[\
+    ['director', 'date_added', 'release_year', 'rating', 'duration', 'year_added']\
+    ].assign(director=df['director']\
+      .str.split(', ')).explode('director')
+  director_df.director = director_df.director.astype('category')
+  return director_df
 
 ps = (lambda pdf, field: Enumerable([
   # lambda: df.sample(5),
@@ -62,7 +66,7 @@ ps = (lambda pdf, field: Enumerable([
   lambda: len(pdf[field].unique()),
   # lambda: df[['director', 'title']],
   lambda: pdf.columns
-]))(genre_df, 'genre')
+]))(genre_df_sup(), 'genre')
 u.foreach(lambda f: print(f()),ps)
 
 # Apply the default theme
