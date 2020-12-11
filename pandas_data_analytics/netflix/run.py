@@ -43,19 +43,26 @@ genre_df: pd.DataFrame = df[\
   ].assign(genre=df["listed_in"]\
   .str.split(", ")).explode('genre')
 genre_df.genre = genre_df.genre.apply(drop_filler).str.strip()
+genre_df.genre = genre_df.genre.astype('category')
 
-ps = Enumerable([
+director_df: pd.DataFrame = df[\
+  ['director', 'date_added', 'release_year', 'rating', 'duration', 'year_added']\
+  ].assign(director=df['director']\
+    .str.split(', ')).explode('director')
+director_df.director = director_df.director.astype('category')
+
+ps = (lambda pdf, field: Enumerable([
   # lambda: df.sample(5),
   # lambda: df.dtypes,
   # lambda: df.nunique(),
   # lambda: df.head(),
   # lambda: genre_df.genre.value_counts(normalize=True),
   # lambda: genre_df.groupby('year_added').genre.value_counts(normalize=True),
-  # lambda: df.duration_bin.value_counts(dropna=False),
-  lambda: df.director.unique(),
+  lambda: pdf[field].value_counts(dropna=False),
+  lambda: len(pdf[field].unique()),
   # lambda: df[['director', 'title']],
-  lambda: df.columns
-])
+  lambda: pdf.columns
+]))(genre_df, 'genre')
 u.foreach(lambda f: print(f()),ps)
 
 # Apply the default theme
