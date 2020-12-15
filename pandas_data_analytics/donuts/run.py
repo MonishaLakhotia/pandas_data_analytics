@@ -10,6 +10,7 @@ import seaborn as sns
 import numpy as np
 import joblib
 import functools as ft
+from py_linq import Enumerable
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
 config = toml.load(os.path.join(this_dir, 'config.toml'))
@@ -27,4 +28,19 @@ def food_binner(s):
             np.nan
 
 # df['food_cat'] = df.name.apply(food_binner)
+
+ 
+ps = (lambda pdf, field: Enumerable([
+  # lambda: pdf.sample(5),
+  # lambda: pdf.dtypes,
+  # lambda: genre_df.genre.value_counts(normalize=True),
+  # lambda: genre_df.groupby('year_added').genre.value_counts(normalize=True),
+  # lambda: pdf[field].value_counts(dropna=False, normalize=True),
+  # lambda: len(pdf[field].unique()),
+  # lambda: pdf[~(pdf.year_added == pdf.release_year)].sample(5),
+  lambda: pdf.groupby('company').calories.mean(),
+  # lambda: df[['director', 'title']],
+  lambda: pdf.columns
+]))(df, 'country')
+u.foreach(lambda f: print(f()),ps)
 
