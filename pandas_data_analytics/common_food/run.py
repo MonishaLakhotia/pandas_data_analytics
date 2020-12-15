@@ -16,17 +16,25 @@ u.set_full_paths(config, this_dir)
 csv_loc = config['file_locations']['data']
 
 df: pd.DataFrame = pd.read_csv(csv_loc)
+df.columns = df.columns.str.lower()
+for c in ['protein', 'carbs', 'fat', 'sat.fat']:
+  df[c] = df[c]\
+    .str.replace('[a-zA-Z]', '', regex=True)
+df[c] = df[c].replace(r'^\s*$', np.nan, regex=True)
 df = df.convert_dtypes()
 
 pd.set_option('display.max_rows', df.shape[0]+1)
 pd.set_option('display.max_columns', df.shape[1]+1)
 
-
 ps = (lambda pdf, field: Enumerable([
-  # lambda: pdf.sample(5),
+  lambda: pdf.sample(5),
+  lambda: pdf.columns,
+  lambda: pdf.dtypes,
 ]))(df, 'country')
 
 u.foreach(lambda f: print(f()),ps)
+
+# df.to_csv(config['file_locations']['clean_data'])
 
 # Apply the default theme
 sns.set_theme()
