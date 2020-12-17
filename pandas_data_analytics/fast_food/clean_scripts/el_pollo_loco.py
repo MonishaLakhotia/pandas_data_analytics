@@ -17,19 +17,21 @@ csv_loc = config['file_locations']['raw_el_pollo_loco']
 
 df: pd.DataFrame = pd.read_csv(csv_loc)
 df.columns = df.columns.str.lower()
-df.drop(['web-scraper-order', 'web-scraper-start-url'], inplace=True, axis=1)
+df['category'] = df.main_food_link
+df.drop(['web-scraper-order', 'web-scraper-start-url', 'main_food_link', 'main_food_link'], inplace=True, axis=1)
+df['company'] = 'El Pollo Loco'
+df.dropna(inplace=True, axis=0)
 
 pd.set_option('display.max_rows', df.shape[0]+1)
 pd.set_option('display.max_columns', df.shape[1]+1)
 
 ps = (lambda pdf: Enumerable([
-  lambda: pdf.sample(5),
+  # lambda: pdf[['name']],
   lambda: pdf.columns,
   # lambda: pdf.dtypes,
   # lambda: pdf[['food', 'cal_per_gram', 'category']].groupby('category').food.agg(list),
   # lambda: pdf.category.value_counts(),
 ]))(df)
-
 u.foreach(lambda f: print(f()),ps)
 
 # df.to_csv(config['file_locations']['clean_el_pollo_loco'], index=False)

@@ -1,4 +1,4 @@
 file_locations.raw_delish = "all_data/scraped_data/delish_highest_calorie_fast_food_restaurant_meals.csv"
 file_locations.clean_delish = "all_data/cleaned_data/delish_highest_calorie_fast_food_restaurant_meals.csv"
 file_locations.raw_el_pollo_loco = "all_data/scraped_data/el_pollo_loco.csv"
-file_locations.clean_el_pollo_loco = "all_data/clean_data/el_pollo_loco.csv"
+file_locations.clean_el_pollo_loco = "all_data/cleaned_data/el_pollo_loco.csv"
