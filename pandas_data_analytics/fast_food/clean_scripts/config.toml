@@ -2,3 +2,5 @@ file_locations.raw_delish = "all_data/scraped_data/delish_highest_calorie_fast_f
 file_locations.clean_delish = "all_data/cleaned_data/delish_highest_calorie_fast_food_restaurant_meals.csv"
 file_locations.raw_el_pollo_loco = "all_data/scraped_data/el_pollo_loco.csv"
 file_locations.clean_el_pollo_loco = "all_data/cleaned_data/el_pollo_loco.csv"
+file_locations.raw_mens_health_40_worst = "all_data/scraped_data/menshealth_40_worst_restaurant_menu.csv"
+file_locations.clean_mens_health_40_worst = "all_data/cleaned_data/menshealth_40_worst_restaurant_menu.csv"
