@@ -20,10 +20,8 @@ df.columns = df.columns.str.lower()
 
 def get_thing(s, phrase):
   m = re.search(phrase,s)
-  if m is not None:
-    return m.group(1)
-  else:
-    return np.nan
+  return m.group(1) if m is not None\
+    else np.nan
 def get_sodium(s):
   m = get_thing(s, '(\d+[\d,\.]+)[\sa-zA-Z]*?sodium')
   return m if not pd.isna(m)\
