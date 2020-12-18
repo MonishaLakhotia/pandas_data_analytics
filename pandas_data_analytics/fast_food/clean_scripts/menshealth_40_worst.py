@@ -50,7 +50,7 @@ def remove_company(s):
     else re.sub('Wendy\'s', '', s, flags=re.I) if re.search('Wendy\'s', s, re.I)\
     else re.sub('Panera Bread', '', s, flags=re.I) if re.search('Panera Bread', s, re.I)\
     else re.sub('Romano’s', '', s, flags=re.I) if re.search('Romano’s', s, re.I)\
-    else re.sub('Checker\'s', '', s, flags=re.I) if re.search('Checkers\'', s, re.I)\
+    else re.sub('Checkers\'', '', s, flags=re.I) if re.search('Checkers\'', s, re.I)\
     else re.sub('Jimmy John\'s', '', s, flags=re.I) if re.search('Jimmy John\'s', s, re.I)\
     else re.sub('McDonald\'s', '', s, flags=re.I) if re.search('McDonald\'s', s, re.I)\
     else re.sub('Arby’s', '', s, flags=re.I) if re.search('Arby’s', s, re.I)\
@@ -137,4 +137,4 @@ ps = Enumerable([
 ])
 u.foreach(lambda f: print(f()),ps)
 
-df.to_csv(config['file_locations']['clean_mens_health_40_worst'], index=False)
+# df.to_csv(config['file_locations']['clean_mens_health_40_worst'], index=False)
