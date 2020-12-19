@@ -6,3 +6,5 @@ file_locations.raw_mens_health_40_worst = "all_data/scraped_data/menshealth_40_w
 file_locations.clean_mens_health_40_worst = "all_data/cleaned_data/menshealth_40_worst_restaurant_menu.csv"
 file_locations.raw_nourish_7and7 = "all_data/scraped_data/nourish_7and7_sandwiches_bad_good.csv"
 file_locations.clean_nourish_7and7 = "all_data/cleaned_data/nourish_7and7_sandwiches_bad_good.csv"
+file_locations.raw_nourish_worst_rest = "all_data/scraped_data/nourish_worst_restaurant_meals.csv"
+file_locations.clean_nourish_worst_rest = "all_data/cleaned_data/nourish_worst_restaurant_meals.csv"
