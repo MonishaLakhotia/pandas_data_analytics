@@ -1,4 +1,4 @@
-name,serving_size,calories,fat,protein,carbs,category,company,serving_size_unit,fat_units,protein_units,carb_units
+name,serving_size,calories,fat,protein,carbs,category,company,serving_size_units,fat_units,protein_units,carb_units
 Fire-Grilled Chicken Thigh,3.1,210,15,21,0,Chicken Meals,El Pollo Loco,oz,g,g,g
 Vegan Chickenless Pollo Taco,5.3,140,3.5,9,20,Chickenless Pollo,El Pollo Loco,oz,g,g,g
 Double Tamale Bowl,23.5,910,42,32,97,Holiday Favorites,El Pollo Loco,oz,g,g,g

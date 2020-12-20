@@ -26,7 +26,7 @@ df['category'] = df.main_food_link
 df.drop(['web-scraper-order', 'web-scraper-start-url', 'main_food_link', 'main_food_link-href'], inplace=True, axis=1)
 df['company'] = 'El Pollo Loco'
 df.dropna(inplace=True, axis=0, subset=['calories'])
-df['serving_size_unit'] = df.serving_size.str.split(' ', expand=True)[1]
+df['serving_size_units'] = df.serving_size.str.split(' ', expand=True)[1]
 df['serving_size'] = df.serving_size.str.split(' ', expand=True)[0]
 
 pd.set_option('display.max_rows', df.shape[0]+1)
@@ -39,7 +39,7 @@ df['carb_units'] = 'g'
 ps = (lambda pdf: Enumerable([
   # lambda: pdf[['name']],
   lambda: pdf.columns,
-  lambda: pdf.serving_size_unit.value_counts(dropna=False),
+  lambda: pdf.serving_size_units.value_counts(dropna=False),
   lambda: pdf.sample(10),
   # lambda: pdf[['food', 'cal_per_gram', 'category']].groupby('category').food.agg(list),
   # lambda: pdf.category.value_counts(),
