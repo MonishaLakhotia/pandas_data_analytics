@@ -32,6 +32,10 @@ df['serving_size'] = df.serving_size.str.split(' ', expand=True)[0]
 pd.set_option('display.max_rows', df.shape[0]+1)
 pd.set_option('display.max_columns', df.shape[1]+1)
 
+df['fat_units'] = 'g'
+df['protein_units'] = 'g'
+df['carb_units'] = 'g'
+
 ps = (lambda pdf: Enumerable([
   # lambda: pdf[['name']],
   lambda: pdf.columns,

@@ -47,6 +47,10 @@ df.drop(['web-scraper-order', 'web-scraper-start-url'], inplace=True, axis=1)
 pd.set_option('display.max_rows', df.shape[0]+1)
 pd.set_option('display.max_columns', df.shape[1]+1)
 
+df['sodium_units'] = 'mg'
+df['fat_units'] = 'g'
+df.columns = df.columns.str.replace('_in_(?:milli)?grams', '', regex=True)
+
 pdf = df
 ps = Enumerable([
   # lambda: pdf[['name']],
@@ -57,4 +61,4 @@ ps = Enumerable([
 ])
 u.foreach(lambda f: print(f()),ps)
 
-df.to_csv(config['file_locations']['clean_nourish_worst_rest'], index=False)
+# df.to_csv(config['file_locations']['clean_nourish_worst_rest'], index=False)

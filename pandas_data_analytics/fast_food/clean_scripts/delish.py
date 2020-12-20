@@ -48,6 +48,11 @@ for (label, fn) in [\
 pd.set_option('display.max_rows', df.shape[0]+1)
 pd.set_option('display.max_columns', df.shape[1]+1)
 
+df['sodium_units'] = 'mg'
+df['trans_fat_units'] = 'g'
+df['sat_fat_units'] = 'g'
+df.columns = df.columns.str.replace('_in_(?:milli)?grams', '', regex=True)
+
 ps = (lambda pdf: Enumerable([
   lambda: pdf.sample(5),
   lambda: pdf.columns,
@@ -59,7 +64,7 @@ ps = (lambda pdf: Enumerable([
 u.foreach(lambda f: print(f()),ps)
 
 df.drop('nutrition', inplace=True, axis=1)
-df.to_csv(config['file_locations']['clean_delish'], index=False)
+# df.to_csv(config['file_locations']['clean_delish'], index=False)
 
 # Apply the default theme
 sns.set_theme()

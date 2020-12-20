@@ -1,49 +1,49 @@
-name,serving_size,calories,fat,protein,carbs,category,company,serving_size_unit
-Fire-Grilled Chicken Thigh,3.1,210,15,21,0,Chicken Meals,El Pollo Loco,oz
-Vegan Chickenless Pollo Taco,5.3,140,3.5,9,20,Chickenless Pollo,El Pollo Loco,oz
-Double Tamale Bowl,23.5,910,42,32,97,Holiday Favorites,El Pollo Loco,oz
-Chicken Avocado Street Taco,6.2,290,17,17,17,Street Tacos,El Pollo Loco,oz
-Double Chicken Bowl,24.7,850,27,65,86,Bowls,El Pollo Loco,oz
-Classic Chicken Burrito,10.4,480,14,22,65,Extras,El Pollo Loco,oz
-Fire-Grilled Chicken Leg,1.6,80,4,12,0,Chicken Meals,El Pollo Loco,oz
-Fire-Grilled Chicken Wing,1.3,90,5,12,0,Chicken Meals,El Pollo Loco,oz
-"6"" Corn Tortillas",1.8,110,1.5,2,22,Extras,El Pollo Loco,oz
-Mexican Hot Chocolate,12.2,210,6,5,34,Holiday Favorites,El Pollo Loco,oz
-Vegan Chickenless Pollo Burrito,16.1,550,16,23,82,Burritos,El Pollo Loco,oz
-Original BRC Burrito,7.6,410,11,14,61,Burritos,El Pollo Loco,oz
-Double Chicken Tostada Salad,20.6,990,49,61,77,Tostadas,El Pollo Loco,oz
-Classic Chicken Burrito,10.4,480,14,22,65,Burritos,El Pollo Loco,oz
-Grande Avocado Chicken Bowl,22.6,770,26,44,89,Bowls,El Pollo Loco,oz
-Original Pollo Bowl®,18.1,530,7,36,80,Bowls,El Pollo Loco,oz
-Chicken Black Bean Bowl,18.7,460,11,37,57,Under 500 Calories,El Pollo Loco,oz
-Chicken Taco Al Carbon,3.1,140,4,10,17,Street Tacos,El Pollo Loco,oz
-Chicken Taco Al Carbon,3.1,140,4,10,17,Extras,El Pollo Loco,oz
-Chickenless Pollo Burrito,18.1,750,35,28,86,Burritos,El Pollo Loco,oz
-Fire-Grilled Chicken Breast,4.3,220,9,36,0,Chicken Meals,El Pollo Loco,oz
-Classic Chicken Burrito Combo,13.1,580,18,35,68,$5 Fire Grilled Combos,El Pollo Loco,oz
-Mac & Cheese Chicken Taco,4.6,260,12,13,23,Kids Meals,El Pollo Loco,oz
-Mexican Hot Chocolate,12.2,210,6,5,34,"Sides, Drinks & Salsas",El Pollo Loco,oz
-Vegan Chickenless Pollo Taco,5.3,140,3.5,9,20,Street Tacos,El Pollo Loco,oz
-"6"" Flour Tortillas",2.2,190,6,5,29,Extras,El Pollo Loco,oz
-Chickenless Pollo Street Taco,5.8,190,7,11,21,Street Tacos,El Pollo Loco,oz
-Chicken Nachos Combo,13.1,830,48,30,68,$5 Fire Grilled Combos,El Pollo Loco,oz
-Chickenless Pollo Burrito,18.1,750,35,28,86,Chickenless Pollo,El Pollo Loco,oz
-California Queso Burrito,19.4,930,42,40,93,Burritos,El Pollo Loco,oz
-Crispy Tamale and Tinga Bowl,18.9,710,31,29,75,Holiday Favorites,El Pollo Loco,oz
-Bottled Water,16.9,0,0,0,0,"Sides, Drinks & Salsas",El Pollo Loco,oz
-Vegan Chickenless Pollo Burrito,16.1,550,16,23,82,Chickenless Pollo,El Pollo Loco,oz
-Original BRC Burrito,7.6,410,11,14,61,Extras,El Pollo Loco,oz
-Double Chicken Avocado Salad,14.6,370,14,48,14,Under 500 Calories,El Pollo Loco,oz
-Chicken Black Bean Bowl,18.7,460,11,37,57,Bowls,El Pollo Loco,oz
-Chicken Tacos al Carbon Combo,9.5,430,13,29,51,$5 Fire Grilled Combos,El Pollo Loco,oz
-Double Loaded Queso Tamale Bowl,20.7,750,30,45,74,Holiday Favorites,El Pollo Loco,oz
-Two Cinnamon Churros,2.5,280,17,2,29,Extras,El Pollo Loco,oz
-Classic Tostada Salad,16.3,830,41,39,74,Tostadas,El Pollo Loco,oz
-Chicken Avocado Tortilla Wrap,11.9,480,19,34,47,Under 500 Calories,El Pollo Loco,oz
-Chipotle Chicken Avocado Burrito,18.9,880,40,44,86,Burritos,El Pollo Loco,oz
-Chicken Tinga Burrito,17.7,750,28,34,90,Burritos,El Pollo Loco,oz
-The World's First Keto Taco™,6.0,250,17,18,13,Street Tacos,El Pollo Loco,oz
-Chicken Avocado Burrito,18.0,870,47,42,71,Burritos,El Pollo Loco,oz
-Original Pollo Bowl®  Combo,18.1,530,7,36,80,$5 Fire Grilled Combos,El Pollo Loco,oz
-Chickenless Pollo Street Taco,5.8,190,7,11,21,Chickenless Pollo,El Pollo Loco,oz
-Original BRC Burrito,7.6,410,11,14,61,Kids Meals,El Pollo Loco,oz
+name,serving_size,calories,fat,protein,carbs,category,company,serving_size_unit,fat_units,protein_units,carb_units
+Fire-Grilled Chicken Thigh,3.1,210,15,21,0,Chicken Meals,El Pollo Loco,oz,g,g,g
+Vegan Chickenless Pollo Taco,5.3,140,3.5,9,20,Chickenless Pollo,El Pollo Loco,oz,g,g,g
+Double Tamale Bowl,23.5,910,42,32,97,Holiday Favorites,El Pollo Loco,oz,g,g,g
+Chicken Avocado Street Taco,6.2,290,17,17,17,Street Tacos,El Pollo Loco,oz,g,g,g
+Double Chicken Bowl,24.7,850,27,65,86,Bowls,El Pollo Loco,oz,g,g,g
+Classic Chicken Burrito,10.4,480,14,22,65,Extras,El Pollo Loco,oz,g,g,g
+Fire-Grilled Chicken Leg,1.6,80,4,12,0,Chicken Meals,El Pollo Loco,oz,g,g,g
+Fire-Grilled Chicken Wing,1.3,90,5,12,0,Chicken Meals,El Pollo Loco,oz,g,g,g
+"6"" Corn Tortillas",1.8,110,1.5,2,22,Extras,El Pollo Loco,oz,g,g,g
+Mexican Hot Chocolate,12.2,210,6,5,34,Holiday Favorites,El Pollo Loco,oz,g,g,g
+Vegan Chickenless Pollo Burrito,16.1,550,16,23,82,Burritos,El Pollo Loco,oz,g,g,g
+Original BRC Burrito,7.6,410,11,14,61,Burritos,El Pollo Loco,oz,g,g,g
+Double Chicken Tostada Salad,20.6,990,49,61,77,Tostadas,El Pollo Loco,oz,g,g,g
+Classic Chicken Burrito,10.4,480,14,22,65,Burritos,El Pollo Loco,oz,g,g,g
+Grande Avocado Chicken Bowl,22.6,770,26,44,89,Bowls,El Pollo Loco,oz,g,g,g
+Original Pollo Bowl®,18.1,530,7,36,80,Bowls,El Pollo Loco,oz,g,g,g
+Chicken Black Bean Bowl,18.7,460,11,37,57,Under 500 Calories,El Pollo Loco,oz,g,g,g
+Chicken Taco Al Carbon,3.1,140,4,10,17,Street Tacos,El Pollo Loco,oz,g,g,g
+Chicken Taco Al Carbon,3.1,140,4,10,17,Extras,El Pollo Loco,oz,g,g,g
+Chickenless Pollo Burrito,18.1,750,35,28,86,Burritos,El Pollo Loco,oz,g,g,g
+Fire-Grilled Chicken Breast,4.3,220,9,36,0,Chicken Meals,El Pollo Loco,oz,g,g,g
+Classic Chicken Burrito Combo,13.1,580,18,35,68,$5 Fire Grilled Combos,El Pollo Loco,oz,g,g,g
+Mac & Cheese Chicken Taco,4.6,260,12,13,23,Kids Meals,El Pollo Loco,oz,g,g,g
+Mexican Hot Chocolate,12.2,210,6,5,34,"Sides, Drinks & Salsas",El Pollo Loco,oz,g,g,g
+Vegan Chickenless Pollo Taco,5.3,140,3.5,9,20,Street Tacos,El Pollo Loco,oz,g,g,g
+"6"" Flour Tortillas",2.2,190,6,5,29,Extras,El Pollo Loco,oz,g,g,g
+Chickenless Pollo Street Taco,5.8,190,7,11,21,Street Tacos,El Pollo Loco,oz,g,g,g
+Chicken Nachos Combo,13.1,830,48,30,68,$5 Fire Grilled Combos,El Pollo Loco,oz,g,g,g
+Chickenless Pollo Burrito,18.1,750,35,28,86,Chickenless Pollo,El Pollo Loco,oz,g,g,g
+California Queso Burrito,19.4,930,42,40,93,Burritos,El Pollo Loco,oz,g,g,g
+Crispy Tamale and Tinga Bowl,18.9,710,31,29,75,Holiday Favorites,El Pollo Loco,oz,g,g,g
+Bottled Water,16.9,0,0,0,0,"Sides, Drinks & Salsas",El Pollo Loco,oz,g,g,g
+Vegan Chickenless Pollo Burrito,16.1,550,16,23,82,Chickenless Pollo,El Pollo Loco,oz,g,g,g
+Original BRC Burrito,7.6,410,11,14,61,Extras,El Pollo Loco,oz,g,g,g
+Double Chicken Avocado Salad,14.6,370,14,48,14,Under 500 Calories,El Pollo Loco,oz,g,g,g
+Chicken Black Bean Bowl,18.7,460,11,37,57,Bowls,El Pollo Loco,oz,g,g,g
+Chicken Tacos al Carbon Combo,9.5,430,13,29,51,$5 Fire Grilled Combos,El Pollo Loco,oz,g,g,g
+Double Loaded Queso Tamale Bowl,20.7,750,30,45,74,Holiday Favorites,El Pollo Loco,oz,g,g,g
+Two Cinnamon Churros,2.5,280,17,2,29,Extras,El Pollo Loco,oz,g,g,g
+Classic Tostada Salad,16.3,830,41,39,74,Tostadas,El Pollo Loco,oz,g,g,g
+Chicken Avocado Tortilla Wrap,11.9,480,19,34,47,Under 500 Calories,El Pollo Loco,oz,g,g,g
+Chipotle Chicken Avocado Burrito,18.9,880,40,44,86,Burritos,El Pollo Loco,oz,g,g,g
+Chicken Tinga Burrito,17.7,750,28,34,90,Burritos,El Pollo Loco,oz,g,g,g
+The World's First Keto Taco™,6.0,250,17,18,13,Street Tacos,El Pollo Loco,oz,g,g,g
+Chicken Avocado Burrito,18.0,870,47,42,71,Burritos,El Pollo Loco,oz,g,g,g
+Original Pollo Bowl®  Combo,18.1,530,7,36,80,$5 Fire Grilled Combos,El Pollo Loco,oz,g,g,g
+Chickenless Pollo Street Taco,5.8,190,7,11,21,Chickenless Pollo,El Pollo Loco,oz,g,g,g
+Original BRC Burrito,7.6,410,11,14,61,Kids Meals,El Pollo Loco,oz,g,g,g
