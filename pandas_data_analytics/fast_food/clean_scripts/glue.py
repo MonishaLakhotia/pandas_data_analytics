@@ -32,4 +32,4 @@ ps = (lambda pdf: Enumerable([
 ]))(df)
 u.foreach(lambda f: print(f()),ps)
 
-# df.to_csv(config['file_locations']['clean_el_pollo_loco'], index=False)
+# df.to_csv(config['file_locations']['clean_all_data'], index=False)
