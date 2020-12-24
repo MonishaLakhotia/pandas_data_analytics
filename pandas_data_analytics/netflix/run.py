@@ -65,7 +65,9 @@ def country_df_sup():
   return country_df
 
 
-ps = (lambda pdf, field: Enumerable([
+pdf = country_df_sup()
+field = 'country'
+ps = Enumerable([
   # lambda: pdf.sample(5),
   # lambda: pdf.dtypes,
   # lambda: genre_df.genre.value_counts(normalize=True),
@@ -74,9 +76,14 @@ ps = (lambda pdf, field: Enumerable([
   # lambda: len(pdf[field].unique()),
   # lambda: pdf[~(pdf.year_added == pdf.release_year)].sample(5),
   lambda: pdf.isna().mean().sort_values(ascending=False),
-  # lambda: df[['director', 'title']],
-  lambda: pdf.columns
-]))(df, 'country')
+  lambda: pdf.columns,
+  # len does not account for unique index
+  lambda: len(pdf),
+  lambda: len(df),
+  # len does not account for unique index
+  lambda: len(df.index.value_counts()),
+  lambda: len(pdf.index.value_counts())
+])
 u.foreach(lambda f: print(f()),ps)
 
 # good idea for analysis of top 10 cats 

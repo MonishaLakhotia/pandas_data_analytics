@@ -168,6 +168,10 @@
 # import numpy as np
 # df.loc[((df['stop_duration'] == '1') | (df['stop_duration'] == '2')), 'stop duration'] = np.nan
 
+# counts all rows regardless of index value
+# len(df)
+# counts all rows with a unique index value
+# len(df.index.value_counts()),
 
 
 #### QT CONSOLE #####
