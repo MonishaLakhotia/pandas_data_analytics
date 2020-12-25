@@ -29,9 +29,10 @@ pd.set_option('display.max_rows', df.shape[0]+1)
 pd.set_option('display.max_columns', df.shape[1]+1)
 
 def drop_filler(g):
-  if(Enumerable(['tv shows', 'movies']).any(lambda e: g.lower() == e)):
+  l = ['Movies', 'TV Shows', 'TV', 'Shows', 'Series', 'Features']
+  if(Enumerable(l).any(lambda e: g.lower() == e.lower())):
     return g
-  return re.sub('Movies|TV|Shows|Series|Features', '', g)
+  return re.sub('|'.join(l), '', g, flags=re.I)
 
 # creates bins for the durations, does not include season info
 # only assigns indices where duration was minute based
@@ -65,7 +66,7 @@ def country_df_sup():
   return country_df
 
 
-pdf = country_df_sup()
+pdf = genre_df_sup()
 field = 'country'
 ps = Enumerable([
   # lambda: pdf.sample(5),
@@ -76,13 +77,13 @@ ps = Enumerable([
   # lambda: len(pdf[field].unique()),
   # lambda: pdf[~(pdf.year_added == pdf.release_year)].sample(5),
   lambda: pdf.isna().mean().sort_values(ascending=False),
-  lambda: pdf.columns,
-  # len does not account for unique index
-  lambda: len(pdf),
-  lambda: len(df),
-  # len does not account for unique index
-  lambda: len(df.index.value_counts()),
-  lambda: len(pdf.index.value_counts())
+  lambda: pdf.genre.value_counts(),
+  # # len does not account for unique index
+  # lambda: len(pdf),
+  # lambda: len(df),
+  # # len does not account for unique index
+  # lambda: len(df.index.value_counts()),
+  # lambda: len(pdf.index.value_counts())
 ])
 u.foreach(lambda f: print(f()),ps)
 
