@@ -39,28 +39,30 @@ exps = Enumerable(df.columns).where(lambda c: re.match('.*_exp',c,re.I)).to_list
 print(exps)
 
 
-def r(s):
-    return re.sub('\D+', '', flags=re.I, string=s)
+# def r(s):
+#     return re.sub('\D+', '', flags=re.I, string=s)
 
 
-def remove_exp(s):
-    return re.sub('(.*)_exp$', '\\1', flags=re.I, string=s)
+# def remove_exp(s):
+#     return re.sub('(.*)_exp$', '\\1', flags=re.I, string=s)
 
+def skill_binner(skill):
+    return 'combat' if re.search(
+        '(attack|str|hp|def|rang|mage|pray)', skill)\
+    else 'gathering' if re.search(
+        '(wc|fish|hunt|mining|farm)', skill)\
+    else 'artisan(production)' if re.search(
+        '(fm|cook|smith|craft|rc|herb|fletch|con)', skill)\
+    else 'support'
 
-mdf = pd.melt(df, id_vars=['character'], value_vars=exps, value_name='exp', var_name='skill')
+mdf: pd.DataFrame = pd.melt(df, id_vars=['character'], value_vars=exps, value_name='exp', var_name='skill')
 # mdf.rename(columns={'value': 'exp', 'variable': 'skill'}, inplace=True)
-mdf['skill_bin'] = mdf['skill'].apply(lambda skill:
-                                      'combat' if re.search(
-                                          '(attack|str|hp|def|rang|mage|pray)', skill)
-                                      else 'gathering' if re.search(
-                                          '(wc|fish|hunt|mining|farm)', skill)
-                                      else 'artisan(production)' if re.search(
-                                          '(fm|cook|smith|craft|rc|herb|fletch|con)', skill)
-                                      else 'support'
-                                      )
-mdf['exp'] = mdf['exp'].apply(r)
-mdf['skill'] = mdf['skill'].apply(remove_exp)
-mdf['exp'] = mdf['exp'].astype('int64')
+mdf['skill_bin'] = mdf['skill'].apply(skill_binner)
+# mdf['exp'] = mdf['exp'].apply(r)
+mdf['exp'] = mdf['exp'].str.replace('\D+', '', regex=True, flags=re.I)
+# mdf['skill'] = mdf['skill'].apply(remove_exp)
+mdf['skill'] = mdf['skill'].str.replace('(.*)_exp$', '\\1', regex=True, flags=re.I)
+mdf['exp'] = mdf['exp'].astype('int')
 
 # bplot = sns.barplot(x='character', y='exp', hue='skill_bin',
 #                     data=mdf)  # , palette=sns.color_palette('hls', 30))
@@ -95,12 +97,15 @@ mdf['exp'] = mdf['exp'].astype('int64')
 # sns.jointplot is good for numeric x,y scatter plot for checking bin relationships
 # plt.show()
 print(mdf.head(100))
-exp_df = df.loc[:,df.columns.isin(Enumerable(df.columns).where(lambda c: re.match('.*exp', c)).to_list())]
-def keep_digits(e):
-    r = re.sub('\D', '', e)
-    return r
-exp_df = exp_df.applymap(keep_digits).astype(int)
+exp_df: pd.DataFrame = df.loc[:,df.columns.isin(Enumerable(df.columns).where(lambda c: re.match('.*exp', c)).to_list())]
+# def keep_digits(e):
+#     r = re.sub('\D', '', e)
+#     return r
+    
+# exp_df = exp_df.applymap(keep_digits).astype(int)
+exp_df = exp_df.replace('\D', '', regex=True).astype(int)
 mean_exp = exp_df.mean().astype(int)
+print(mean_exp)
 # sns.heatmap(exp_df.corr())
 
 # plt.show()
