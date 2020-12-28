@@ -81,7 +81,7 @@ ps = Enumerable([
   # # len does not account for unique index
   # lambda: len(pdf),
   # lambda: len(df),
-  # # len does not account for unique index
+  # # len does account for unique index
   # lambda: len(df.index.value_counts()),
   # lambda: len(pdf.index.value_counts())
 ])
