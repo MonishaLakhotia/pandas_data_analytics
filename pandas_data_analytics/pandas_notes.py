@@ -180,6 +180,14 @@
 #                   index=pd.date_range("2020-01-01", "2020-01-05"))
 # dfe['Col4'] = dfe.Col3.shift(1) - dfe.Col3
 
+# datetime column from a Dataframe
+# df = pd.DataFrame([[12,25,2017,10],[1,15,2018,11]],\
+#                   columns=['month', 'day', 'year', 'hour']
+#                 )
+# df['datetime'] = pd.to_datetime(df)
+# df['date'] = pd.to_datetime(df[['month', 'day', 'year']])
+
+
 
 #### QT CONSOLE #####
 # allows more space for column contents
