@@ -41,7 +41,6 @@ types = ['ground', 'electric', 'bug', 'ghost', 'normal', 'psychic', 'fire', 'fai
 #   lvl = get_thing('^(\d+)', s)
 #   return lvl
 # movesdf['moves_learnt_by_level_up_lvl'] = movesdf.moves_learnt_by_level_up.apply(parse_moves_lvl_up)
-x: pd.Series
 
 movesdf['moves_learnt_by_level_up_lvl'] = movesdf.moves_learnt_by_level_up.str.replace(r'(^\d+)(.*)', r'\1', regex=True)
 movesdf['moves_learnt_by_level_up_name'] = movesdf\
