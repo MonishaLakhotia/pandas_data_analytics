@@ -29,7 +29,8 @@ pd.set_option('display.max_columns', 175)
 
 # name field is unique per pokemon
 
-movesdf: pd.DataFrame = df[['name', 'moves_learnt_by_level_up', 'generation']].dropna()
+# movesdf: pd.DataFrame = df[['name', 'moves_learnt_by_level_up', 'generation']].dropna()
+movesdf: pd.DataFrame = df.drop(['name_link'], axis=1)
 
 types = ['ground', 'electric', 'bug', 'ghost', 'normal', 'psychic', 'fire', 'fairy', 'dark', 'grass', 'fighting', 'water', 'ice', 'dragon', 'poison', 'rock', 'flying', 'steel']
 
@@ -42,32 +43,53 @@ types = ['ground', 'electric', 'bug', 'ghost', 'normal', 'psychic', 'fire', 'fai
 #   return lvl
 # movesdf['moves_learnt_by_level_up_lvl'] = movesdf.moves_learnt_by_level_up.apply(parse_moves_lvl_up)
 
-movesdf['moves_learnt_by_level_up_lvl'] = movesdf.moves_learnt_by_level_up.str.replace(r'(^\d+)(.*)', r'\1', regex=True)
-movesdf['moves_learnt_by_level_up_name'] = movesdf\
-  .moves_learnt_by_level_up\
-  .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
-  .str.replace('(.*?)('+'|'.join(types)+')'+'$', r'\1', regex=True, flags=re.I)
-movesdf['moves_learnt_by_level_up_type'] = movesdf\
-  .moves_learnt_by_level_up\
-  .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
-  .str.replace('(.*?)('+'|'.join(types)+')'+'$', r'\2', regex=True, flags=re.I)
-movesdf['moves_learnt_by_level_up_power'] = movesdf\
-  .moves_learnt_by_level_up\
-  .str.strip()\
-  .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\3', regex=True, flags=re.I)\
-  .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\2', regex=True, flags=re.I)\
-  .str.replace(r'∞', 'inf', regex=True)\
-  .str.replace(r'—', '', regex=True)
-movesdf['moves_learnt_by_level_up_acc'] = movesdf\
-  .moves_learnt_by_level_up\
-  .str.strip()\
-  .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\3', regex=True, flags=re.I)\
-  .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\3', regex=True, flags=re.I)\
-  .str.replace(r'∞', 'inf', regex=True)\
-  .str.replace(r'—', '', regex=True)
+def parse_moves(df, field):
+  movesdf[f'{field}_lvl'] = movesdf\
+    [field]\
+    .str.replace(r'(^\d+)(.*)', r'\1', regex=True)
+  movesdf[f'{field}_move'] = movesdf\
+    [field]\
+    .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
+    .str.replace('(.*?)('+'|'.join(types)+')'+'$', r'\1', regex=True, flags=re.I)
+  movesdf[f'{field}_type'] = movesdf\
+    [field]\
+    .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
+    .str.replace('(.*?)('+'|'.join(types)+')'+'$', r'\2', regex=True, flags=re.I)
+  movesdf[f'{field}_power'] = movesdf\
+    [field]\
+    .str.strip()\
+    .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\3', regex=True, flags=re.I)\
+    .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\2', regex=True, flags=re.I)\
+    .str.replace(r'∞', 'inf', regex=True)\
+    .str.replace(r'—', '', regex=True)
+  movesdf[f'{field}_acc'] = movesdf\
+    [field]\
+    .str.strip()\
+    .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\3', regex=True, flags=re.I)\
+    .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\3', regex=True, flags=re.I)\
+    .str.replace(r'∞', 'inf', regex=True)\
+    .str.replace(r'—', '', regex=True)
+  return df
+
+print(df.columns)
+
+l = [
+  'moves_learnt_by_level_up',
+  'moves_learnt_by_tm',
+  'moves_learnt_by_tr',
+  'moves_learnt_by_move_tutor',
+  'moves_learnt_by_egg',
+  'moves_learnt_by_hm',
+  'moves_learnt_by_transfer',
+  'moves_learnt_by_evolution'
+  ]
+for f in l:
+  movesdf = parse_moves(movesdf, f)
 
 pdf = movesdf
-field = ''
+field = 'moves_learnt_by_level_up'
+pdf = pdf.filter(regex=f'{field}|name', axis=1)
+# pdf.columns[pdf.columns.str.contains(f'({field}.*|name|generation)', flags=re.I,regex=True)]
 total_rows = len(pdf.index.value_counts())
 unique_rows = len(pdf.drop_duplicates().index.value_counts())
 dup_rows = len(pdf[movesdf.duplicated()].index.value_counts())
@@ -88,8 +110,9 @@ ps = Enumerable([
   lambda: unique_rows,
   lambda: dup_rows,
   lambda: percent_duped,
+  lambda: pdf.sample(5),
   # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).drop([], axis=1).sample(5),
-  lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).sample(5),
+  # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).sample(5),
   # lambda: pdf[movesdf.duplicated()].sort_values(['name', 'generation'])
   # lambda: pdf.sort_values('calories')
 ])
