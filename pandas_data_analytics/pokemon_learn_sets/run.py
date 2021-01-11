@@ -51,6 +51,20 @@ movesdf['moves_learnt_by_level_up_type'] = movesdf\
   .moves_learnt_by_level_up\
   .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
   .str.replace('(.*?)('+'|'.join(types)+')'+'$', r'\2', regex=True, flags=re.I)
+movesdf['moves_learnt_by_level_up_power'] = movesdf\
+  .moves_learnt_by_level_up\
+  .str.strip()\
+  .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\3', regex=True, flags=re.I)\
+  .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\2', regex=True, flags=re.I)\
+  .str.replace(r'∞', 'inf', regex=True)\
+  .str.replace(r'—', '', regex=True)
+movesdf['moves_learnt_by_level_up_acc'] = movesdf\
+  .moves_learnt_by_level_up\
+  .str.strip()\
+  .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\3', regex=True, flags=re.I)\
+  .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\3', regex=True, flags=re.I)\
+  .str.replace(r'∞', 'inf', regex=True)\
+  .str.replace(r'—', '', regex=True)
 
 pdf = movesdf
 field = ''
@@ -75,7 +89,7 @@ ps = Enumerable([
   lambda: dup_rows,
   lambda: percent_duped,
   # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).drop([], axis=1).sample(5),
-  lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).head(18),
+  lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).sample(5),
   # lambda: pdf[movesdf.duplicated()].sort_values(['name', 'generation'])
   # lambda: pdf.sort_values('calories')
 ])

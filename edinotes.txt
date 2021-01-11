@@ -1,0 +1,89 @@
+
+edi 275 format
+hl7 specs - purchase this spec?
+companion guides
+Tasha
+medicaid hmo brokers
+needs attachment segment in atlas for this
+pdf to binary. store it. text data goes into the 275 file
+january 1st deadline
+brokers are waiting on us to finish the 275 files so they can make something to work on them
+new submission process
+new queues for this. 
+a scheduled process that runs on a server and looks at the queues for processing
+build invoices into the 275 file
+get the pdfs from website automated and a process for user to manual to upload
+website is Striker (health ems)
+manual process is first priority
+pull stuff from epcr system? -- long term?
+edi filesneeds to be in AR2000
+control number, type of file, fax files
+documents on google docs
+
+edi275build table build date
+
+write off from the invoice itself
+
+change title to edi attachment reports
+send this infor in the report:
+build date,
+payor,
+patient name,
+control number for the item that was submitted,
+the file type/item type sent(in the ediattachments table)EaPaperworkType
+  ErDescription from Paperwork table
+
+vs reporting software - 
+
+
+insert into build table
+all invoices from same batch need exact same timestamp
+ediproviders table. edi275queue
+ AARP and blue cross will have edi275queues
+provider maintenance is where the specify a queue - terry does that
+be4 getting queue, look at edtypof in edi providers table if its P (payer) T (payortypes) and edcompanyid
+
+one attachment table for all edi types
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+list, option, async, seq
+map: (a->b) -> C a -> C b
+<*>: C (a->b) -> C a -> C b
+bind: (a->C b) -> C a -> C b
+cobind: (C a -> b) -> C a -> C b
+>=>: (a -> C b) -> (b -> C c) -> (a -> C c)
+>>: (a -> b) -> (b -> c) -> (a -> c)
+<<
+
+
+f: int -> option int
+g: int -> int
+
+let x: list int = [1,2,3] |> bind f
+
+
+
+
+
