@@ -1,4 +1,5 @@
 import pandas_data_analytics.utils as u
+import json
 import re
 import toml
 from pandas_data_analytics import *
@@ -50,11 +51,11 @@ def parse_moves(df: pd.DataFrame, field: str):
     .str.replace(r'(^\d+)(.*)', r'\1', regex=True)
   ldf[f'{field}_move'] = df\
     [field]\
-    .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
+    .str.replace('(^.*?)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
     .str.replace('(.*?)('+'|'.join(types)+')'+'$', r'\1', regex=True, flags=re.I)
   ldf[f'{field}_type'] = df\
     [field]\
-    .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
+    .str.replace('(^.*?)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
     .str.replace('(.*?)('+'|'.join(types)+')'+'$', r'\2', regex=True, flags=re.I)
   ldf[f'{field}_power'] = df\
     [field]\
@@ -105,9 +106,15 @@ csv_move_df = movesdf\
   .agg(agg_dict, regex=True)\
   .reset_index()
   
-# csv_move_df.moves_learnt_by_level_up_json = csv_move_df.moves_learnt_by_level_up_json\
-#   .apply(lambda l: Enumerable(l)\
-#     .where(lambda j: j['move'] is not None))
+def move_list_filter(j):
+  d = json.loads(j)
+  return d['move'] is not None
+
+csv_move_df.moves_learnt_by_level_up_json = csv_move_df.moves_learnt_by_level_up_json\
+  .apply(lambda l: Enumerable(l)\
+    .where(move_list_filter))
+  # .apply(lambda l: Enumerable(l)\
+  #   .select(lambda j: str(j)))
 print(type(csv_move_df))
 print(csv_move_df.columns)
 print(csv_move_df.sample(6))
@@ -116,8 +123,8 @@ print(csv_move_df.sample(6))
 
 
 pdf = movesdf
-pdf.style.set_properties(**{'width': '300px'})
-field = 'moves_learnt_by_level_up'
+# pdf.style.set_properties(**{'width': '300px'})
+field = 'moves_learnt_by_tr' + '_'
 pdf = pdf.filter(regex=f'{field}|name', axis=1)
 # pdf.columns[pdf.columns.str.contains(f'({field}.*|name|generation)', flags=re.I,regex=True)]
 total_rows = len(pdf.index.value_counts())
