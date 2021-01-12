@@ -70,7 +70,6 @@ def parse_moves(df: pd.DataFrame, field: str):
     .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\3', regex=True, flags=re.I)\
     .str.replace(r'∞', 'inf', regex=True)\
     .str.replace(r'—', '', regex=True)
-  # df['json'] = df.to_json(orient='records', lines=True).splitlines()
   return ldf
 
 print(df.columns)
@@ -87,9 +86,18 @@ l = [
   ]
 for f in l:
   ldf = parse_moves(movesdf, f)
-  movesdf = pd.concat([movesdf,ldf],axis=1)
+  # to have move data in columns
+  # movesdf = pd.concat([movesdf,ldf],axis=1)
+  # to have move data in json format in 1 column
+  ldf.columns = ldf.columns\
+    .str.replace(f, '', regex=True)\
+    .str.replace('_', '', regex=True)
+  movesdf[f'{f}_json'] = ldf.to_json(orient='records', lines=True).splitlines()
+
+# print(movesdf.sample(5))
 
 pdf = movesdf
+pdf.style.set_properties(**{'width': '300px'})
 field = 'moves_learnt_by_level_up'
 pdf = pdf.filter(regex=f'{field}|name', axis=1)
 # pdf.columns[pdf.columns.str.contains(f'({field}.*|name|generation)', flags=re.I,regex=True)]
