@@ -43,26 +43,27 @@ types = ['ground', 'electric', 'bug', 'ghost', 'normal', 'psychic', 'fire', 'fai
 #   return lvl
 # movesdf['moves_learnt_by_level_up_lvl'] = movesdf.moves_learnt_by_level_up.apply(parse_moves_lvl_up)
 
-def parse_moves(df, field):
-  df[f'{field}_lvl'] = df\
+def parse_moves(df: pd.DataFrame, field: str):
+  ldf = pd.DataFrame()
+  ldf[f'{field}_lvl'] = df\
     [field]\
     .str.replace(r'(^\d+)(.*)', r'\1', regex=True)
-  df[f'{field}_move'] = df\
+  ldf[f'{field}_move'] = df\
     [field]\
     .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
     .str.replace('(.*?)('+'|'.join(types)+')'+'$', r'\1', regex=True, flags=re.I)
-  df[f'{field}_type'] = df\
+  ldf[f'{field}_type'] = df\
     [field]\
     .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
     .str.replace('(.*?)('+'|'.join(types)+')'+'$', r'\2', regex=True, flags=re.I)
-  df[f'{field}_power'] = df\
+  ldf[f'{field}_power'] = df\
     [field]\
     .str.strip()\
     .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\3', regex=True, flags=re.I)\
     .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\2', regex=True, flags=re.I)\
     .str.replace(r'∞', 'inf', regex=True)\
     .str.replace(r'—', '', regex=True)
-  df[f'{field}_acc'] = df\
+  ldf[f'{field}_acc'] = df\
     [field]\
     .str.strip()\
     .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\3', regex=True, flags=re.I)\
@@ -70,8 +71,7 @@ def parse_moves(df, field):
     .str.replace(r'∞', 'inf', regex=True)\
     .str.replace(r'—', '', regex=True)
   # df['json'] = df.to_json(orient='records', lines=True).splitlines()
-  return df
-
+  return ldf
 
 print(df.columns)
 
@@ -86,7 +86,8 @@ l = [
   'moves_learnt_by_evolution'
   ]
 for f in l:
-  movesdf = parse_moves(movesdf, f)
+  ldf = parse_moves(movesdf, f)
+  movesdf = pd.concat([movesdf,ldf],axis=1)
 
 pdf = movesdf
 field = 'moves_learnt_by_level_up'
@@ -112,7 +113,7 @@ ps = Enumerable([
   lambda: unique_rows,
   lambda: dup_rows,
   lambda: percent_duped,
-  lambda: pdf.sample(5),
+  lambda: pdf.dropna().sample(7),
   # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).drop([], axis=1).sample(5),
   # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).sample(5),
   # lambda: pdf[movesdf.duplicated()].sort_values(['name', 'generation'])
