@@ -74,7 +74,7 @@ def parse_moves(df: pd.DataFrame, field: str):
 
 print(df.columns)
 
-l = [
+moves = [
   'moves_learnt_by_level_up',
   'moves_learnt_by_tm',
   'moves_learnt_by_tr',
@@ -84,7 +84,7 @@ l = [
   'moves_learnt_by_transfer',
   'moves_learnt_by_evolution'
   ]
-for f in l:
+for f in moves:
   ldf = parse_moves(movesdf, f)
   # to have move data in columns
   # movesdf = pd.concat([movesdf,ldf],axis=1)
@@ -93,8 +93,27 @@ for f in l:
     .str.replace(f, '', regex=True)\
     .str.replace('_', '', regex=True)
   movesdf[f'{f}_json'] = ldf.to_json(orient='records', lines=True).splitlines()
+  # print(f)
+  # print(movesdf[f'{f}_json'].tolist()[0:10])
 
-# print(movesdf.sample(5))
+agg_dict = {}
+for m in moves:
+  agg_dict[f'{m}_json'] = lambda x: x.tolist()
+
+csv_move_df = movesdf\
+  .groupby('name')\
+  .agg(agg_dict, regex=True)\
+  .reset_index()
+  
+# csv_move_df.moves_learnt_by_level_up_json = csv_move_df.moves_learnt_by_level_up_json\
+#   .apply(lambda l: Enumerable(l)\
+#     .where(lambda j: j['move'] is not None))
+print(type(csv_move_df))
+print(csv_move_df.columns)
+print(csv_move_df.sample(6))
+# csv_move_df.sample(6).to_csv('hi.csv', index=False)
+# print(csv_move_df[csv_move_df.name == "Arcanine"])
+
 
 pdf = movesdf
 pdf.style.set_properties(**{'width': '300px'})
