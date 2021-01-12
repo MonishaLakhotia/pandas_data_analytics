@@ -1,1 +1,2 @@
 file_locations.data = "data/dailyCalories.csv"
+file_locations.monthly_summaries = "data/monthly_summaries.csv"
