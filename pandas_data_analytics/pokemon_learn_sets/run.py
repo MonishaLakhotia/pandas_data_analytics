@@ -44,32 +44,34 @@ types = ['ground', 'electric', 'bug', 'ghost', 'normal', 'psychic', 'fire', 'fai
 # movesdf['moves_learnt_by_level_up_lvl'] = movesdf.moves_learnt_by_level_up.apply(parse_moves_lvl_up)
 
 def parse_moves(df, field):
-  movesdf[f'{field}_lvl'] = movesdf\
+  df[f'{field}_lvl'] = df\
     [field]\
     .str.replace(r'(^\d+)(.*)', r'\1', regex=True)
-  movesdf[f'{field}_move'] = movesdf\
+  df[f'{field}_move'] = df\
     [field]\
     .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
     .str.replace('(.*?)('+'|'.join(types)+')'+'$', r'\1', regex=True, flags=re.I)
-  movesdf[f'{field}_type'] = movesdf\
+  df[f'{field}_type'] = df\
     [field]\
     .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
     .str.replace('(.*?)('+'|'.join(types)+')'+'$', r'\2', regex=True, flags=re.I)
-  movesdf[f'{field}_power'] = movesdf\
+  df[f'{field}_power'] = df\
     [field]\
     .str.strip()\
     .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\3', regex=True, flags=re.I)\
     .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\2', regex=True, flags=re.I)\
     .str.replace(r'∞', 'inf', regex=True)\
     .str.replace(r'—', '', regex=True)
-  movesdf[f'{field}_acc'] = movesdf\
+  df[f'{field}_acc'] = df\
     [field]\
     .str.strip()\
     .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\3', regex=True, flags=re.I)\
     .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\3', regex=True, flags=re.I)\
     .str.replace(r'∞', 'inf', regex=True)\
     .str.replace(r'—', '', regex=True)
+  # df['json'] = df.to_json(orient='records', lines=True).splitlines()
   return df
+
 
 print(df.columns)
 
