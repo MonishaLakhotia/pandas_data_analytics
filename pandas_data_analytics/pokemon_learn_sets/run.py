@@ -18,11 +18,6 @@ def main():
     unique_rows = len(pdf.drop_duplicates().index.value_counts())
     dup_rows = len(pdf[pdf.duplicated()].index.value_counts())
     percent_duped = (dup_rows / total_rows) * 100
-    # dups are due to alonan forms/ alter form tabs for move sets
-    # try to filter then out based on if the number in the move set entry restarts
-    # FOR EACH GENERATION
-    # if 1..23..88 then 2..22..88
-      # then drop the entries from 2 onward since these are alonan form move sets
     ps = Enumerable([
       # lambda: pdf[~(pdf.year_added == pdf.release_year)].sample(5),
       # lambda: pdf.isna().mean().sort_values(ascending=False),
@@ -41,7 +36,7 @@ def main():
     ])
     u.foreach(lambda f: print(f()),ps)
 
-  def implode_move_sets(movesdf):
+  def implode_move_sets(movesdf, moves):
     # describes what to do with each move set
     agg_dict = {}
     for m in moves:
@@ -54,9 +49,15 @@ def main():
     def move_list_filter(j):
       d = json.loads(j)
       return d['move'] is not None
-    csv_move_df.moves_learnt_by_level_up_json = csv_move_df.moves_learnt_by_level_up_json\
-      .apply(lambda l: Enumerable(l)\
-        .where(move_list_filter))
+    for field in Enumerable(moves).select(lambda m: m+'_json'):
+      csv_move_df[field] = csv_move_df[field]\
+        .apply(lambda l: Enumerable(l)\
+          .where(move_list_filter))
+    # dups are due to alonan forms/ alter form tabs for move sets
+    # try to filter then out based on if the number in the move set entry restarts
+    # FOR EACH GENERATION
+    # if 1..23..88 then 2..22..88
+      # then drop the entries from 2 onward since these are alonan form move sets
     return csv_move_df
 
   this_dir = os.path.dirname(os.path.realpath(__file__))
@@ -140,7 +141,7 @@ def main():
     # print(f)
     # print(movesdf[f'{f}_json'].tolist()[0:10])
 
-  csv_move_df = implode_move_sets(movesdf)
+  csv_move_df = implode_move_sets(movesdf, moves)
   # print(type(csv_move_df))
   print(csv_move_df.columns)
   print(len(csv_move_df))
