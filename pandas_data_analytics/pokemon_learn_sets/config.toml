@@ -1,1 +1,2 @@
 file_locations.data = "data/pokemondb_75_100_2.csv"
+file_locations.cleaned_data = "data/cleaned.csv"
