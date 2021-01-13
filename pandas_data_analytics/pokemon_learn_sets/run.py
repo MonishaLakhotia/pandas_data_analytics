@@ -48,7 +48,7 @@ def main():
       agg_dict[f'{m}_json'] = lambda x: x.tolist()
     # 'Implodes' data frame move sets into lists
     csv_move_df = movesdf\
-      .groupby('name')\
+      .groupby(['name', 'generation'])\
       .agg(agg_dict, regex=True)\
       .reset_index()
     def move_list_filter(j):
