@@ -1,15 +1,12 @@
-import pandas_data_analytics.utils as u
+from py_linq import Enumerable
 import json
-import re
-import toml
-from pandas_data_analytics import *
+import numpy as np
 import os
 import pandas as pd
-import matplotlib.pyplot as plt
+import pandas_data_analytics.utils as u
+import re
 import seaborn as sns
-import numpy as np
-import functools as ft
-from py_linq import Enumerable
+import toml
 
 def implode_move_sets(movesdf):
   # describes what to do with each move set
@@ -158,13 +155,4 @@ def main():
   u.foreach(lambda f: print(f()),ps)
 
   # df.to_csv(config['file_locations']['data'])
-
-  # Apply the default theme
-  sns.set_theme()
-
-  # aplot = sns.boxplot(x='food_cat', y='carbs_marco_ratio', data=df)
-  # General plot stuff
-  # aplot.set_xticklabels(aplot.get_xticklabels(), rotation=30)
-  # plt.show()
-
 main()
