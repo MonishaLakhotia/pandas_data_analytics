@@ -8,31 +8,28 @@ import re
 import seaborn as sns
 import toml
 
-def implode_move_sets(movesdf):
-  # describes what to do with each move set
-  agg_dict = {}
-  for m in moves:
-    agg_dict[f'{m}_json'] = lambda x: x.tolist()
-
-  # 'Implodes' data frame move sets into lists
-  csv_move_df = movesdf\
-    .groupby('name')\
-    .agg(agg_dict, regex=True)\
-    .reset_index()
-    
-  def move_list_filter(j):
-    d = json.loads(j)
-    return d['move'] is not None
-
-  csv_move_df.moves_learnt_by_level_up_json = csv_move_df.moves_learnt_by_level_up_json\
-    .apply(lambda l: Enumerable(l)\
-      .where(move_list_filter))
-  print(type(csv_move_df))
-  print(csv_move_df.columns)
-  print(csv_move_df.sample(6))
-  # csv_move_df.sample(6).to_csv('hi.csv', index=False)
-
 def main():
+  def implode_move_sets(movesdf):
+    # describes what to do with each move set
+    agg_dict = {}
+    for m in moves:
+      agg_dict[f'{m}_json'] = lambda x: x.tolist()
+
+    # 'Implodes' data frame move sets into lists
+    csv_move_df = movesdf\
+      .groupby('name')\
+      .agg(agg_dict, regex=True)\
+      .reset_index()
+      
+    def move_list_filter(j):
+      d = json.loads(j)
+      return d['move'] is not None
+
+    csv_move_df.moves_learnt_by_level_up_json = csv_move_df.moves_learnt_by_level_up_json\
+      .apply(lambda l: Enumerable(l)\
+        .where(move_list_filter))
+    return csv_move_df
+
   this_dir = os.path.dirname(os.path.realpath(__file__))
   config = toml.load(os.path.join(this_dir, 'config.toml'))
   u.set_full_paths(config, this_dir)
@@ -119,7 +116,11 @@ def main():
     # print(f)
     # print(movesdf[f'{f}_json'].tolist()[0:10])
 
-  # implode_move_sets(movesdf)
+  csv_move_df = implode_move_sets(movesdf)
+  print(type(csv_move_df))
+  print(csv_move_df.columns)
+  print(csv_move_df.sample(6))
+  # csv_move_df.sample(6).to_csv('hi.csv', index=False)
 
   pdf = movesdf
   # pdf.style.set_properties(**{'width': '300px'})
