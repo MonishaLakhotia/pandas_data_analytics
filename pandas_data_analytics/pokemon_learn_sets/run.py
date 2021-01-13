@@ -9,22 +9,52 @@ import seaborn as sns
 import toml
 
 def main():
+  def view_data(df):
+    pdf = movesdf
+    # pdf.style.set_properties(**{'width': '300px'})
+    field = 'moves_learnt_by_tr' + '_'
+    pdf = pdf.filter(regex=f'{field}|name', axis=1)
+    # pdf.columns[pdf.columns.str.contains(f'({field}.*|name|generation)', flags=re.I,regex=True)]
+    total_rows = len(pdf.index.value_counts())
+    unique_rows = len(pdf.drop_duplicates().index.value_counts())
+    dup_rows = len(pdf[movesdf.duplicated()].index.value_counts())
+    percent_duped = (dup_rows / total_rows) * 100
+    # dups are due to alonan forms/ alter form tabs for move sets
+    # try to filter then out based on if the number in the move set entry restarts
+    # FOR EACH GENERATION
+    # if 1..23..88 then 2..22..88
+      # then drop the entries from 2 onward since these are alonan form move sets
+    ps = Enumerable([
+      # lambda: pdf[~(pdf.year_added == pdf.release_year)].sample(5),
+      # lambda: pdf.isna().mean().sort_values(ascending=False),
+      # lambda: pdf[pdf.name.str.contains('Salad', flags = re.I)].name,
+      # lambda: pdf.groupby('food_cat').carbs_marco_ratio.count(),
+      lambda: pdf.columns,
+      lambda: total_rows,
+      lambda: unique_rows,
+      lambda: dup_rows,
+      lambda: percent_duped,
+      lambda: pdf.dropna().sample(7),
+      # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).drop([], axis=1).sample(5),
+      # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).sample(5),
+      # lambda: pdf[movesdf.duplicated()].sort_values(['name', 'generation'])
+      # lambda: pdf.sort_values('calories')
+    ])
+    u.foreach(lambda f: print(f()),ps)
+
   def implode_move_sets(movesdf):
     # describes what to do with each move set
     agg_dict = {}
     for m in moves:
       agg_dict[f'{m}_json'] = lambda x: x.tolist()
-
     # 'Implodes' data frame move sets into lists
     csv_move_df = movesdf\
       .groupby('name')\
       .agg(agg_dict, regex=True)\
       .reset_index()
-      
     def move_list_filter(j):
       d = json.loads(j)
       return d['move'] is not None
-
     csv_move_df.moves_learnt_by_level_up_json = csv_move_df.moves_learnt_by_level_up_json\
       .apply(lambda l: Enumerable(l)\
         .where(move_list_filter))
@@ -34,24 +64,19 @@ def main():
   config = toml.load(os.path.join(this_dir, 'config.toml'))
   u.set_full_paths(config, this_dir)
   csv_loc = config['file_locations']['data']
-
   df: pd.DataFrame = pd.read_csv(csv_loc)
-
   df = df.drop(\
     ['web-scraper-order',
     'web-scraper-start-url',
     'name_link-href',
     'generation-href'
     ], axis=1)
-
   pd.set_option('display.max_rows', df.shape[0]+1)
   pd.set_option('display.max_columns', 175)
 
   # name field is unique per pokemon
-
   # movesdf: pd.DataFrame = df[['name', 'moves_learnt_by_level_up', 'generation']].dropna()
   movesdf: pd.DataFrame = df.drop(['name_link'], axis=1)
-
   types = ['ground', 'electric', 'bug', 'ghost', 'normal', 'psychic', 'fire', 'fairy', 'dark', 'grass', 'fighting', 'water', 'ice', 'dragon', 'poison', 'rock', 'flying', 'steel']
 
   # def get_thing(phrase, s):
@@ -120,40 +145,6 @@ def main():
   print(type(csv_move_df))
   print(csv_move_df.columns)
   print(csv_move_df.sample(6))
-  # csv_move_df.sample(6).to_csv('hi.csv', index=False)
+  csv_move_df.to_csv(config['file_locations']['cleaned_data'], index=False)
 
-  pdf = movesdf
-  # pdf.style.set_properties(**{'width': '300px'})
-  field = 'moves_learnt_by_tr' + '_'
-  pdf = pdf.filter(regex=f'{field}|name', axis=1)
-  # pdf.columns[pdf.columns.str.contains(f'({field}.*|name|generation)', flags=re.I,regex=True)]
-  total_rows = len(pdf.index.value_counts())
-  unique_rows = len(pdf.drop_duplicates().index.value_counts())
-  dup_rows = len(pdf[movesdf.duplicated()].index.value_counts())
-  percent_duped = (dup_rows / total_rows) * 100
-  # dups are due to alonan forms/ alter form tabs for move sets
-  # try to filter then out based on if the number in the move set entry restarts
-  # FOR EACH GENERATION
-  # if 1..23..88 then 2..22..88
-    # then drop the entries from 2 onward since these are alonan form move sets
-
-  ps = Enumerable([
-    # lambda: pdf[~(pdf.year_added == pdf.release_year)].sample(5),
-    # lambda: pdf.isna().mean().sort_values(ascending=False),
-    # lambda: pdf[pdf.name.str.contains('Salad', flags = re.I)].name,
-    # lambda: pdf.groupby('food_cat').carbs_marco_ratio.count(),
-    lambda: pdf.columns,
-    lambda: total_rows,
-    lambda: unique_rows,
-    lambda: dup_rows,
-    lambda: percent_duped,
-    lambda: pdf.dropna().sample(7),
-    # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).drop([], axis=1).sample(5),
-    # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).sample(5),
-    # lambda: pdf[movesdf.duplicated()].sort_values(['name', 'generation'])
-    # lambda: pdf.sort_values('calories')
-  ])
-  u.foreach(lambda f: print(f()),ps)
-
-  # df.to_csv(config['file_locations']['data'])
 main()
