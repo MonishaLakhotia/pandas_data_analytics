@@ -9,15 +9,14 @@ import seaborn as sns
 import toml
 
 def main():
-  def view_data(df):
-    pdf = movesdf
+  def view_data(pdf):
     # pdf.style.set_properties(**{'width': '300px'})
     field = 'moves_learnt_by_tr' + '_'
     pdf = pdf.filter(regex=f'{field}|name', axis=1)
     # pdf.columns[pdf.columns.str.contains(f'({field}.*|name|generation)', flags=re.I,regex=True)]
     total_rows = len(pdf.index.value_counts())
     unique_rows = len(pdf.drop_duplicates().index.value_counts())
-    dup_rows = len(pdf[movesdf.duplicated()].index.value_counts())
+    dup_rows = len(pdf[pdf.duplicated()].index.value_counts())
     percent_duped = (dup_rows / total_rows) * 100
     # dups are due to alonan forms/ alter form tabs for move sets
     # try to filter then out based on if the number in the move set entry restarts
@@ -37,7 +36,7 @@ def main():
       lambda: pdf.dropna().sample(7),
       # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).drop([], axis=1).sample(5),
       # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).sample(5),
-      # lambda: pdf[movesdf.duplicated()].sort_values(['name', 'generation'])
+      # lambda: pdf[pdf.duplicated()].sort_values(['name', 'generation'])
       # lambda: pdf.sort_values('calories')
     ])
     u.foreach(lambda f: print(f()),ps)
@@ -117,7 +116,7 @@ def main():
       .str.replace(r'—', '', regex=True)
     return ldf
 
-  print(df.columns)
+  # print(df.columns)
 
   moves = [
     'moves_learnt_by_level_up',
@@ -142,9 +141,22 @@ def main():
     # print(movesdf[f'{f}_json'].tolist()[0:10])
 
   csv_move_df = implode_move_sets(movesdf)
-  print(type(csv_move_df))
+  # print(type(csv_move_df))
   print(csv_move_df.columns)
-  print(csv_move_df.sample(6))
-  csv_move_df.to_csv(config['file_locations']['cleaned_data'], index=False)
+  print(len(csv_move_df))
+  # print(csv_move_df.sample(6))
+  # csv_move_df.to_csv(config['file_locations']['cleaned_data'], index=False)
+  general_df = df.drop(
+    [
+      'moves_learnt_by_level_up', 'moves_learnt_by_tm',
+      'moves_learnt_by_tr', 'moves_learnt_by_move_tutor',
+      'moves_learnt_by_egg', 'moves_learnt_by_hm',
+      'moves_learnt_by_transfer', 'moves_learnt_by_evolution'
+    ],
+    axis=1
+  ).drop_duplicates()
+  print(len(df))
+  print(len(general_df))
+  print(general_df.columns)
 
 main()
