@@ -25,8 +25,7 @@ do
             ;;
 
     *)
-            str="$@"
-            echo "str: $str"
+            strs="$@"
             break
             ;;
 
@@ -39,6 +38,9 @@ done
 echo "#: $#"
 echo "@: $@"
 
+# valC="X"
+# valN="10"
+# strs=("pad" "me\n" "daddy ya ya")
 # Load the user defined parameters
 echo "C: $valC"
 echo "N: $valN"
@@ -46,10 +48,15 @@ echo "N: $valN"
 iN="$(printf '%d' $valN 2>/dev/null)"
 
 echo "iN: $iN"
-while ((${#str} < $iN)); do 
-  # str+='X' # for pad left
-  str="X$str"
+
+declare -a arr
+for str in ${strs[@]}
+do
+  while ((${#str} < $iN)); do 
+    # str+="$valC" # for pad right
+    str="$valC$str" # for pad left
+  done
+  arr=( "${arr[@]}" "$str" )
 done
 
-echo $str
-echo $(echo "$str" | sed 's/\n//' | wc -c)
+printf '%s\n' "${arr[@]}"
