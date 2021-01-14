@@ -1,6 +1,7 @@
 #!/bin/bash
 
-echo "$#"
+echo "#: $#"
+echo "@: $@"
 while [[ $# > 0 ]]
 do
   case "$1" in
@@ -24,35 +25,21 @@ do
             ;;
 
     *)
-            str="$1"
-            echo "$1"
-            echo "wild child"
-            shift
+            str="$@"
+            echo "str: $str"
+            break
             ;;
 
   esac
   shift
 done
 
-[[ -p /dev/stdin ]] && { mapfile -t; set -- "${MAPFILE[@]}"; }
+# [[ -p /dev/stdin ]] && { mapfile -t; set -- "${MAPFILE[@]}"; }
 
-echo "$#"
-while [[ $# > 0 ]]
-do
-  case "$1" in
+echo "#: $#"
+echo "@: $@"
 
-    *)
-            str="$1"
-            echo "$1"
-            echo "wild child"
-            shift
-            ;;
-
-  esac
-  shift
-done
 # Load the user defined parameters
-echo "$#"
 echo "C: $valC"
 echo "N: $valN"
 
