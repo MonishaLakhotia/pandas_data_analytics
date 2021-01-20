@@ -1,16 +1,16 @@
-import pandas_data_analytics.utils as u
-import json
-import re
-import toml
 from pandas_data_analytics import *
-import os
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import numpy as np
-import functools as ft
 from py_linq import Enumerable
 import datetime
+import functools as ft
+import json
+import matplotlib.pyplot as plt
+import numpy as np
+import os
+import pandas as pd
+import pandas_data_analytics.utils as u
+import re
+import seaborn as sns
+import toml
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
 config = toml.load(os.path.join(this_dir, 'config.toml'))

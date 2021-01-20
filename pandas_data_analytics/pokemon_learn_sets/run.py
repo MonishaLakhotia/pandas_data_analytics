@@ -7,6 +7,7 @@ import pandas_data_analytics.utils as u
 import re
 import seaborn as sns
 import toml
+import math
 
 def main():
   def view_data(pdf):
@@ -49,10 +50,27 @@ def main():
     def move_list_filter(j):
       d = json.loads(j)
       return d['move'] is not None
+
+    # Ex: If on Golem, we will drop Alonan form Golem moves
+    def drop_alternate_form_moves(l):
+      current_highest_number = -1
+      move_list = []
+      for d in l:
+        j = json.loads(d)
+        if (j['lvl'].isnumeric()):
+          num = int(j['lvl'])
+          if (num < current_highest_number):
+            break
+          else:
+            current_highest_number = num
+            move_list.append(j)
+      return move_list
+
     for field in Enumerable(moves).select(lambda m: m+'_json'):
       csv_move_df[field] = csv_move_df[field]\
         .apply(lambda l: Enumerable(l)\
-          .where(move_list_filter))
+          .where(move_list_filter))\
+        .apply(drop_alternate_form_moves)
     # dups are due to alonan forms/ alter form tabs for move sets
     # try to filter then out based on if the number in the move set entry restarts
     # FOR EACH GENERATION
