@@ -4,22 +4,23 @@ requires pipenv(or pip), python 3.8
 
 In project root:
 
-With pipenv:
+startup
 > pipenv shell
 > pipenv install -e .
 
-With pip:
-Create the virutal env:
-> python -m venv ~/.virtual/pandas_data_analytics
-Launch the virual env:
-> source ~/.virtual/pandas_data_analytics/Scripts/activate
-One time:
-> pip install wheel
-Install packages:
-> pip install -e .
+tear down
+> deactivate
 
-Run code:
+or with pip
+
+startup
+> source C:/Users/abhimanyu.lakhotia/.virtualenvs/pandas_data_analytics-T_4TRt4A/Scripts/activate
+> pip install -e .
 > python <filename>
+
+tear down
+> deactivate
+
 setup.py with the follow line of code is required for references project files in other project files for import statements
 packages=find_packages(include=['python01', 'python01.*']),
 
