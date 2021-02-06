@@ -2,6 +2,14 @@ To build project:
 
 requires pipenv, python 3.8
 
+With pip:
+Create the virutal env:
+> python -m venv ~/.virtual/pandas_data_analytics
+Launch the virual env:
+> source ~/.virtual/pandas_data_analytics/Scripts/activate
+Install packages:
+> pip install -e .
+
 In project root:
 
 > pipenv shell
