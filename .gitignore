@@ -70,3 +70,4 @@ target/
 
 pandas_data_analytics/wine/data/*
 data
+Pipfile.lock
