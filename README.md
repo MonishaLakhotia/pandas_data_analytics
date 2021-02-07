@@ -7,6 +7,8 @@ Create the virutal env:
 > python -m venv ~/.virtual/pandas_data_analytics
 Launch the virual env:
 > source ~/.virtual/pandas_data_analytics/Scripts/activate
+One time:
+> pip install wheel
 Install packages:
 > pip install -e .
 
