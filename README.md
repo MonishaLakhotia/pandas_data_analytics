@@ -1,6 +1,12 @@
 To build project:
 
-requires pipenv, python 3.8
+requires pipenv(or pip), python 3.8
+
+In project root:
+
+With pipenv:
+> pipenv shell
+> pipenv install -e .
 
 With pip:
 Create the virutal env:
@@ -12,12 +18,8 @@ One time:
 Install packages:
 > pip install -e .
 
-In project root:
-
-> pipenv shell
-> pipenv install -e .
+Run code:
 > python <filename>
-
 setup.py with the follow line of code is required for references project files in other project files for import statements
 packages=find_packages(include=['python01', 'python01.*']),
 
