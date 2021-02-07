@@ -29,7 +29,6 @@ def food_binner(s):
 
 # df['food_cat'] = df.name.apply(food_binner)
 
- 
 ps = (lambda pdf, field: Enumerable([
   # lambda: pdf.sample(5),
   # lambda: pdf.dtypes,
@@ -38,9 +37,8 @@ ps = (lambda pdf, field: Enumerable([
   # lambda: pdf[field].value_counts(dropna=False, normalize=True),
   # lambda: len(pdf[field].unique()),
   # lambda: pdf[~(pdf.year_added == pdf.release_year)].sample(5),
-  lambda: pdf.groupby('company').calories.mean(),
+  lambda: pdf.groupby('company').calories.agg(['mean', 'std']),
   # lambda: df[['director', 'title']],
   lambda: pdf.columns
 ]))(df, 'country')
 u.foreach(lambda f: print(f()),ps)
-

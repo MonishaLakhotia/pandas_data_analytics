@@ -66,7 +66,7 @@ ps = (lambda pdf, field: Enumerable([
 # Apply the default theme
 sns.set_theme()
 
-# aplot = sns.boxplot(x='food_cat', y='carbs_marco_ratio', data=df)
+aplot = sns.boxplot(x='food_cat', y='carbs_marco_ratio', data=df)
 # General plot stuff
-# aplot.set_xticklabels(aplot.get_xticklabels(), rotation=30)
-# plt.show()
+aplot.set_xticklabels(aplot.get_xticklabels(), rotation=30)
+plt.show()

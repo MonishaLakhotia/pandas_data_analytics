@@ -26,7 +26,6 @@ df.rating = df.rating.astype('category')
 # amazing!!! converts datatypes as best it can
 # string nan values become <NA>, still a rep for nan
 pd.set_option('display.max_rows', df.shape[0]+1)
-pd.set_option('display.max_columns', df.shape[1]+1)
 
 def drop_filler(g):
   l = ['Movies', 'TV Shows', 'TV', 'Shows', 'Series', 'Features']
