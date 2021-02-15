@@ -1,0 +1,4 @@
+file_locations.data = "data/all_data.csv"
+file_locations.monthly_summaries = "data/monthly_summaries.csv"
+file_locations.book_refs = "data/book_refs.csv"
+partitioned_book_data_pattern = "data/Sponsored_*.csv"
