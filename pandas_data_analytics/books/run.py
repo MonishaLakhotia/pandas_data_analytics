@@ -17,12 +17,17 @@ this_dir = os.path.dirname(os.path.realpath(__file__))
 config = toml.load(os.path.join(this_dir, 'config.toml'))
 u.set_full_paths(config, this_dir)
 
+# Currently not using the book references
+# book_refs_csv_loc = config['file_locations']['book_refs']
+# book_refs: pd.DataFrame = pd.read_csv(book_refs_csv_loc)
+
 partitioned_book_data_pattern = config['partitioned_book_data_pattern']
 files = sorted(glob(partitioned_book_data_pattern))
-book_refs_csv_loc = config['file_locations']['book_refs']
-
-book_refs: pd.DataFrame = pd.read_csv(book_refs_csv_loc)
+# reads every csv file that matches a text pattern and puts them all into 1 dataframe
 book_data: pd.DataFrame = pd.concat((pd.read_csv(file) for file in files), ignore_index=True)
+
+# function to parse the product field
+# parse_products : row -> row
 def parse_products(r):
   m = re.search('(.+)\((.*)(?:Book|,)(.*?)\)', r['Products'], re.I)
   if m:
@@ -41,35 +46,16 @@ def parse_products(r):
       r['book_number'] = None
   return r
 
-
-  # food_cat = "salad" if re.search('salad', r['Products'], re.I) else\
-  #   r['food_cat']
-  # r['food_cat'] = food_cat
-  # return r
 book_data = book_data.apply(parse_products, axis=1)
-# df = df.convert_dtypes()
 
+# sets display options for the dataframe
 pd.set_option('display.max_rows', book_data.shape[0]+1)
 pd.set_option('display.max_columns', 10000)
 pd.set_option('display.max_colwidth', 200)
-# State,Products,Status,SKU,ASIN,Impressions,Clicks,CTR,Spend(USD),CPC(USD),Orders,Sales(USD),ACOS,ROAS
-# State,Products,Status,SKU,ASIN,Impressions,Clicks,CTR,Spend(USD),CPC(USD),Orders,Sales(USD),ACOS,ROAS
-# State,Products,Status,SKU,ASIN,Impressions,Clicks,CTR,Spend(USD),CPC(USD),Orders,Sales(USD),ACOS,ROAS
 
-# g1 = book title
-# g2 = book series
-# g3 = the number that this book is in the book series
-# Only works for entries like:
-# (.+)\((.*?)(?:Book|,)(.*?)\)
-# A Good Duke Is Hard to Find (Isle of Synne Book 1)
-# A Good Duke Is Hard to Find (Isle of Synne, 1)
-# not books like:
-# A Christmas to Remember
-# The O'Malleys Box Set Books 1-3
-
+# display metrics/data
 pdf: pd.DataFrame = book_data
 ps = Enumerable([
-  # lambda: book_refs,
   # lambda: pdf.columns,
   # lambda: pdf['Products'],
   lambda: pdf.sample(5)
@@ -78,6 +64,7 @@ ps = Enumerable([
 ])
 u.foreach(lambda f: print(f()),ps)
 
+# Write the cleaned data to a file
 book_data.to_csv(config['file_locations']['cleaned_data'], index=False)
 
 # Apply the default theme
