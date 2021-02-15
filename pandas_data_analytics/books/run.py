@@ -35,9 +35,9 @@ def parse_products(r):
       r['book_title'] = m.group(1)
       r['book_series'] = m.group(2)
     else:
-    r['book_title'] = None
-    r['book_series'] = None
-    r['book_number'] = None
+      r['book_title'] = None
+      r['book_series'] = None
+      r['book_number'] = None
   return r
 
 
@@ -76,6 +76,8 @@ ps = Enumerable([
   # lambda: pdf.dtypes,
 ])
 u.foreach(lambda f: print(f()),ps)
+
+book_data.to_csv(config['file_locations']['cleaned_data'], index=False)
 
 # Apply the default theme
 sns.set_theme()
