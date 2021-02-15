@@ -1,17 +1,9 @@
-from pandas_data_analytics import *
-from py_linq import Enumerable
-import datetime
-import functools as ft
-import json
-import matplotlib.pyplot as plt
-import numpy as np
+from glob import glob
 import os
 import pandas as pd
 import pandas_data_analytics.utils as u
 import re
-import seaborn as sns
 import toml
-from glob import glob
 
 # get the directory path where this script is
 this_dir = os.path.dirname(os.path.realpath(__file__))
@@ -58,13 +50,13 @@ pd.set_option('display.max_colwidth', 200)
 
 # display metrics/data
 pdf: pd.DataFrame = book_data
-ps = Enumerable([
+ps = [
   # lambda: pdf.columns,
   # lambda: pdf['Products'],
   lambda: pdf.sample(5)
   # lambda: pdf.Products.sort_values()
   # lambda: pdf.dtypes,
-])
+]
 u.foreach(lambda f: print(f()),ps)
 
 # Write the cleaned data to a file
