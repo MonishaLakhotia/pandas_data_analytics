@@ -13,8 +13,11 @@ import seaborn as sns
 import toml
 from glob import glob
 
+# get the directory path where this script is
 this_dir = os.path.dirname(os.path.realpath(__file__))
+# grab the config file from this directory
 config = toml.load(os.path.join(this_dir, 'config.toml'))
+# prefix partial file paths found in the config.toml with the full path
 u.set_full_paths(config, this_dir)
 
 # Currently not using the book references
@@ -66,13 +69,3 @@ u.foreach(lambda f: print(f()),ps)
 
 # Write the cleaned data to a file
 book_data.to_csv(config['file_locations']['cleaned_data'], index=False)
-
-# Apply the default theme
-sns.set_theme()
-
-# aplot = sns.barplot(x='date_range', y='lbs', hue='weight_category', data=mdf)
-# aplot = sns.boxplot(x='date_range', y='calories', data=df)
-
-# General plot stuff
-# aplot.set_xticklabels(aplot.get_xticklabels(), rotation=30)
-# plt.show()
