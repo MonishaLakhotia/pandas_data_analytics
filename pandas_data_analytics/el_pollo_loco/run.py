@@ -46,27 +46,36 @@ def salad_bin(r):
     r['food_cat']
   r['food_cat'] = food_cat
   return r
-df = df.apply(salad_bin, axis=1)
+# df = df.apply(salad_bin, axis=1)
 df['carbs_marco_ratio'] = df.carbs / (df.carbs + df.protein + df.fat)
 
-ps = (lambda pdf, field: Enumerable([
+mdf = pd.melt(df, id_vars=['food_cat', 'name'], value_vars=['protein', 'carbs', 'fat'], value_name='grams', var_name='gram_category')
+
+pdf = df
+ps = Enumerable([
   # lambda: pdf[~(pdf.year_added == pdf.release_year)].sample(5),
   # lambda: pdf.isna().mean().sort_values(ascending=False),
   # lambda: df[['director', 'title']],
   # lambda: pdf[pdf.name.str.contains('Salad', flags = re.I)].name,
   # lambda: pdf.groupby('food_cat').carbs_marco_ratio.count(),
-  # lambda: pdf.sample(5),
+  lambda: pdf.columns,
   # lambda: pdf.sort_values('calories')
-]))(df, 'country')
+])
 
-# u.foreach(lambda f: print(f()),ps)
-
+u.foreach(lambda f: print(f()),ps)
 # df.to_csv(config['file_locations']['data'])
 
 # Apply the default theme
 sns.set_theme()
 
-aplot = sns.boxplot(x='food_cat', y='carbs_marco_ratio', data=df)
+# aplot = sns.boxplot(y='food_cat', x='carbs_marco_ratio', data=df)
+aplot = sns.boxplot(y='food_cat', x='calories', data=df)
+# aplot = sns.barplot(y='food_cat', x='grams', hue='gram_category', data=mdf)
 # General plot stuff
-aplot.set_xticklabels(aplot.get_xticklabels(), rotation=30)
+# aplot.set_xticklabels(aplot.get_xticklabels(), rotation=30)
 plt.show()
+
+# El Pollo Loco Menu Analysis
+# Data scraped from https://www.elpolloloco.com/ using webscraper.io
+# Data figures created using pandas in python
+# Thread will be populated with more metrics
