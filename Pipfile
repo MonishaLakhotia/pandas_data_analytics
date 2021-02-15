@@ -26,6 +26,7 @@ qtconsole = "*"
 pyqt5 = "*"
 pdfplumber = "*"
 dask = {extras = ["complete"], version = "*"}
+openpyxl = "*"
 
 [dev-packages]
 pylint = "*"

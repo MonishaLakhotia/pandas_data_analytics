@@ -40,7 +40,8 @@ setup(
         "qtconsole",
         "pyqt5",
         "pdfplumber",
-        "dask"
+        "dask",
+        "openpyxl"
     ],
     long_description=long_description,
     classifiers=[
