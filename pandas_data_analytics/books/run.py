@@ -24,17 +24,22 @@ book_refs_csv_loc = config['file_locations']['book_refs']
 book_refs: pd.DataFrame = pd.read_csv(book_refs_csv_loc)
 book_data: pd.DataFrame = pd.concat((pd.read_csv(file) for file in files), ignore_index=True)
 def parse_products(r):
-  m = re.search('(.+)\((.*?)(?:Book|,)(.*?)\)', r['Products'], re.I)
+  m = re.search('(.+)\((.*)(?:Book|,)(.*?)\)', r['Products'], re.I)
   if m:
     r['book_title'] = m.group(1).strip()
     r['book_series'] = m.group(2).strip()
     r['book_number'] = m.group(3).strip()
   else:
-    # TODO: Add more matches here
+    m = re.search('(.+)(Box Set Books 1-3(.*))', r['Products'], re.I)
+    if m:
+      r['book_title'] = m.group(1)
+      r['book_series'] = m.group(2)
+    else:
     r['book_title'] = None
     r['book_series'] = None
     r['book_number'] = None
   return r
+
 
   # food_cat = "salad" if re.search('salad', r['Products'], re.I) else\
   #   r['food_cat']
