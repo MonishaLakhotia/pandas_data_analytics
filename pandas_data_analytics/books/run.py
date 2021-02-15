@@ -30,12 +30,13 @@ def parse_products(r):
     r['book_series'] = m.group(2).strip()
     r['book_number'] = m.group(3).strip()
   else:
-    m = re.search('(.+)(Box Set Books 1-3(.*))', r['Products'], re.I)
+    m = re.search('(.+)(Box Set Books (.*):(.*))', r['Products'], re.I)
     if m:
-      r['book_title'] = m.group(1)
-      r['book_series'] = m.group(2)
+      r['book_title'] = m.group(1).strip()
+      r['book_series'] = m.group(4).strip()
+      r['book_number'] = m.group(3).strip()
     else:
-      r['book_title'] = None
+      r['book_title'] = r['Products']
       r['book_series'] = None
       r['book_number'] = None
   return r
