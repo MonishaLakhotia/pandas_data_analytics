@@ -20,7 +20,7 @@ requires pipenv(or pip), python 3.8
 
 ## With pip
 ### To Create a new virtual environment for this project
-> python3 -m venv /path/to/new/virtual/environment
+> python3 -m venv $HOME/.virtualenvs/pandas_data_analytics/Scripts/activate
 
 ### startup
 > source $HOME/.virtualenvs/pandas_data_analytics/Scripts/activate
