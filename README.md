@@ -1,28 +1,41 @@
-To build project:
+# Purpose
+An area for exploratory data science; to clean, analyze, and visualize data. 
+
+Data sources vary from kaggle.com and personally web scrapped. Formats vary from csv, excel, json, and sql.
+
+# To build project:
 
 requires pipenv(or pip), python 3.8
 
-In project root:
+## In project root (All of these package manager commands):
 
-startup
+## With pipenv
+### startup
 > pipenv shell
+### install dependencies
 > pipenv install -e .
 
-tear down
+### tear down
 > deactivate
 
-or with pip
+## With pip
+### To Create a new virtual environment for this project
+> python3 -m venv /path/to/new/virtual/environment
 
-startup
-> source C:/Users/abhimanyu.lakhotia/.virtualenvs/pandas_data_analytics-T_4TRt4A/Scripts/activate
+### startup
+> source $HOME/.virtualenvs/pandas_data_analytics/Scripts/activate
+
+### install dependencies
 > pip install -e .
+
+### tear down
+> deactivate
+
+## Run some code
 > python <filename>
 
-tear down
-> deactivate
-
 setup.py with the follow line of code is required for references project files in other project files for import statements
-packages=find_packages(include=['python01', 'python01.*']),
+packages=find_packages(include=['pandas_data_analytics', 'pandas_data_analytics.*']),
 
 
 # Interactive qtconsole shell
