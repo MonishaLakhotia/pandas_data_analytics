@@ -19,7 +19,7 @@ requires pipenv(or pip), python 3.8
 > deactivate
 
 ## With pip
-### install wheel with pip 
+### install wheel with pip - still unsure how to get wheel message during install to go away
 pip install wheel
 ### To Create a new virtual environment for this project
 > python -m venv ~/.virtualenvs/pandas_data_analytics
