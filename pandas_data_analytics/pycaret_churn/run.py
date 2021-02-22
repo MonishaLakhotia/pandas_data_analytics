@@ -7,16 +7,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-import joblib
-import pandas_data_analytics.pdpipe_example.pipe_utils as pu
-import pandas_data_analytics.pdpipe_example.clean as c
 import functools as ft
 import sqlite3
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
 config = toml.load(os.path.join(this_dir, 'config.toml'))
 
-pu.set_full_paths(config, this_dir)
+u.set_full_paths(config, this_dir)
 db_loc = config['file_locations']['data']
 
 # Read sqlite query results into a pandas DataFrame

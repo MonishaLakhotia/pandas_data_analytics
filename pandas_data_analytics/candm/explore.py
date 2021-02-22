@@ -6,8 +6,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-import pandas_data_analytics.pdpipe_example.pipe_utils as pu
-import pandas_data_analytics.pdpipe_example.clean as c
 import functools as ft
 from py_linq import Enumerable
 import re
@@ -15,7 +13,7 @@ from glob import glob
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
 config = toml.load(os.path.join(this_dir, 'config.toml'))
-pu.set_full_paths(config, this_dir)
+u.set_full_paths(config, this_dir)
 csv_loc = config['file_locations']['clean']
 
 df = pd.read_csv(csv_loc)
