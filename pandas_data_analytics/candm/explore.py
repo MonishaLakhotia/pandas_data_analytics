@@ -4,7 +4,6 @@ import toml
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-from scipy import stats
 import seaborn as sns
 import numpy as np
 import pandas_data_analytics.pdpipe_example.pipe_utils as pu

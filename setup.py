@@ -18,25 +18,13 @@ setup(
     packages=find_packages(
         include=['pandas_data_analytics', 'pandas_data_analytics.*']),
     install_requires=[
-        "sklearn",
         "numpy==1.19.3",
-        "xgboost==1.1.0",
-        "scikit-mdr",
-        "skrebate",
-        "scikit-learn",
-        "joblib",
         "pandas_data_analytics",
         "toml",
-        "pdpipe",
         "pandas",
         "seaborn",
-        "scipy",
-        "nltk",
-        "plotly",
-        "cufflinks",
         "py-linq",
-        "pdfplumber",
-        "openpyxl"
+        "pdfplumber"
     ],
     long_description=long_description,
     classifiers=[

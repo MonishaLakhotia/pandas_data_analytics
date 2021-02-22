@@ -1,4 +1,0 @@
-file_locations.model = "pickles/model.pkl"
-file_locations.pipeline = "pickles/pipeline.pkl"
-file_locations.training_data = "data/USA_Housing.csv"
-file_locations.user_query = "data/user_query.csv"

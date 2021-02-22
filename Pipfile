@@ -4,24 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-scikit-mdr = "*"
-skrebate = "*"
-scikit-learn = "*"
-joblib = "*"
 pandas_data_analytics = {editable = true, path = "."}
 toml = "*"
-pdpipe = "*"
 numpy = "==1.19.3"
 pandas = "*"
 seaborn = "*"
-scipy = "*"
-nltk = "*"
-xgboost = "==1.1.0"
-plotly = "*"
-cufflinks = "*"
 py-linq = "*"
 pdfplumber = "*"
-openpyxl = "*"
 
 [dev-packages]
 pylint = "*"

@@ -44,7 +44,7 @@ df['DayList'] = df[md1]\
 # df.DayList = df.DayList.fillna([])
 # df.loc[df['DayList'].isna(),['DayList']] = df.loc[df['DayList'].isna(),'DayList'].apply(lambda x: [])
 
-df.dropna(inplace=True,axis=1)
+# df.dropna(inplace=True,axis=1)
 # df.convert_dtypes()
 # print(df.dtypes)
 print(df['DayList'])

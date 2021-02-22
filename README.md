@@ -19,8 +19,10 @@ requires pipenv(or pip), python 3.8
 > deactivate
 
 ## With pip
+### install wheel with pip 
+pip install wheel
 ### To Create a new virtual environment for this project
-> python3 -m venv $HOME/.virtualenvs/pandas_data_analytics/
+> python -m venv ~/.virtualenvs/pandas_data_analytics
 
 ### startup
 > source $HOME/.virtualenvs/pandas_data_analytics/Scripts/activate
