@@ -1,10 +1,6 @@
 from pandas_data_analytics import *
 from py_linq import Enumerable
-import datetime
-import functools as ft
-import json
 import matplotlib.pyplot as plt
-import numpy as np
 import os
 import pandas as pd
 import pandas_data_analytics.utils as u
@@ -27,7 +23,7 @@ pd.set_option('display.max_columns', 175)
 
 date_bins = pd.interval_range\
   (start=pd.Timestamp('2020-07-01'),\
-  periods=7, freq='MS')
+  periods=8, freq='MS')
 df['date_range'] = pd.cut(df.date, date_bins)
 df['muscle_weight'] = df.morning_weight * df.muscle_mass_percentage / 100
 df['body_fat_weight'] = df.morning_weight * df.body_fat_percentage / 100
@@ -76,7 +72,6 @@ sns.set_theme()
 # aplot = sns.barplot(x='date_range', y='lbs', hue='weight_category', data=mdf)
 aplot = sns.boxplot(x='date_range', y='calories', data=df)
 
-# aplot = sns.lineplot(x='date', y='morning_weight', data=df)
 # aplot = sns.lineplot(x='date', y='calories', data=df)
 # aplot = sns.lineplot(x='date', y='muscle_weight', data=df)
 # aplot = sns.lineplot(x='date', y='body_fat_weight', data=df)
@@ -84,5 +79,8 @@ aplot = sns.boxplot(x='date_range', y='calories', data=df)
 # aplot = sns.barplot(x='')
 
 # General plot stuff
+aplot.set_xticklabels(aplot.get_xticklabels(), rotation=30)
+plt.show()
+aplot = sns.boxplot(x='date_range', y='morning_weight', data=df)
 aplot.set_xticklabels(aplot.get_xticklabels(), rotation=30)
 plt.show()
