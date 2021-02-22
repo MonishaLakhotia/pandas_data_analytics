@@ -24,7 +24,8 @@ setup(
         "pandas",
         "seaborn",
         "py-linq",
-        "pdfplumber"
+        "pdfplumber",
+        "openpyxl"
     ],
     long_description=long_description,
     classifiers=[

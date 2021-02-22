@@ -11,6 +11,7 @@ pandas = "*"
 seaborn = "*"
 py-linq = "*"
 pdfplumber = "*"
+openpyxl = "*"
 
 [dev-packages]
 pylint = "*"
