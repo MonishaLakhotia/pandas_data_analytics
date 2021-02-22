@@ -1,2 +1,4 @@
-file_locations.data = "data/all_data.csv"
-file_locations.cleaned_data = "data/cleaned_data.csv"
+file_locations.data = "data/2021_Spring-CMPS_INFX_Course_Enrollment.xlsx"
+file_locations.data_csv = "data/2021_Spring-CMPS_INFX_Course_Enrollment.csv"
+file_locations.cleaned_data = "data/2021_Spring-CMPS_INFX_Course_Enrollment_cleaned.xlsx"
+file_locations.cleaned_data_csv = "data/2021_Spring-CMPS_INFX_Course_Enrollment_cleaned.csv"
