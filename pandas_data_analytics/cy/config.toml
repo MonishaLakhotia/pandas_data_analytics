@@ -1,0 +1,2 @@
+file_locations.data = "data/all_data.csv"
+file_locations.cleaned_data = "data/cleaned_data.csv"
