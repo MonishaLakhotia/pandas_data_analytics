@@ -42,3 +42,58 @@ packages=find_packages(include=['pandas_data_analytics', 'pandas_data_analytics.
 > $ jupyter qtconsole
 ## loading a python file into the interactive
 >> in qtconsole ---> %run <path/to/pythonfile>
+
+# Cool Packages
+pipenv:
+[packages]
+scikit-mdr = "*"
+skrebate = "*"
+scikit-learn = "*"
+joblib = "*"
+pandas_data_analytics = {editable = true, path = "."}
+toml = "*"
+pdpipe = "*"
+numpy = "==1.19.3"
+pandas = "*"
+seaborn = "*"
+scipy = "*"
+nltk = "*"
+xgboost = "==1.1.0"
+plotly = "*"
+cufflinks = "*"
+py-linq = "*"
+jupyter = "*"
+jupyter-contrib-nbextensions = "*"
+qtconsole = "*"
+pyqt5 = "*"
+pdfplumber = "*"
+dask = {extras = ["complete"], version = "*"}
+openpyxl = "*"
+
+pip:
+    install_requires=[
+        "sklearn",
+        "numpy==1.19.3",
+        "xgboost==1.1.0",
+        "scikit-mdr",
+        "skrebate",
+        "scikit-learn",
+        "joblib",
+        "pandas_data_analytics",
+        "toml",
+        "pdpipe",
+        "pandas",
+        "seaborn",
+        "scipy",
+        "nltk",
+        "plotly",
+        "cufflinks",
+        "py-linq",
+        "jupyter",
+        "jupyter-contrib-nbextensions",
+        "qtconsole",
+        "pyqt5",
+        "pdfplumber",
+        "dask",
+        "openpyxl"
+    ],
