@@ -1,7 +1,6 @@
 import pdfplumber
 from py_linq import Enumerable
 from pandas_data_analytics.text_parser.parser import Parser
-from dask import delayed
 
 
 def from_pdf_bulk_read(pdf_loc, parser_settings):
@@ -21,18 +20,6 @@ def from_pdf_per_page(pdf_loc, parser_settings):
         result = Enumerable(pdf.pages)\
             .select(lambda page: page.extract_text())\
             .select(parser.parse)\
-            .to_list()
-        return result
-
-def from_pdf_per_page_prom(pdf_loc, parser_settings):
-    # settings per page. returns a list of dicts. 1 per page
-    # same info in each dict
-    parser = Parser(parser_settings)
-    with pdfplumber.open(pdf_loc) as pdf:
-        result = Enumerable(pdf.pages)\
-            .select(lambda page: delayed(page.extract_text)())\
-            .select(lambda page_prom: delayed(parser.parse)(page_prom))\
-            .select(lambda p: p.compute())\
             .to_list()
         return result
 

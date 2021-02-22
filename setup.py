@@ -35,12 +35,7 @@ setup(
         "plotly",
         "cufflinks",
         "py-linq",
-        "jupyter",
-        "jupyter-contrib-nbextensions",
-        "qtconsole",
-        "pyqt5",
         "pdfplumber",
-        "dask",
         "openpyxl"
     ],
     long_description=long_description,
