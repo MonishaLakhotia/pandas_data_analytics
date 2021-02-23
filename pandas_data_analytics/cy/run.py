@@ -48,37 +48,50 @@ def time_binner(r):
   ed = r['end_time']
   # if np.isnan(ed) or np.isnan(sd):
   h = str(sd.hour)
+  m = sd.minute
+  em = '0'
   if h == 'nan':
     return r
-  curr_time = datetime.datetime.strptime(h, '%H')
+  if m >= 30:
+    em = '30'
+  curr_time = datetime.datetime.strptime(h+":"+em, '%H:%M')
   time_bins = []
   while (curr_time.hour <= ed.hour):
     if (curr_time.minute <= ed.minute):
-      time_bins.append(str(curr_time.hour) + ':' + str(curr_time.minute).rjust(2, '0'))
+      time_bins.append(str(curr_time.hour).rjust(2,'0') + ':' + str(curr_time.minute).rjust(2, '0'))
     curr_time += datetime.timedelta(minutes = 30)
   r['time_bins'] = time_bins
   return r
+
+def to_mil_time(d):
+  h = str(d.hour)
+  if h == 'nan':
+    return np.nan
+  return str(d.hour).rjust(2,'0') + ':' + str(d.minute).rjust(2,'0')
 
 df['time_ext_begin'] = df['Begin Time 1'].str.split(' ', expand=True)[1]
 df['time_ext_end'] = df['End Time 1'].str.split(' ', expand=True)[1]
 df['start_time'] = pd.to_datetime(df['Begin Time 1'], format='%I:%M %p')
 df['end_time'] = pd.to_datetime(df['End Time 1'], format='%I:%M %p')
 df['time_span'] = df.end_time - df.start_time
+df['military_begin_time'] = df['start_time'].apply(to_mil_time)
+df['military_end_time'] = df['end_time'].apply(to_mil_time)
 df = df.apply(time_binner, axis=1)
 
 # df.Day = df.Day.fillna([])
 # df.loc[df['Day'].isna(),['Day']] = df.loc[df['Day'].isna(),'Day'].apply(lambda x: [])
 
-print(df.time_bins)
+# print(df.military_end_time)
 # print(df.time_ext_end)
 # df.dropna(inplace=True,axis=1)
 # df.convert_dtypes()
 # print(df.dtypes)
 # print(df)
-# print(df['time_span'])
+# print(df['time_bins'])
+df = df.explode('time_bins')
 df = df.explode('Day')
 
-df['NumDay'] = df['Day'].replace({
+df['num_day'] = df['Day'].replace({
   'M': '1-Monday',
   'T': '2-Tuesday',
   'W': '3-Wednesday',
@@ -86,7 +99,7 @@ df['NumDay'] = df['Day'].replace({
   'F': '5-Friday'
 })
 
-print(df['NumDay'])
+# print(df['num_day'])
 
 # df.to_excel(config['file_locations']['cleaned_data'], index=False, sheet_name='Export Worksheet')
 # df.to_csv(config['file_locations']['cleaned_data_csv'], index=False)
