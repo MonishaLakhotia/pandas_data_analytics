@@ -5,12 +5,14 @@ import pandas_data_analytics.utils as u
 import re
 import toml
 from ast import literal_eval
+import datetime
+import numpy as np
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
 config = toml.load(os.path.join(this_dir, 'config.toml'))
 u.set_full_paths(config, this_dir)
 
-df: pd.DataFrame = pd.read_csv(config['file_locations']['data_csv'])
+df: pd.DataFrame = pd.read_excel(config['file_locations']['data'], sheet_name='Export Worksheet')
 df.columns = df.columns.str.strip()
 # print(df['Academic Period Code'].head(5))
 # print(df.dtypes)
@@ -35,21 +37,56 @@ dayPatterns = [
 
 md1 = 'Meet Days 1'
 # print(df[[md1]])
-df['DayList'] = df[md1]\
+df['Day'] = df[md1]\
   .str.strip()\
   .str.replace('('+'|'.join(dayPatterns)+')', r'\1, ', regex=True, flags=re.I)\
   .str.replace('(.*), $', r'\1', regex=True)\
   .str.split(', ')
 
-# df.DayList = df.DayList.fillna([])
-# df.loc[df['DayList'].isna(),['DayList']] = df.loc[df['DayList'].isna(),'DayList'].apply(lambda x: [])
+def time_binner(r):
+  sd = r['start_time']
+  ed = r['end_time']
+  # if np.isnan(ed) or np.isnan(sd):
+  h = str(sd.hour)
+  if h == 'nan':
+    return r
+  curr_time = datetime.datetime.strptime(h, '%H')
+  time_bins = []
+  while (curr_time.hour <= ed.hour):
+    if (curr_time.minute <= ed.minute):
+      time_bins.append(str(curr_time.hour) + ':' + str(curr_time.minute).rjust(2, '0'))
+    curr_time += datetime.timedelta(minutes = 30)
+  r['time_bins'] = time_bins
+  return r
 
+df['time_ext_begin'] = df['Begin Time 1'].str.split(' ', expand=True)[1]
+df['time_ext_end'] = df['End Time 1'].str.split(' ', expand=True)[1]
+df['start_time'] = pd.to_datetime(df['Begin Time 1'], format='%I:%M %p')
+df['end_time'] = pd.to_datetime(df['End Time 1'], format='%I:%M %p')
+df['time_span'] = df.end_time - df.start_time
+df = df.apply(time_binner, axis=1)
+
+# df.Day = df.Day.fillna([])
+# df.loc[df['Day'].isna(),['Day']] = df.loc[df['Day'].isna(),'Day'].apply(lambda x: [])
+
+print(df.time_bins)
+# print(df.time_ext_end)
 # df.dropna(inplace=True,axis=1)
 # df.convert_dtypes()
 # print(df.dtypes)
-print(df['DayList'])
-df.explode('DayList')
+# print(df)
+# print(df['time_span'])
+df = df.explode('Day')
 
+df['NumDay'] = df['Day'].replace({
+  'M': '1-Monday',
+  'T': '2-Tuesday',
+  'W': '3-Wednesday',
+  'R': '4-Thursday',
+  'F': '5-Friday'
+})
+
+print(df['NumDay'])
 
 # df.to_excel(config['file_locations']['cleaned_data'], index=False, sheet_name='Export Worksheet')
 # df.to_csv(config['file_locations']['cleaned_data_csv'], index=False)
