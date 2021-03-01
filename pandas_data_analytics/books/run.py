@@ -16,7 +16,7 @@ u.set_full_paths(config, this_dir)
 # book_refs_csv_loc = config['file_locations']['book_refs']
 # book_refs: pd.DataFrame = pd.read_csv(book_refs_csv_loc)
 
-partitioned_book_data_pattern = config['partitioned_book_data_pattern']
+partitioned_book_data_pattern = config['file_locations']['partitioned_book_data_pattern']
 files = sorted(glob(partitioned_book_data_pattern))
 # reads every csv file that matches a text pattern and puts them all into 1 dataframe
 book_data: pd.DataFrame = pd.concat((pd.read_csv(file) for file in files), ignore_index=True)
