@@ -13,7 +13,9 @@ config = toml.load(os.path.join(this_dir, 'config.toml'))
 u.set_full_paths(config, this_dir)
 
 df: pd.DataFrame = pd.read_excel(config['file_locations']['data'], sheet_name='Export Worksheet')
+# df: pd.DataFrame = pd.read_csv(config['file_locations']['data_csv'])
 df.columns = df.columns.str.strip()
+# df.to_csv('data.csv', index=False)
 # print(df['Academic Period Code'].head(5))
 # print(df.dtypes)
 
@@ -46,6 +48,7 @@ df['Day'] = df[md1]\
 def time_binner(r):
   sd = r['start_time']
   ed = r['end_time']
+  # x = r['time_span']
   # if np.isnan(ed) or np.isnan(sd):
   h = str(sd.hour)
   m = sd.minute
@@ -57,7 +60,7 @@ def time_binner(r):
   curr_time = datetime.datetime.strptime(h+":"+em, '%H:%M')
   time_bins = []
   while (curr_time.hour <= ed.hour):
-    if (curr_time.minute <= ed.minute):
+    if (curr_time.hour < ed.hour or curr_time.minute <= ed.minute):
       time_bins.append(str(curr_time.hour).rjust(2,'0') + ':' + str(curr_time.minute).rjust(2, '0'))
     curr_time += datetime.timedelta(minutes = 30)
   r['time_bins'] = time_bins
