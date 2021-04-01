@@ -26,7 +26,7 @@
 # import ast
 # type(ast.literal_eval('[1,2,3]')) # outputs: list
 
-# filtering df using a series
+# filtering df using a series, contains check. is in list .in() .contains()
 # occ_counts = df['occ'].value_counts()
 # top_occs = occ_counts[occ_counts >= 5].index
 # filtered_df = df[df['occ'].isin(top_occs)]
