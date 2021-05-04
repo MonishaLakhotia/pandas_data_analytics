@@ -55,6 +55,7 @@ mdf['exp'] = mdf['exp'].str.replace('\D+', '', regex=True, flags=re.I)
 # mdf['skill'] = mdf['skill'].apply(remove_exp)
 mdf['skill'] = mdf['skill'].str.replace('(.*)_exp$', '\\1', regex=True, flags=re.I)
 mdf['exp'] = mdf['exp'].astype('int')
+mdf = mdf.sort_values('skill_bin')
 
 # bplot = sns.barplot(x='character', y='exp', hue='skill_bin',
 #                     data=mdf)  # , palette=sns.color_palette('hls', 30))
@@ -82,10 +83,10 @@ mdf['exp'] = mdf['exp'].astype('int')
 # sns.set_style
 
 # good plotting for distribution of catagories
-# sns.catplot(x='skill', y='exp', data=mdf, hue='skill_bin').set_xticklabels(rotation=30)
+# sns.catplot(y='skill', x='exp', data=mdf, hue='skill_bin')
 # sns.violinplot(x='skill', y='exp', data=mdf)
 # sns.histplot(x='skill', y='exp', data=mdf)
-# sns.boxplot(x='skill', y='exp', data=mdf)
+# sns.boxplot(y='skill', x='exp', data=mdf)
 # sns.jointplot is good for numeric x,y scatter plot for checking bin relationships
 # plt.show()
 print(mdf.head(100))
@@ -97,7 +98,11 @@ exp_df: pd.DataFrame = df.loc[:,df.columns.isin(Enumerable(df.columns).where(lam
 # exp_df = exp_df.applymap(keep_digits).astype(int)
 exp_df = exp_df.replace('\D', '', regex=True).astype(int)
 mean_exp = exp_df.mean().astype(int)
-print(mean_exp)
+# print(mean_exp)
+# the number of skills within each skill_bin: Length of a group: groupby length
+print(mdf.groupby('skill_bin').apply(lambda x: len(x.skill.unique())))
+# the number of rows for each skill
+print(mdf.value_counts('skill'))
 # sns.heatmap(exp_df.corr())
 
 # plt.show()
