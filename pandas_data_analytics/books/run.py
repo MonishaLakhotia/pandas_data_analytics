@@ -41,7 +41,18 @@ def parse_products(r):
       r['book_number'] = None
   return r
 
-book_data = book_data.apply(parse_products, axis=1)
+# non pandas way
+# book_data = book_data.apply(parse_products, axis=1)
+
+# pandas way
+book_data[['book_title', 'book_series', 'book_number']] = book_data.Products\
+  .str.replace('(.+)\((.*)(?:Book|,)(.*?)\)', r'\1<:>\2<:>\3', regex=True, flags=re.I)\
+  .str.replace('(.+)(Box Set Books (.*):(.*))', r'\1<:>\4<:>\3', regex=True, flags=re.I)\
+  .str.split('<:>', expand=True)
+
+book_data[book_data['book_title'].isna()] = book_data['Products']
+for c in ['book_title', 'book_series', 'book_number']:
+  book_data[c] = book_data[c].str.strip()
 
 # sets display options for the dataframe
 pd.set_option('display.max_rows', book_data.shape[0]+1)
