@@ -25,7 +25,8 @@ setup(
         "seaborn",
         "py-linq",
         "pdfplumber",
-        "openpyxl"
+        "openpyxl",
+        "pyodbc"
     ],
     long_description=long_description,
     classifiers=[
