@@ -46,56 +46,33 @@ packages=find_packages(include=['pandas_data_analytics', 'pandas_data_analytics.
 >> in qtconsole ---> %run <path/to/pythonfile>
 
 # Cool Packages
-pipenv:
-[packages]
-scikit-mdr = "*"
-skrebate = "*"
-scikit-learn = "*"
-joblib = "*"
-pandas_data_analytics = {editable = true, path = "."}
-toml = "*"
-pdpipe = "*"
-numpy = "==1.19.3"
-pandas = "*"
-seaborn = "*"
-scipy = "*"
-nltk = "*"
-xgboost = "==1.1.0"
-plotly = "*"
-cufflinks = "*"
-py-linq = "*"
-jupyter = "*"
-jupyter-contrib-nbextensions = "*"
-qtconsole = "*"
-pyqt5 = "*"
-pdfplumber = "*"
-dask = {extras = ["complete"], version = "*"}
-openpyxl = "*"
+Data Science
+- pandas # dataframe
+- dask # chunks pandas dataframes for scaling. async utils aswell
+- sklearn
+- scikit-learn # sklearn helper
+- scikit-mdr # sklearn helper
+- skrebate # sklearn helper
+- numpy==1.19.3
+- scipy
+- xgboost==1.1.0 # gpu
+- nltk # Natural Language Toolkit
 
-pip:
-    install_requires=[
-        "sklearn",
-        "numpy==1.19.3",
-        "xgboost==1.1.0",
-        "scikit-mdr",
-        "skrebate",
-        "scikit-learn",
-        "joblib",
-        "pandas_data_analytics",
-        "toml",
-        "pdpipe",
-        "pandas",
-        "seaborn",
-        "scipy",
-        "nltk",
-        "plotly",
-        "cufflinks",
-        "py-linq",
-        "jupyter",
-        "jupyter-contrib-nbextensions",
-        "qtconsole",
-        "pyqt5",
-        "pdfplumber",
-        "dask",
-        "openpyxl"
-    ],
+Data Visualization
+- seaborn # charting
+- plotly # charting
+- cufflinks # charting
+
+Utilities
+- joblib # Pickling python Objects
+- toml # Config files
+- pdpipe # ml pipeline helper
+- openpyxl # read excel
+- py-linq # LINQ in python
+- pdfplumber # pdf reader
+
+Interactive (all required for launching an interactive shell)
+- jupyter
+- jupyter-contrib-nbextensions
+- qtconsole
+- pyqt5

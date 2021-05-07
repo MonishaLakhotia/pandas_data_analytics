@@ -12,6 +12,11 @@ seaborn = "*"
 py-linq = "*"
 pdfplumber = "*"
 openpyxl = "*"
+pyodbc = "*"
+qtconsole = "*"
+jupyter = "*"
+jupyter-contrib-nbextensions = "*"
+pyqt5 = "*"
 
 [dev-packages]
 pylint = "*"

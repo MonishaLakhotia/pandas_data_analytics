@@ -26,7 +26,11 @@ setup(
         "py-linq",
         "pdfplumber",
         "openpyxl",
-        "pyodbc"
+        "pyodbc",
+        "qtconsole",
+        "jupyter",
+        "jupyter-contrib-nbextensions",
+        "pyqt5"
     ],
     long_description=long_description,
     classifiers=[
