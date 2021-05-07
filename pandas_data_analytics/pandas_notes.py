@@ -3,6 +3,15 @@
 
 # https://www.kaggle.com/herozerp/viz-rule-mining-for-groceries-dataset
 
+# Show installed versions
+# Shows pandas version
+# pd.___version__
+# Shows all dependency versions
+# pd.show_versions()
+
+# unique entries in a Series
+# df.col_name.unique()
+
 # shows number of nan/null values per column
 # df.isna().sum()
 
@@ -37,12 +46,19 @@
 # reverse column order
 # df.loc[:, ::-1]
 
+# loc info
+# df.loc[<row_selector>, <column_selector>]
+
 # select columns by data type
 # df.select_dtype(include='number')
 # df.select_dtype(include=['number', 'category'])
 # df.select_dtype(exclude=['number', 'category'])
 
 # convert string to numbers with strings that do not look like numbers converted to NAN
+# for 1 column
+# pd.to_numeric(df['col'], errors='coerce')
+# for all columns and fills NaN with 0
+# df.apply(pd.to_numeric, errors='coerce').fillna(0)
 # pd.to_numeric(df['col'], errors='coerce')
 
 # memory reduction step
@@ -53,7 +69,7 @@
 # memory reduction step
 # specify categories up front
 # cols = ['a', 'b']
-# dtypes = {'a', 'category'}
+# dtypes = {'a: 'category'}
 # df = pd.read_csv('path/to/csv.csv', usecols=cols, dtype=dtypes)
 
 # show memory usage of df
@@ -118,7 +134,7 @@
 # df.groupby(['Sex', 'Pclass'])['Survived'].mean()
 # df.groupby(['Sex', 'Pclass'])['Survived'].mean().unstack()
 
-# create a pivot table
+# create a pivot table like performing the unstack above!!
 # df.pivot_table(index='Sex', columns='Pclass', values='Survived', aggfunc='mean')
 # shows overall survival rate aswell
 # df.pivot_table(index='Sex', columns='Pclass', values='Survived', aggfunc='mean', margins=True)
@@ -128,7 +144,8 @@
 
 # change display options
 # all floats will use 2 dec places
-# pd.set_option('display.float_format', '{:f}'.format)
+# pd.set_option('display.float_format', '{:.2f}'.format)
+# resets the float format back to default
 # pd.reset_option('display.float_format')
 
 # style a dataframe
@@ -186,6 +203,15 @@
 #                 )
 # df['datetime'] = pd.to_datetime(df)
 # df['date'] = pd.to_datetime(df[['month', 'day', 'year']])
+
+# overwrite the index .index
+# df.index = df.col_num
+
+# convert data types multiple rows at once, astype()
+# df = df.astype({'colA':'float', 'colB':'float'})
+
+# .agg() works on groupby, series, and dataframe!
+# .agg() on dataframe can be a more flexible replacement to .describe() bcuz you can give custom fns to .agg()
 
 
 
