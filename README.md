@@ -46,33 +46,126 @@ packages=find_packages(include=['pandas_data_analytics', 'pandas_data_analytics.
 >> in qtconsole ---> %run <path/to/pythonfile>
 
 # Cool Packages
-Data Science
-- pandas # dataframe
-- dask # chunks pandas dataframes for scaling. async utils aswell
-- sklearn
-- scikit-learn # sklearn helper
-- scikit-mdr # sklearn helper
-- skrebate # sklearn helper
-- numpy==1.19.3
-- scipy
-- xgboost==1.1.0 # gpu
-- nltk # Natural Language Toolkit
+## Data Science
+<table style="width:100%">
+  <tr>
+    <th>Package</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>pandas</td>
+    <td>dataframe</td>
+  </tr>
+  <tr>
+    <td>dask</td>
+    <td>chunks pandas dataframes for scaling. async utils aswell</td>
+  </tr>
+  <tr>
+    <td>sklearn</td>
+    <td>TODO</td>
+  </tr>
+  <tr>
+    <td>scikit-learn</td>
+    <td>sklearn helper</td>
+  </tr>
+  <tr>
+    <td>scikit-mdr</td>
+    <td>sklearn helper</td>
+  </tr>
+  <tr>
+    <td>skrebate</td>
+    <td> sklearn helper</td>
+  </tr>
+  <tr>
+    <td>numpy==1.19.3</td>
+    <td>TODO</td>
+  </tr>
+  <tr>
+    <td>scipy</td>
+    <td>TODO</td>
+  </tr>
+  <tr>
+    <td>xgboost==1.1.0</td>
+    <td>gpu</td>
+  </tr>
+  <tr>
+    <td>nltk</td>
+    <td>Natural Language Toolkit</td>
+  </tr>
+</table>
 
-Data Visualization
-- seaborn # charting
-- plotly # charting
-- cufflinks # charting
+## Data Visualization
+<table style="width:100%">
+  <tr>
+    <th>Package</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>seaborn</td>
+    <td>charting</td>
+  </tr>
+  <tr>
+    <td>plotly</td>
+    <td>charting</td>
+  </tr>
+  <tr>
+    <td>cufflinks</td>
+    <td>charting</td>
+  </tr>
+</table>
 
-Utilities
-- joblib # Pickling python Objects
-- toml # Config files
-- pdpipe # ml pipeline helper
-- openpyxl # read excel
-- py-linq # LINQ in python
-- pdfplumber # pdf reader
+## Utilities
+<table style="width:100%">
+  <tr>
+    <th>Package</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>joblib</td>
+    <td>Pickling python Objects</td>
+  </tr>
+  <tr>
+    <td>toml</td>
+    <td>Config files</td>
+  </tr>
+  <tr>
+    <td>pdpipe</td>
+    <td>ml pipeline helper</td>
+  </tr>
+  <tr>
+    <td>openpyxl</td>
+    <td>read excel</td>
+  </tr>
+  <tr>
+    <td>py-linq</td>
+    <td>LINQ in python</td>
+  </tr>
+  <tr>
+    <td>pdfplumber</td>
+    <td>pdf reader</td>
+  </tr>
+</table>
 
-Interactive (all required for launching an interactive shell)
-- jupyter
-- jupyter-contrib-nbextensions
-- qtconsole
-- pyqt5
+## Interactive (all required for launching an interactive shell)
+<table style="width:100%">
+  <tr>
+    <th>Package</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>jupyter</td>
+    <td>TODO</td>
+  </tr>
+  <tr>
+    <td>jupyter-contrib-nbextensions</td>
+    <td>TODO</td>
+  </tr>
+  <tr>
+    <td>qtconsole</td>
+    <td>TODO</td>
+  </tr>
+  <tr>
+    <td>pyqt5</td>
+    <td>TODO</td>
+  </tr>
+</table>
