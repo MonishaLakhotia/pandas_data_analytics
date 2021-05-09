@@ -5,18 +5,11 @@ Data sources vary from kaggle.com and personally web scrapped. Formats vary from
 
 # To build project:
 
-requires pipenv(or pip), python 3.8
+requires:
+- pip or pipenv
+- python 3.8
 
 ## In project root (All of these package manager commands):
-
-## With pipenv
-### startup
-> pipenv shell
-### install dependencies
-> pipenv install -e .
-
-### tear down
-> deactivate
 
 ## With pip
 ### install wheel with pip - still unsure how to get wheel message during install to go away
@@ -32,6 +25,16 @@ pip install wheel
 
 ### tear down
 > deactivate
+
+## With pipenv
+### startup
+> pipenv shell
+### install dependencies
+> pipenv install -e .
+
+### tear down
+> deactivate
+
 
 ## Run some code
 > python <filename>
