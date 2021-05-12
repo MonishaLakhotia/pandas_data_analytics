@@ -3,6 +3,14 @@ An area for exploratory data science; to clean, analyze, and visualize data.
 
 Data sources vary from kaggle.com and personally web scrapped. Formats vary from csv, excel, json, and sql.
 
+# Data
+The data sources are generally ignored by git.
+
+Some are from kaggle and the config.toml of most of the projects will mention the url the data is from.
+
+Some of the data is personally scrapped using webscrapper.io. See my web_scraper_io_scripts repo for how to scrap this
+data yourself.
+
 # To build project:
 
 requires:
