@@ -33,6 +33,7 @@ sns.set_theme()
 # )
 # print(df['Platform'].unique())
 
+# creating bins in a dynamic way based on the min and max values and in steps of 5
 bins = np.linspace(df['Global_Sales'].min(), df['Global_Sales'].max(),  5)
 df['Global_Sales_Bin'] = pd.cut(df['Global_Sales'], bins=bins)  # .astype(str)
 

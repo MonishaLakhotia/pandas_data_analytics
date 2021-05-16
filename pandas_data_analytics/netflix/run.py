@@ -23,7 +23,6 @@ df.date_added = pd.to_datetime(df.date_added)
 df['year_added'] = df.date_added.dt.year.astype('Int64').astype('category')
 df.release_year = df.release_year.astype('category')
 df.rating = df.rating.astype('category')
-# amazing!!! converts datatypes as best it can
 # string nan values become <NA>, still a rep for nan
 pd.set_option('display.max_rows', df.shape[0]+1)
 

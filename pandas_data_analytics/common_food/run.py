@@ -29,9 +29,9 @@ for c in nums:
 
 df['cal_per_gram'] = df.calories / df.grams
 
+# set pandas dataframe options
 pd.set_option('display.max_rows', df.shape[0]+1)
 pd.set_option('display.max_columns', df.shape[1]+1)
-
 pd.set_option('display.width', 1000)
 
 pdf = df

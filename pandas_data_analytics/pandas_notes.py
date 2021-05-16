@@ -223,6 +223,9 @@
 # drinks = pd.read_csv('http://bit.ly/drinksbycountry')
 # drinks.loc[:, 'beer_servings':'wine_servings'].apply(np.argmax, axis=1)
 
+# creating bins in a dynamic way based on the min and max values and in steps of 5
+# bins = np.linspace(df['Global_Sales'].min(), df['Global_Sales'].max(),  5)
+
 
 
 #### QT CONSOLE #####
