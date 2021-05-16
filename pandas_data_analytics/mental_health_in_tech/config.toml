@@ -1,1 +1,2 @@
 file_locations.data = "data/mental_health.sqlite"
+data_notes = "data from kaggle: https://www.kaggle.com/osmi/mental-health-in-tech-survey"

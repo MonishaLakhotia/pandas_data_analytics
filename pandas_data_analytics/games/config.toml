@@ -1,4 +1,2 @@
-file_locations.model = "pickles/model.pkl"
-file_locations.pipeline = "pickles/pipeline.pkl"
-file_locations.training_data = "data/vgsales.csv"
-file_locations.user_query = "data/user_query.csv"
+file_locations.data = "data/vgsales.csv"
+data_notes = "data from kaggle: https://www.kaggle.com/gregorut/videogamesales"

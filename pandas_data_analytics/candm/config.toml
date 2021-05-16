@@ -1,2 +1,3 @@
 file_locations.raw = "data/c_and_m_listings.csv"
 file_locations.clean = "data/c_and_m_listings_clean.csv"
+data_notes = "data webscraped from c and m music of lafayette's reverb store listing"

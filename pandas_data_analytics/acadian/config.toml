@@ -1,1 +1,2 @@
 file_locations.training_data = "data/projs.csv"
+data_notes = "data web scraped from bitbucket"

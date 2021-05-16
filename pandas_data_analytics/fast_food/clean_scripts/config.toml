@@ -11,3 +11,4 @@ file_locations.clean_nourish_worst_rest = "all_data/cleaned_data/nourish_worst_r
 file_locations.raw_taco_bell = "all_data/scraped_data/taco_bell_menu.csv"
 file_locations.clean_taco_bell = "all_data/cleaned_data/taco_bell_menu.csv"
 file_locations.clean_all_data = "all_data/all_data_glued.csv"
+data_notes = "data webscraped from various food menus"
