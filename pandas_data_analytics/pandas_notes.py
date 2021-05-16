@@ -213,6 +213,10 @@
 # .agg() works on groupby, series, and dataframe!
 # .agg() on dataframe can be a more flexible replacement to .describe() bcuz you can give custom fns to .agg()
 
+# get the column with the max value in a row
+# drinks = pd.read_csv('http://bit.ly/drinksbycountry')
+# drinks.loc[:, 'beer_servings':'wine_servings'].apply(np.argmax, axis=1)
+
 
 
 #### QT CONSOLE #####
