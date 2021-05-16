@@ -24,11 +24,8 @@ pd.set_option('display.max_rows', df.shape[0]+1)
 pd.set_option('display.max_columns', df.shape[1]+1)
 
 ps = (lambda pdf: Enumerable([
-  # lambda: pdf[['name']],
   lambda: pdf.columns,
   lambda: pdf.sample(10),
-  # lambda: pdf[['food', 'cal_per_gram', 'category']].groupby('category').food.agg(list),
-  # lambda: pdf.category.value_counts(),
 ]))(df)
 u.foreach(lambda f: print(f()),ps)
 

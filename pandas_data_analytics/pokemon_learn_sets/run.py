@@ -20,10 +20,7 @@ def main():
     dup_rows = len(pdf[pdf.duplicated()].index.value_counts())
     percent_duped = (dup_rows / total_rows) * 100
     ps = Enumerable([
-      # lambda: pdf[~(pdf.year_added == pdf.release_year)].sample(5),
       # lambda: pdf.isna().mean().sort_values(ascending=False),
-      # lambda: pdf[pdf.name.str.contains('Salad', flags = re.I)].name,
-      # lambda: pdf.groupby('food_cat').carbs_marco_ratio.count(),
       lambda: pdf.columns,
       lambda: total_rows,
       lambda: unique_rows,
@@ -33,7 +30,6 @@ def main():
       # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).drop([], axis=1).sample(5),
       # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).sample(5),
       # lambda: pdf[pdf.duplicated()].sort_values(['name', 'generation'])
-      # lambda: pdf.sort_values('calories')
     ])
     u.foreach(lambda f: print(f()),ps)
 

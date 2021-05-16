@@ -12,6 +12,12 @@
 # unique entries in a Series
 # df.col_name.unique()
 
+# show the dataframe column types
+# df.dtypes
+
+# show the dataframe shape, the number of columns and rows
+# df.shape
+
 # shows number of nan/null values per column
 # df.isna().sum()
 

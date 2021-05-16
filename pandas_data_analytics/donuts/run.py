@@ -5,9 +5,7 @@ from pandas_data_analytics import *
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
-import functools as ft
 from py_linq import Enumerable
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
@@ -30,13 +28,7 @@ def food_binner(s):
 ps = (lambda pdf, field: Enumerable([
   # lambda: pdf.sample(5),
   # lambda: pdf.dtypes,
-  # lambda: genre_df.genre.value_counts(normalize=True),
-  # lambda: genre_df.groupby('year_added').genre.value_counts(normalize=True),
-  # lambda: pdf[field].value_counts(dropna=False, normalize=True),
-  # lambda: len(pdf[field].unique()),
-  # lambda: pdf[~(pdf.year_added == pdf.release_year)].sample(5),
   lambda: pdf.groupby('company').calories.agg(['mean', 'std']),
-  # lambda: df[['director', 'title']],
   lambda: pdf.columns
 ]))(df, 'country')
 u.foreach(lambda f: print(f()),ps)

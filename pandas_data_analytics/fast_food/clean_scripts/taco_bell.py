@@ -24,11 +24,8 @@ pd.set_option('display.max_columns', df.shape[1]+1)
 
 pdf = df
 ps = Enumerable([
-  # lambda: pdf[['name']],
   lambda: pdf.columns,
   lambda: pdf,
-  # lambda: pdf[['food', 'cal_per_gram', 'category']].groupby('category').food.agg(list),
-  # lambda: pdf.category.value_counts(),
 ])
 u.foreach(lambda f: print(f()),ps)
 

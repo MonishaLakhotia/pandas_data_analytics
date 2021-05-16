@@ -32,13 +32,6 @@ pd.set_option('display.max_rows', df.shape[0]+1)
 pd.set_option('display.max_columns', df.shape[1]+1)
 df.dropna(how='any', inplace=True)
 
-# def f(s):
-#   print(s)
-#   if(s == np.nan):
-#     return s
-#   return np.nan if(re.match('Loading...',s,re.I))\
-#     else s
-# df.name = df.name.apply(f)
 df = df[['food_cat', 'name', 'calories','fat','protein','carbs']]
 
 def salad_bin(r):
@@ -53,9 +46,6 @@ mdf = pd.melt(df, id_vars=['food_cat', 'name'], value_vars=['protein', 'carbs', 
 
 pdf = df
 ps = Enumerable([
-  # lambda: pdf[~(pdf.year_added == pdf.release_year)].sample(5),
-  # lambda: pdf.isna().mean().sort_values(ascending=False),
-  # lambda: df[['director', 'title']],
   # lambda: pdf[pdf.name.str.contains('Salad', flags = re.I)].name,
   # lambda: pdf.groupby('food_cat').carbs_marco_ratio.count(),
   lambda: pdf.columns,

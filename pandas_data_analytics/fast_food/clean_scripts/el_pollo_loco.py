@@ -37,7 +37,6 @@ df['protein_units'] = 'g'
 df['carb_units'] = 'g'
 
 ps = (lambda pdf: Enumerable([
-  # lambda: pdf[['name']],
   lambda: pdf.columns,
   lambda: pdf.serving_size_units.value_counts(dropna=False),
   lambda: pdf.sample(10),

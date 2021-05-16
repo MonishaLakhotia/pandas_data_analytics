@@ -73,7 +73,6 @@ aplot = sns.boxplot(y='date_range', x='calories', data=df)
 # aplot = sns.lineplot(x='date', y='muscle_weight', data=df)
 # aplot = sns.lineplot(x='date', y='body_fat_weight', data=df)
 # aplot = sns.lineplot(x='date', y='other_weight', data=df)
-# aplot = sns.barplot(x='')
 
 # General plot stuff
 plt.show()

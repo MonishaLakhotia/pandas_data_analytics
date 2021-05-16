@@ -1,12 +1,9 @@
 import pandas_data_analytics.utils as u
-import pandas_profiling
 import toml
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import numpy as np
-import functools as ft
 from py_linq import Enumerable
 import re
 from glob import glob
@@ -38,6 +35,5 @@ def main():
     # u.general_df_stats(df)
     print(df.dtypes)
     # print(df.groupby('brand').agg(['count', 'mean']))
-
 
 main()

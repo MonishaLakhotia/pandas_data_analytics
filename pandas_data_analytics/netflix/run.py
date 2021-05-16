@@ -68,11 +68,8 @@ def country_df_sup():
 pdf = genre_df_sup()
 field = 'country'
 ps = Enumerable([
-  # lambda: pdf.sample(5),
-  # lambda: pdf.dtypes,
   # lambda: genre_df.genre.value_counts(normalize=True),
   # lambda: genre_df.groupby('year_added').genre.value_counts(normalize=True),
-  # lambda: pdf[field].value_counts(dropna=False, normalize=True),
   # lambda: len(pdf[field].unique()),
   # lambda: pdf[~(pdf.year_added == pdf.release_year)].sample(5),
   lambda: pdf.isna().mean().sort_values(ascending=False),
