@@ -13,8 +13,10 @@ def foreach(action, iterable):
         action(element)
 
 def set_full_paths(config, directory):
-    for key, value in config['file_locations'].items():
-        config['file_locations'][key] = os.path.join(directory, value)
+    file_locations = config.get('file_locations', None)
+    if(file_locations):
+        for key, value in config['file_locations'].items():
+            config['file_locations'][key] = os.path.join(directory, value)
 
 def general_df_stats(df):
     def count_of_unique_members_per_column(df):

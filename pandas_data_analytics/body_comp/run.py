@@ -53,9 +53,6 @@ ps = Enumerable([
   # lambda: pdf.describe(include='all', datetime_is_numeric=True),
   # lambda: pdf.sample(5),
   # lambda: monthly_summaries_df,
-  # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).drop([], axis=1).sample(5),
-  # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).sample(5),
-  # lambda: pdf[movesdf.duplicated()].sort_values(['name', 'generation'])
   # lambda: pdf.sort_values('calories')
 ])
 u.foreach(lambda f: print(f()),ps)
