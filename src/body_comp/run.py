@@ -3,7 +3,7 @@ from py_linq import Enumerable
 import matplotlib.pyplot as plt
 import os
 import pandas as pd
-import pandas_data_analytics.utils as u
+import src.utils as u
 import re
 import seaborn as sns
 import toml

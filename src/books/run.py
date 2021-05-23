@@ -1,7 +1,7 @@
 from glob import glob
 import os
 import pandas as pd
-import pandas_data_analytics.utils as u
+import src.utils as u
 import re
 import toml
 

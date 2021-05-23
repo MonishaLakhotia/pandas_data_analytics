@@ -3,7 +3,7 @@ import json
 import numpy as np
 import os
 import pandas as pd
-import pandas_data_analytics.utils as u
+import src.utils as u
 import re
 import seaborn as sns
 import toml

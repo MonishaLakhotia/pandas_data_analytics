@@ -1,4 +1,4 @@
-import pandas_data_analytics.utils as u
+import src.utils as u
 import toml
 from pandas_data_analytics import *
 import os

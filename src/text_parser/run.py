@@ -2,7 +2,7 @@ import pdfplumber
 from py_linq import Enumerable
 import toml
 import os
-import pandas_data_analytics.utils as u
+import src.utils as u
 from pandas_data_analytics.text_parser.parser import Parser
 import re
 import pandas_data_analytics.text_parser.utils as tu
