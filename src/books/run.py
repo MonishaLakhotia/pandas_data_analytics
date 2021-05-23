@@ -1,7 +1,7 @@
 from glob import glob
 import os
 import pandas as pd
-import pandas_data_analytics.utils as u
+import src.utils as u
 import re
 import toml
 
@@ -23,8 +23,10 @@ book_data: pd.DataFrame = pd.concat((pd.read_csv(file) for file in files), ignor
 
 # function to parse the product field
 # parse_products : row -> row
+
+
 def parse_products(r):
-  m = re.search('(.+)\((.*)(?:Book|,)(.*?)\)', r['Products'], re.I)
+  m = re.search('(.+)\\((.*)(?:Book|,)(.*?)\\)', r['Products'], re.I)
   if m:
     r['book_title'] = m.group(1).strip()
     r['book_series'] = m.group(2).strip()
@@ -44,9 +46,10 @@ def parse_products(r):
 # non pandas way
 # book_data = book_data.apply(parse_products, axis=1)
 
+
 # pandas way
 book_data[['book_title', 'book_series', 'book_number']] = book_data.Products\
-  .str.replace('(.+)\((.*)(?:Book|,)(.*?)\)', r'\1<:>\2<:>\3', regex=True, flags=re.I)\
+  .str.replace('(.+)\\((.*)(?:Book|,)(.*?)\\)', r'\1<:>\2<:>\3', regex=True, flags=re.I)\
   .str.replace('(.+)(Box Set Books (.*):(.*))', r'\1<:>\4<:>\3', regex=True, flags=re.I)\
   .str.split('<:>', expand=True)
 
@@ -55,7 +58,7 @@ for c in ['book_title', 'book_series', 'book_number']:
   book_data[c] = book_data[c].str.strip()
 
 # sets display options for the dataframe
-pd.set_option('display.max_rows', book_data.shape[0]+1)
+pd.set_option('display.max_rows', book_data.shape[0] + 1)
 pd.set_option('display.max_columns', 10000)
 pd.set_option('display.max_colwidth', 200)
 
@@ -66,7 +69,7 @@ ps = [
   # lambda: pdf.Products.sort_values()
   # lambda: pdf.dtypes,
 ]
-u.foreach(lambda f: print(f()),ps)
+u.foreach(lambda f: print(f()), ps)
 
 # Write the cleaned data to a file
 book_data.to_csv(config['file_locations']['cleaned_data'], index=False)

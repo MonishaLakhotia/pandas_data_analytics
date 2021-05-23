@@ -1,4 +1,4 @@
-import pandas_data_analytics.utils as u
+import src.utils as u
 import re
 import toml
 from pandas_data_analytics import *
@@ -18,30 +18,42 @@ csv_loc = config['file_locations']['raw_nourish_7and7']
 df: pd.DataFrame = pd.read_csv(csv_loc)
 df.columns = df.columns.str.lower()
 
+
 def get_thing(s, phrase):
-  m = re.search(phrase,s)
+  m = re.search(phrase, s)
   return m.group(1) if m is not None\
-    else np.nan
+      else np.nan
+
+
 def get_sodium(s):
-  m = get_thing(s, '(\d+[\d,\.]+)[\sa-zA-Z]*?sodium')
+  m = get_thing(s, '(\\d+[\\d,\\.]+)[\\sa-zA-Z]*?sodium')
   return m if not pd.isna(m)\
-    else get_thing(s, 'sodium[\sa-zA-Z]\((\d+[\d,\.]+)[\sa-zA-Z]*?\)')
+      else get_thing(s, 'sodium[\\sa-zA-Z]\\((\\d+[\\d,\\.]+)[\\sa-zA-Z]*?\\)')
+
+
 def get_sat_fat(s):
-  m = get_thing(s, '(\d+[\d,\.]+)[\sa-zA-Z]*?saturated fat')
+  m = get_thing(s, '(\\d+[\\d,\\.]+)[\\sa-zA-Z]*?saturated fat')
   return m if not pd.isna(m)\
-    else get_thing(s, 'saturated fat[\sa-zA-Z]\((\d+[\d,\.]+)[\sa-zA-Z]*?\)')
+      else get_thing(s, 'saturated fat[\\sa-zA-Z]\\((\\d+[\\d,\\.]+)[\\sa-zA-Z]*?\\)')
+
+
 def get_fat(s):
-  m = get_thing(s, '(\d+[\d,\.]+)[\sa-zA-Z]*?fat')
+  m = get_thing(s, '(\\d+[\\d,\\.]+)[\\sa-zA-Z]*?fat')
   return m if not pd.isna(m)\
-    else get_thing(s, 'fat \((\d+[\d,\.]+)[\sa-zA-Z]*?\)')
+      else get_thing(s, 'fat \\((\\d+[\\d,\\.]+)[\\sa-zA-Z]*?\\)')
+
+
 def get_calories(s):
-  m = get_thing(s, '(\d+[\d,\.]+)[\sa-zA-Z]*?calories')
+  m = get_thing(s, '(\\d+[\\d,\\.]+)[\\sa-zA-Z]*?calories')
   return m if not pd.isna(m)\
-    else get_thing(s, 'calories[\sa-zA-Z]\((\d+[\d,\.]+)[\sa-zA-Z]*?\)')
+      else get_thing(s, 'calories[\\sa-zA-Z]\\((\\d+[\\d,\\.]+)[\\sa-zA-Z]*?\\)')
+
+
 def get_sugar(s):
-  m = get_thing(s, '(\d+[\d,\.]+)[\sa-zA-Z]*?sugar')
+  m = get_thing(s, '(\\d+[\\d,\\.]+)[\\sa-zA-Z]*?sugar')
   return m if not pd.isna(m)\
-    else get_thing(s, 'sugar[\sa-zA-Z]\((\d+[\d,\.]+)[\sa-zA-Z]*?\)')
+      else get_thing(s, 'sugar[\\sa-zA-Z]\\((\\d+[\\d,\\.]+)[\\sa-zA-Z]*?\\)')
+
 
 def get_company(s):
   m = re.search('^(.*?):', s, re.I)
@@ -49,12 +61,13 @@ def get_company(s):
     return m.group(1)
   return np.nan
 
-for (label, fn) in [\
-  ('calories', get_calories),\
-  ('sodium_in_milligrams', get_sodium),\
-  ('sat_fat_in_grams', get_sat_fat),\
-  ('fat_in_grams', get_fat)\
-    ]:
+
+for (label, fn) in [
+  ('calories', get_calories),
+  ('sodium_in_milligrams', get_sodium),
+  ('sat_fat_in_grams', get_sat_fat),
+  ('fat_in_grams', get_fat)
+]:
   df[label] = df.descr.apply(fn).str.replace(',', '')
 
 df['company'] = df.name.apply(get_company).str.replace('\'', '').str.replace('’', '')
@@ -62,8 +75,8 @@ df.name = df.other_name_from_body
 
 df.drop(['other_name_from_body', 'web-scraper-order', 'web-scraper-start-url'], inplace=True, axis=1)
 
-pd.set_option('display.max_rows', df.shape[0]+1)
-pd.set_option('display.max_columns', df.shape[1]+1)
+pd.set_option('display.max_rows', df.shape[0] + 1)
+pd.set_option('display.max_columns', df.shape[1] + 1)
 
 df['sodium_units'] = 'mg'
 df['fat_units'] = 'g'
@@ -75,6 +88,6 @@ ps = Enumerable([
   lambda: pdf.columns,
   lambda: pdf,
 ])
-u.foreach(lambda f: print(f()),ps)
+u.foreach(lambda f: print(f()), ps)
 
 df.to_csv(config['file_locations']['clean_nourish_7and7'], index=False)

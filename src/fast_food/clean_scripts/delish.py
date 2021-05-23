@@ -1,4 +1,4 @@
-import pandas_data_analytics.utils as u
+import src.utils as u
 import re
 import toml
 from pandas_data_analytics import *
@@ -15,38 +15,44 @@ config = toml.load(os.path.join(this_dir, 'config.toml'))
 u.set_full_paths(config, this_dir)
 csv_loc = config['file_locations']['raw_delish']
 
+
 def get_thing(s, phrase):
-  m = re.search(phrase,s)
+  m = re.search(phrase, s)
   return m.group(1) if m is not None\
-    else np.nan
+      else np.nan
+
 
 def get_sodium(s):
-  return get_thing(s, '([,\d]+) [a-zA-Z\s]+ sodium')
+  return get_thing(s, '([,\\d]+) [a-zA-Z\\s]+ sodium')
+
 
 def get_sat_fat(s):
-  return get_thing(s, '([,\d]+) [a-zA-Z\s]+ saturated fat')
+  return get_thing(s, '([,\\d]+) [a-zA-Z\\s]+ saturated fat')
+
 
 def get_trans_fat(s):
-  return get_thing(s, '([,\d]+) [a-zA-Z\s]+ trans fat')
+  return get_thing(s, '([,\\d]+) [a-zA-Z\\s]+ trans fat')
+
 
 def get_calories(s):
-  return get_thing(s, '([,\d]+) calories')
+  return get_thing(s, '([,\\d]+) calories')
+
 
 df: pd.DataFrame = pd.read_csv(csv_loc)
 df.columns = df.columns.str.lower()
 df.drop(['web-scraper-order', 'web-scraper-start-url'], inplace=True, axis=1)
 df['company'] = df.name.str.split(':', expand=True)[0]
 df['name'] = df.name.str.split(':').apply(lambda l: ':'.join(l[1:])).str.strip()
-for (label, fn) in [\
-  ('calories', get_calories),\
-  ('sodium_in_milligrams', get_sodium),\
-  ('trans_fat_in_grams', get_trans_fat),\
-  ('sat_fat_in_grams', get_sat_fat)\
-    ]:
+for (label, fn) in [
+  ('calories', get_calories),
+  ('sodium_in_milligrams', get_sodium),
+  ('trans_fat_in_grams', get_trans_fat),
+  ('sat_fat_in_grams', get_sat_fat)
+]:
   df[label] = df.nutrition.apply(fn).str.replace(',', '')
 
-pd.set_option('display.max_rows', df.shape[0]+1)
-pd.set_option('display.max_columns', df.shape[1]+1)
+pd.set_option('display.max_rows', df.shape[0] + 1)
+pd.set_option('display.max_columns', df.shape[1] + 1)
 
 df['sodium_units'] = 'mg'
 df['trans_fat_units'] = 'g'
@@ -61,7 +67,7 @@ ps = (lambda pdf: Enumerable([
   # lambda: pdf.category.value_counts(),
 ]))(df)
 
-u.foreach(lambda f: print(f()),ps)
+u.foreach(lambda f: print(f()), ps)
 
 df.drop('nutrition', inplace=True, axis=1)
 # df.to_csv(config['file_locations']['clean_delish'], index=False)

@@ -1,4 +1,4 @@
-import pandas_data_analytics.utils as u
+import src.utils as u
 import re
 import toml
 from pandas_data_analytics import *
@@ -29,8 +29,8 @@ for c in nums:
 
 df['cal_per_gram'] = df.calories / df.grams
 
-pd.set_option('display.max_rows', df.shape[0]+1)
-pd.set_option('display.max_columns', df.shape[1]+1)
+pd.set_option('display.max_rows', df.shape[0] + 1)
+pd.set_option('display.max_columns', df.shape[1] + 1)
 
 
 ps = (lambda pdf: Enumerable([
@@ -39,7 +39,7 @@ ps = (lambda pdf: Enumerable([
   lambda: pdf[['food', 'cal_per_gram', 'category']].groupby('category').food.agg(list),
 ]))(df)
 
-u.foreach(lambda f: print(f()),ps)
+u.foreach(lambda f: print(f()), ps)
 
 # df.to_csv(config['file_locations']['clean_data'])
 

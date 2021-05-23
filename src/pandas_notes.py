@@ -37,7 +37,7 @@
 # group by stuff -- NOTE: count is the number of rows per group
 # df.groupby('event')['views'].agg['count', 'mean', 'sum'].sort_values('sum')
 
-# a safer eval to parse a string 
+# a safer eval to parse a string
 # import ast
 # type(ast.literal_eval('[1,2,3]')) # outputs: list
 
@@ -227,16 +227,15 @@
 # bins = np.linspace(df['Global_Sales'].min(), df['Global_Sales'].max(),  5)
 
 
-
 #### QT CONSOLE #####
 # allows more space for column contents
 # pd.set_option('display.max_colwidth', 200)
 
 # themes:
 # dark
-  # ink-plot
-  # monokai
-  # stata-dark
-  # parais-dark
+# ink-plot
+# monokai
+# stata-dark
+# parais-dark
 # light
-  # perl-doc
+# perl-doc

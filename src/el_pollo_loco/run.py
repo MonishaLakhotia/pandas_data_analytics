@@ -1,4 +1,4 @@
-import pandas_data_analytics.utils as u
+import src.utils as u
 import re
 import toml
 from pandas_data_analytics import *
@@ -28,21 +28,34 @@ df = df.convert_dtypes()
 df.fat = df.fat.astype('Int64')
 df.protein = df.protein.astype('Int64')
 df.carbs = df.carbs.astype('Int64')
-pd.set_option('display.max_rows', df.shape[0]+1)
-pd.set_option('display.max_columns', df.shape[1]+1)
+pd.set_option('display.max_rows', df.shape[0] + 1)
+pd.set_option('display.max_columns', df.shape[1] + 1)
 df.dropna(how='any', inplace=True)
 
-df = df[['food_cat', 'name', 'calories','fat','protein','carbs']]
+df = df[['food_cat', 'name', 'calories', 'fat', 'protein', 'carbs']]
+
 
 def salad_bin(r):
   food_cat = "salad" if re.search('salad', r['name'], re.I) else\
     r['food_cat']
   r['food_cat'] = food_cat
   return r
+
+
 # df = df.apply(salad_bin, axis=1)
 df['carbs_marco_ratio'] = df.carbs / (df.carbs + df.protein + df.fat)
 
-mdf = pd.melt(df, id_vars=['food_cat', 'name'], value_vars=['protein', 'carbs', 'fat'], value_name='grams', var_name='gram_category')
+mdf = pd.melt(
+  df,
+  id_vars=[
+    'food_cat',
+    'name'],
+    value_vars=[
+      'protein',
+      'carbs',
+      'fat'],
+    value_name='grams',
+    var_name='gram_category')
 
 pdf = df
 ps = Enumerable([
@@ -52,7 +65,7 @@ ps = Enumerable([
   # lambda: pdf.sort_values('calories')
 ])
 
-u.foreach(lambda f: print(f()),ps)
+u.foreach(lambda f: print(f()), ps)
 # df.to_csv(config['file_locations']['data'])
 
 # Apply the default theme

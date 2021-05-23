@@ -1,4 +1,4 @@
-import pandas_data_analytics.utils as u
+import src.utils as u
 import re
 import toml
 from pandas_data_analytics import *
@@ -30,8 +30,8 @@ for c in nums:
 df['cal_per_gram'] = df.calories / df.grams
 
 # set pandas dataframe options
-pd.set_option('display.max_rows', df.shape[0]+1)
-pd.set_option('display.max_columns', df.shape[1]+1)
+pd.set_option('display.max_rows', df.shape[0] + 1)
+pd.set_option('display.max_columns', df.shape[1] + 1)
 pd.set_option('display.width', 1000)
 
 pdf = df
@@ -42,12 +42,13 @@ ps = Enumerable([
   # lambda: pdf[['food', 'cal_per_gram']].sort_values('cal_per_gram'),
   lambda: pdf.category.value_counts(),
   lambda: pdf.groupby('category').apply(lambda x:\
-    x.nlargest(n=5,columns='cal_per_gram'))[['food', 'cal_per_gram']]
-  # lambda: df[df['food'].str.contains("milk", flags=re.I)][['food', 'category']]['category'].value_counts() #.groupby('category').count(),
+                                        x.nlargest(n=5, columns='cal_per_gram'))[['food', 'cal_per_gram']]
+  # lambda: df[df['food'].str.contains("milk", flags=re.I)][['food',
+  # 'category']]['category'].value_counts() #.groupby('category').count(),
 ])
 # g = df.groupby(['id']).apply(lambda x: x.nlargest(topk,['value'])).reset_index(drop=True)
 
-u.foreach(lambda f: print(f()),ps)
+u.foreach(lambda f: print(f()), ps)
 # df.to_csv(config['file_locations']['clean_data'])
 
 # Apply the default theme

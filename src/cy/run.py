@@ -1,7 +1,7 @@
 from glob import glob
 import os
 import pandas as pd
-import pandas_data_analytics.utils as u
+import src.utils as u
 import re
 import toml
 from ast import literal_eval
@@ -20,7 +20,7 @@ df.columns = df.columns.str.strip()
 # print(df.dtypes)
 
 # sets display options for the dataframe
-pd.set_option('display.max_rows', df.shape[0]+1)
+pd.set_option('display.max_rows', df.shape[0] + 1)
 pd.set_option('display.max_columns', 10000)
 pd.set_option('display.max_colwidth', 200)
 
@@ -32,18 +32,19 @@ dayPatterns = [
   'F'
 ]
 
-  # genre_df: pd.DataFrame = df[\
-  #   ['date_added', 'release_year', 'rating', 'duration', 'year_added']\
-  #   ].assign(genre=df["listed_in"]\
-  #   .str.split(", ")).explode('genre')
+# genre_df: pd.DataFrame = df[\
+#   ['date_added', 'release_year', 'rating', 'duration', 'year_added']\
+#   ].assign(genre=df["listed_in"]\
+#   .str.split(", ")).explode('genre')
 
 md1 = 'Meet Days 1'
 # print(df[[md1]])
 df['Day'] = df[md1]\
   .str.strip()\
-  .str.replace('('+'|'.join(dayPatterns)+')', r'\1, ', regex=True, flags=re.I)\
+  .str.replace('(' + '|'.join(dayPatterns) + ')', r'\1, ', regex=True, flags=re.I)\
   .str.replace('(.*), $', r'\1', regex=True)\
   .str.split(', ')
+
 
 def time_binner(r):
   sd = r['start_time']
@@ -57,20 +58,22 @@ def time_binner(r):
     return r
   if m >= 30:
     em = '30'
-  curr_time = datetime.datetime.strptime(h+":"+em, '%H:%M')
+  curr_time = datetime.datetime.strptime(h + ":" + em, '%H:%M')
   time_bins = []
   while (curr_time.hour <= ed.hour):
     if (curr_time.hour < ed.hour or curr_time.minute <= ed.minute):
-      time_bins.append(str(curr_time.hour).rjust(2,'0') + ':' + str(curr_time.minute).rjust(2, '0'))
-    curr_time += datetime.timedelta(minutes = 30)
+      time_bins.append(str(curr_time.hour).rjust(2, '0') + ':' + str(curr_time.minute).rjust(2, '0'))
+    curr_time += datetime.timedelta(minutes=30)
   r['time_bins'] = time_bins
   return r
+
 
 def to_mil_time(d):
   h = str(d.hour)
   if h == 'nan':
     return np.nan
-  return str(d.hour).rjust(2,'0') + ':' + str(d.minute).rjust(2,'0')
+  return str(d.hour).rjust(2, '0') + ':' + str(d.minute).rjust(2, '0')
+
 
 df['time_ext_begin'] = df['Begin Time 1'].str.split(' ', expand=True)[1]
 df['time_ext_end'] = df['End Time 1'].str.split(' ', expand=True)[1]

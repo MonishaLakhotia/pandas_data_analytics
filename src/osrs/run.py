@@ -1,4 +1,4 @@
-import pandas_data_analytics.utils as u
+import src.utils as u
 import toml
 import re
 import os
@@ -26,7 +26,7 @@ df.rename(columns={'char_link': 'character'}, inplace=True)
 # u.general_df_stats(df)
 
 # get columns that have exp in the name
-exps = Enumerable(df.columns).where(lambda c: re.match('.*_exp',c,re.I)).to_list()
+exps = Enumerable(df.columns).where(lambda c: re.match('.*_exp', c, re.I)).to_list()
 # exps = df.filter(regex=(".*_exp"))
 print(exps)
 
@@ -39,19 +39,20 @@ print(exps)
 #     return re.sub('(.*)_exp$', '\\1', flags=re.I, string=s)
 
 def skill_binner(skill):
-    return 'combat' if re.search(
-        '(attack|str|hp|def|rang|mage|pray)', skill)\
-    else 'gathering' if re.search(
-        '(wc|fish|hunt|mining|farm)', skill)\
-    else 'artisan(production)' if re.search(
-        '(fm|cook|smith|craft|rc|herb|fletch|con)', skill)\
-    else 'support'
+  return 'combat' if re.search(
+      '(attack|str|hp|def|rang|mage|pray)', skill)\
+      else 'gathering' if re.search(
+      '(wc|fish|hunt|mining|farm)', skill)\
+      else 'artisan(production)' if re.search(
+      '(fm|cook|smith|craft|rc|herb|fletch|con)', skill)\
+      else 'support'
+
 
 mdf: pd.DataFrame = pd.melt(df, id_vars=['character'], value_vars=exps, value_name='exp', var_name='skill')
 # mdf.rename(columns={'value': 'exp', 'variable': 'skill'}, inplace=True)
 mdf['skill_bin'] = mdf['skill'].apply(skill_binner)
 # mdf['exp'] = mdf['exp'].apply(r)
-mdf['exp'] = mdf['exp'].str.replace('\D+', '', regex=True, flags=re.I)
+mdf['exp'] = mdf['exp'].str.replace('\\D+', '', regex=True, flags=re.I)
 # mdf['skill'] = mdf['skill'].apply(remove_exp)
 mdf['skill'] = mdf['skill'].str.replace('(.*)_exp$', '\\1', regex=True, flags=re.I)
 mdf['exp'] = mdf['exp'].astype('int')
@@ -90,13 +91,14 @@ mdf = mdf.sort_values('skill_bin')
 # sns.jointplot is good for numeric x,y scatter plot for checking bin relationships
 # plt.show()
 print(mdf.head(100))
-exp_df: pd.DataFrame = df.loc[:,df.columns.isin(Enumerable(df.columns).where(lambda c: re.match('.*exp', c)).to_list())]
+exp_df: pd.DataFrame = df.loc[:, df.columns.isin(Enumerable(
+  df.columns).where(lambda c: re.match('.*exp', c)).to_list())]
 # def keep_digits(e):
 #     r = re.sub('\D', '', e)
 #     return r
-    
+
 # exp_df = exp_df.applymap(keep_digits).astype(int)
-exp_df = exp_df.replace('\D', '', regex=True).astype(int)
+exp_df = exp_df.replace('\\D', '', regex=True).astype(int)
 mean_exp = exp_df.mean().astype(int)
 # print(mean_exp)
 # the number of skills within each skill_bin: Length of a group: groupby length
@@ -106,4 +108,3 @@ print(mdf.value_counts('skill'))
 # sns.heatmap(exp_df.corr())
 
 # plt.show()
-

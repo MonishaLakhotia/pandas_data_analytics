@@ -46,7 +46,7 @@ print('IQR begin')
 
 Q1 = price_df.quantile(0.25)
 Q3 = price_df.quantile(0.75)
-IQR = Q3-Q1
+IQR = Q3 - Q1
 lowqe_bound = Q1 - 1.5 * IQR
 upper_bound = Q3 + 1.5 * IQR
 print(lowqe_bound)

@@ -3,7 +3,7 @@ from py_linq import Enumerable
 import matplotlib.pyplot as plt
 import os
 import pandas as pd
-import pandas_data_analytics.utils as u
+import src.utils as u
 import re
 import seaborn as sns
 import toml
@@ -18,17 +18,23 @@ df.drop('should_delete', axis=1, inplace=True)
 df = df.convert_dtypes()
 df.date = pd.to_datetime(df.date)
 
-pd.set_option('display.max_rows', df.shape[0]+1)
+pd.set_option('display.max_rows', df.shape[0] + 1)
 pd.set_option('display.max_columns', 175)
 
-date_bins = pd.interval_range\
-  (start=pd.Timestamp('2020-07-01'),\
-  periods=10, freq='MS')
+date_bins = pd.interval_range(start=pd.Timestamp('2020-07-01'),
+                              periods=10, freq='MS')
 df['date_range'] = pd.cut(df.date, date_bins)
 df['muscle_weight'] = df.morning_weight * df.muscle_mass_percentage / 100
 df['body_fat_weight'] = df.morning_weight * df.body_fat_percentage / 100
 df['other_weight'] = df.morning_weight - df.muscle_weight - df.body_fat_weight
-weights = Enumerable(df.drop('morning_weight', axis=1).columns).where(lambda c: re.match('.*_weight',c,re.I)).to_list()
+weights = Enumerable(
+    df.drop(
+        'morning_weight',
+        axis=1).columns).where(
+            lambda c: re.match(
+                '.*_weight',
+                c,
+                re.I)).to_list()
 # exps = Enumerable(df.columns).where(lambda c: re.match('.*_exp',c,re.I)).to_list()
 mdf: pd.DataFrame = pd.melt(df, id_vars=['date'], value_vars=weights, value_name='lbs', var_name='weight_category')
 mdf.dropna(inplace=True)
@@ -37,9 +43,9 @@ mdf = mdf.convert_dtypes()
 mdf.weight_category = mdf.weight_category.astype('category')
 mdf.lbs = mdf.lbs.astype('Int64')
 
-recentdf = df#[(df['date']>pd.Timestamp(2020,11,24)) & (df['date']<pd.Timestamp(2021,1,23))]
+recentdf = df  # [(df['date']>pd.Timestamp(2020,11,24)) & (df['date']<pd.Timestamp(2021,1,23))]
 
-pd.set_option('display.max_rows', mdf.shape[0]+1)
+pd.set_option('display.max_rows', mdf.shape[0] + 1)
 # pd.set_option('display.max_columns', mdf.shape[1]+1)
 
 # diffdf = recentdf.iloc[-1] - recentdf.iloc[0]
@@ -55,7 +61,7 @@ ps = Enumerable([
   # lambda: monthly_summaries_df,
   # lambda: pdf.sort_values('calories')
 ])
-u.foreach(lambda f: print(f()),ps)
+u.foreach(lambda f: print(f()), ps)
 
 # write out monthly summaries of stats
 # monthly_summaries_df: pd.DataFrame = pdf.groupby(by='date_range').agg(['mean', 'std', 'min', 'max']).unstack().reset_index()

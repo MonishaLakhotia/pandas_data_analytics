@@ -1,4 +1,4 @@
-import pandas_data_analytics.utils as u
+import src.utils as u
 import re
 import toml
 from pandas_data_analytics import *
@@ -24,7 +24,8 @@ df['year_added'] = df.date_added.dt.year.astype('Int64').astype('category')
 df.release_year = df.release_year.astype('category')
 df.rating = df.rating.astype('category')
 # string nan values become <NA>, still a rep for nan
-pd.set_option('display.max_rows', df.shape[0]+1)
+pd.set_option('display.max_rows', df.shape[0] + 1)
+
 
 def drop_filler(g):
   l = ['Movies', 'TV Shows', 'TV', 'Shows', 'Series', 'Features']
@@ -32,33 +33,37 @@ def drop_filler(g):
     return g
   return re.sub('|'.join(l), '', g, flags=re.I)
 
+
 # creates bins for the durations, does not include season info
 # only assigns indices where duration was minute based
-df['duration_bin'] = pd.cut(df[~df.duration.str.contains('season', flags=re.I)]\
-  .duration.str.split(' ', expand=True)[0].str.strip().astype('int')\
-    .sort_values(), bins=np.linspace(0, 350, 8))
+df['duration_bin'] = pd.cut(df[~df.duration.str.contains('season', flags=re.I)]
+                            .duration.str.split(' ', expand=True)[0].str.strip().astype('int')
+                            .sort_values(), bins=np.linspace(0, 350, 8))
+
 
 def genre_df_sup():
-  genre_df: pd.DataFrame = df[\
-    ['date_added', 'release_year', 'rating', 'duration', 'year_added']\
-    ].assign(genre=df["listed_in"]\
-    .str.split(", ")).explode('genre')
+  genre_df: pd.DataFrame = df[
+    ['date_added', 'release_year', 'rating', 'duration', 'year_added']
+  ].assign(genre=df["listed_in"]
+           .str.split(", ")).explode('genre')
   genre_df.genre = genre_df.genre.apply(drop_filler).str.strip()
   genre_df.genre = genre_df.genre.astype('category')
   return genre_df
 
+
 def director_df_sup():
-  director_df: pd.DataFrame = df[\
-    ['director', 'date_added', 'release_year', 'rating', 'duration', 'year_added']\
-    ].assign(director=df['director']\
-      .str.split(', ')).explode('director')
+  director_df: pd.DataFrame = df[
+    ['director', 'date_added', 'release_year', 'rating', 'duration', 'year_added']
+  ].assign(director=df['director']
+           .str.split(', ')).explode('director')
   director_df.director = director_df.director.astype('category')
   return director_df
 
+
 def country_df_sup():
-  country_df = df[\
-    ['country', 'director', 'date_added', 'release_year', 'rating', 'duration', 'year_added']\
-    ].assign(country=df.country.str.split(', '))\
+  country_df = df[
+    ['country', 'director', 'date_added', 'release_year', 'rating', 'duration', 'year_added']
+  ].assign(country=df.country.str.split(', '))\
     .explode('country')
   country_df.country = country_df.country.astype('category')
   return country_df
@@ -80,9 +85,9 @@ ps = Enumerable([
   # lambda: len(df.index.value_counts()),
   # lambda: len(pdf.index.value_counts())
 ])
-u.foreach(lambda f: print(f()),ps)
+u.foreach(lambda f: print(f()), ps)
 
-# good idea for analysis of top 10 cats 
+# good idea for analysis of top 10 cats
 # ## Top 10 countries
 # cols_country = list(df.country.value_counts().head(10).index.values)
 # ## Top 10 genere

@@ -1,4 +1,4 @@
-import pandas_data_analytics.utils as u
+import src.utils as u
 import re
 import toml
 from pandas_data_analytics import *
@@ -16,17 +16,17 @@ u.set_full_paths(config, this_dir)
 csv_loc = config['file_locations']['raw_taco_bell']
 
 df: pd.DataFrame = pd.read_csv(csv_loc)
-df.columns = df.columns.str.lower().str.replace('\s+', '', regex=True)
+df.columns = df.columns.str.lower().str.replace('\\s+', '', regex=True)
 df.drop(['web-scraper-order', 'web-scraper-start-url', 'category-href'], inplace=True, axis=1)
 
-pd.set_option('display.max_rows', df.shape[0]+1)
-pd.set_option('display.max_columns', df.shape[1]+1)
+pd.set_option('display.max_rows', df.shape[0] + 1)
+pd.set_option('display.max_columns', df.shape[1] + 1)
 
 pdf = df
 ps = Enumerable([
   lambda: pdf.columns,
   lambda: pdf,
 ])
-u.foreach(lambda f: print(f()),ps)
+u.foreach(lambda f: print(f()), ps)
 
 df.to_csv(config['file_locations']['clean_taco_bell'], index=False)

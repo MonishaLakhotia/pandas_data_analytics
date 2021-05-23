@@ -1,4 +1,4 @@
-import pandas_data_analytics.utils as u
+import src.utils as u
 import toml
 from pandas_data_analytics import *
 import os
@@ -34,7 +34,7 @@ sns.set_theme()
 # print(df['Platform'].unique())
 
 # creating bins in a dynamic way based on the min and max values and in steps of 5
-bins = np.linspace(df['Global_Sales'].min(), df['Global_Sales'].max(),  5)
+bins = np.linspace(df['Global_Sales'].min(), df['Global_Sales'].max(), 5)
 df['Global_Sales_Bin'] = pd.cut(df['Global_Sales'], bins=bins)  # .astype(str)
 
 company_to_console = {
@@ -106,7 +106,7 @@ aplot = sns.boxplot(
 
 
 def countplot(x, hue, **kwargs):
-    sns.countplot(x=x, hue=hue, **kwargs)
+  sns.countplot(x=x, hue=hue, **kwargs)
 
 
 # g = sns.FacetGrid(df, col="Platform_Bin", hue='Genre')

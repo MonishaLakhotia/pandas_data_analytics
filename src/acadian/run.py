@@ -1,4 +1,4 @@
-import pandas_data_analytics.utils as u
+import src.utils as u
 import toml
 import re
 import os
@@ -12,8 +12,10 @@ u.set_full_paths(config, this_dir)
 csv_loc = config['file_locations']['training_data']
 df = pd.read_csv(csv_loc)
 
+
 def r(s):
-  return re.sub('.*?\/(.*?)\/.*?\.\w+$', '\\1', flags=re.I, string=s) 
+  return re.sub('.*?\\/(.*?)\\/.*?\\.\\w+$', '\\1', flags=re.I, string=s)
+
 
 df['project'] = df['project_and_file'].apply(r)
 df = df[~(df['project'] == 'Search')]

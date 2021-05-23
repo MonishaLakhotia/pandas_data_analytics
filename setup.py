@@ -5,9 +5,9 @@ from setuptools import setup, find_packages
 
 
 try:
-    long_description = open("README.rst").read()
+  long_description = open("README.rst").read()
 except IOError:
-    long_description = ""
+  long_description = ""
 
 setup(
     name="pandas_data_analytics",
