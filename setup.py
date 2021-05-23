@@ -30,7 +30,8 @@ setup(
         "qtconsole",
         "jupyter",
         "jupyter-contrib-nbextensions",
-        "pyqt5"
+        "pyqt5",
+        "autopep8"
     ],
     long_description=long_description,
     classifiers=[
