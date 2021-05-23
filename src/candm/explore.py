@@ -16,24 +16,27 @@ csv_loc = config['file_locations']['clean']
 df = pd.read_csv(csv_loc)
 df['price'] = pd.to_numeric(df['price'].apply(lambda p: re.sub('[$,]', '', p)))
 
+
 def plot():
-    bplot = sns.countplot(x='brand', data=df)
-    bplot.set_xticklabels(bplot.get_xticklabels(), rotation=10)
-    plt.show()
+  bplot = sns.countplot(x='brand', data=df)
+  bplot.set_xticklabels(bplot.get_xticklabels(), rotation=10)
+  plt.show()
 
-    bplot = sns.barplot(x='brand', y='price', data=df)
-    bplot.set_xticklabels(bplot.get_xticklabels(), rotation=10)
-    plt.show()
+  bplot = sns.barplot(x='brand', y='price', data=df)
+  bplot.set_xticklabels(bplot.get_xticklabels(), rotation=10)
+  plt.show()
 
-    bplot = sns.boxplot(x='brand', y='price', data=df)
-    bplot.set_xticklabels(bplot.get_xticklabels(), rotation=10)
-    plt.show()
+  bplot = sns.boxplot(x='brand', y='price', data=df)
+  bplot.set_xticklabels(bplot.get_xticklabels(), rotation=10)
+  plt.show()
+
 
 def main():
-    # Apply the default theme
-    sns.set_theme()
-    # u.general_df_stats(df)
-    print(df.dtypes)
-    # print(df.groupby('brand').agg(['count', 'mean']))
+  # Apply the default theme
+  sns.set_theme()
+  # u.general_df_stats(df)
+  print(df.dtypes)
+  # print(df.groupby('brand').agg(['count', 'mean']))
+
 
 main()

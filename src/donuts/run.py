@@ -16,14 +16,16 @@ csv_loc = config['file_locations']['data']
 
 df = pd.read_csv(csv_loc)
 
+
 def food_binner(s):
-    return "pastry" if re.search('donut|eclair|cake', s, re.I) else\
-        "drink" if re.search('shake|soda|coke|hot chocolate|cappacino', s, re.I) else\
-        "ice_cream" if re.search('cone|icecream|sundae', s, re.I) else\
-        "hot_dog" if re.search('dog', s, re.I) else\
-            np.nan
+  return "pastry" if re.search('donut|eclair|cake', s, re.I) else\
+      "drink" if re.search('shake|soda|coke|hot chocolate|cappacino', s, re.I) else\
+      "ice_cream" if re.search('cone|icecream|sundae', s, re.I) else\
+      "hot_dog" if re.search('dog', s, re.I) else\
+      np.nan
 
 # df['food_cat'] = df.name.apply(food_binner)
+
 
 ps = (lambda pdf, field: Enumerable([
   # lambda: pdf.sample(5),
@@ -31,4 +33,4 @@ ps = (lambda pdf, field: Enumerable([
   lambda: pdf.groupby('company').calories.agg(['mean', 'std']),
   lambda: pdf.columns
 ]))(df, 'country')
-u.foreach(lambda f: print(f()),ps)
+u.foreach(lambda f: print(f()), ps)

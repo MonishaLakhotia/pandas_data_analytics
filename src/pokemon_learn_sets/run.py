@@ -9,6 +9,7 @@ import seaborn as sns
 import toml
 import math
 
+
 def main():
   def view_data(pdf):
     # pdf.style.set_properties(**{'width': '300px'})
@@ -31,7 +32,7 @@ def main():
       # lambda: pdf.sort_values(['name', 'generation', 'moves_learnt_by_level_up_lvl']).sample(5),
       # lambda: pdf[pdf.duplicated()].sort_values(['name', 'generation'])
     ])
-    u.foreach(lambda f: print(f()),ps)
+    u.foreach(lambda f: print(f()), ps)
 
   def implode_move_sets(movesdf, moves):
     # describes what to do with each move set
@@ -40,9 +41,10 @@ def main():
       agg_dict[f'{m}_json'] = lambda x: x.tolist()
     # 'Implodes' data frame move sets into lists
     csv_move_df = movesdf\
-      .groupby(['name', 'generation'])\
-      .agg(agg_dict, regex=True)\
-      .reset_index()
+        .groupby(['name', 'generation'])\
+        .agg(agg_dict, regex=True)\
+        .reset_index()
+
     def move_list_filter(j):
       d = json.loads(j)
       return d['move'] is not None
@@ -62,10 +64,10 @@ def main():
             move_list.append(j)
       return move_list
 
-    for field in Enumerable(moves).select(lambda m: m+'_json'):
+    for field in Enumerable(moves).select(lambda m: m + '_json'):
       csv_move_df[field] = csv_move_df[field]\
-        .apply(lambda l: Enumerable(l)\
-          .where(move_list_filter))\
+        .apply(lambda l: Enumerable(l)
+               .where(move_list_filter))\
         .apply(drop_alternate_form_moves)
     # dups are due to alonan forms/ alter form tabs for move sets
     # try to filter then out based on if the number in the move set entry restarts
@@ -79,19 +81,37 @@ def main():
   u.set_full_paths(config, this_dir)
   csv_loc = config['file_locations']['data']
   df: pd.DataFrame = pd.read_csv(csv_loc)
-  df = df.drop(\
+  df = df.drop(
     ['web-scraper-order',
-    'web-scraper-start-url',
-    'name_link-href',
-    'generation-href'
-    ], axis=1)
-  pd.set_option('display.max_rows', df.shape[0]+1)
+     'web-scraper-start-url',
+     'name_link-href',
+     'generation-href'
+     ], axis=1)
+  pd.set_option('display.max_rows', df.shape[0] + 1)
   pd.set_option('display.max_columns', 175)
 
   # name field is unique per pokemon
   # movesdf: pd.DataFrame = df[['name', 'moves_learnt_by_level_up', 'generation']].dropna()
   movesdf: pd.DataFrame = df.drop(['name_link'], axis=1)
-  types = ['ground', 'electric', 'bug', 'ghost', 'normal', 'psychic', 'fire', 'fairy', 'dark', 'grass', 'fighting', 'water', 'ice', 'dragon', 'poison', 'rock', 'flying', 'steel']
+  types = [
+      'ground',
+      'electric',
+      'bug',
+      'ghost',
+      'normal',
+      'psychic',
+      'fire',
+      'fairy',
+      'dark',
+      'grass',
+      'fighting',
+      'water',
+      'ice',
+      'dragon',
+      'poison',
+      'rock',
+      'flying',
+      'steel']
 
   # def get_thing(phrase, s):
   #   m = re.search(phrase,s)
@@ -104,31 +124,26 @@ def main():
 
   def parse_moves(df: pd.DataFrame, field: str):
     ldf = pd.DataFrame()
-    ldf[f'{field}_lvl'] = df\
-      [field]\
-      .str.replace(r'(^\d+)(.*)', r'\1', regex=True)
-    ldf[f'{field}_move'] = df\
-      [field]\
-      .str.replace('(^.*?)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
-      .str.replace('(.*?)('+'|'.join(types)+')'+'$', r'\1', regex=True, flags=re.I)
-    ldf[f'{field}_type'] = df\
-      [field]\
-      .str.replace('(^.*?)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\2', regex=True, flags=re.I)\
-      .str.replace('(.*?)('+'|'.join(types)+')'+'$', r'\2', regex=True, flags=re.I)
-    ldf[f'{field}_power'] = df\
-      [field]\
-      .str.strip()\
-      .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\3', regex=True, flags=re.I)\
-      .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\2', regex=True, flags=re.I)\
-      .str.replace(r'∞', 'inf', regex=True)\
-      .str.replace(r'—', '', regex=True)
-    ldf[f'{field}_acc'] = df\
-      [field]\
-      .str.strip()\
-      .str.replace('(^\\d+)(\\D+(?:'+'|'.join(types)+'))(.*)', r'\3', regex=True, flags=re.I)\
-      .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\3', regex=True, flags=re.I)\
-      .str.replace(r'∞', 'inf', regex=True)\
-      .str.replace(r'—', '', regex=True)
+    ldf[f'{field}_lvl'] = df[field]\
+        .str.replace(r'(^\d+)(.*)', r'\1', regex=True)
+    ldf[f'{field}_move'] = df[field]\
+        .str.replace('(^.*?)(\\D+(?:' + '|'.join(types) + '))(.*)', r'\2', regex=True, flags=re.I)\
+        .str.replace('(.*?)(' + '|'.join(types) + ')' + '$', r'\1', regex=True, flags=re.I)
+    ldf[f'{field}_type'] = df[field]\
+        .str.replace('(^.*?)(\\D+(?:' + '|'.join(types) + '))(.*)', r'\2', regex=True, flags=re.I)\
+        .str.replace('(.*?)(' + '|'.join(types) + ')' + '$', r'\2', regex=True, flags=re.I)
+    ldf[f'{field}_power'] = df[field]\
+        .str.strip()\
+        .str.replace('(^\\d+)(\\D+(?:' + '|'.join(types) + '))(.*)', r'\3', regex=True, flags=re.I)\
+        .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\2', regex=True, flags=re.I)\
+        .str.replace(r'∞', 'inf', regex=True)\
+        .str.replace(r'—', '', regex=True)
+    ldf[f'{field}_acc'] = df[field]\
+        .str.strip()\
+        .str.replace('(^\\d+)(\\D+(?:' + '|'.join(types) + '))(.*)', r'\3', regex=True, flags=re.I)\
+        .str.replace(r'(.*?)(\d{,4}|—|∞)\s{,4}(\d{,4}|—|∞)$', r'\3', regex=True, flags=re.I)\
+        .str.replace(r'∞', 'inf', regex=True)\
+        .str.replace(r'—', '', regex=True)
     return ldf
 
   # print(df.columns)
@@ -142,15 +157,15 @@ def main():
     'moves_learnt_by_hm',
     'moves_learnt_by_transfer',
     'moves_learnt_by_evolution'
-    ]
+  ]
   for f in moves:
     ldf = parse_moves(movesdf, f)
     # to have move data in columns
     # movesdf = pd.concat([movesdf,ldf],axis=1)
     # to have move data in json format in 1 column
     ldf.columns = ldf.columns\
-      .str.replace(f, '', regex=True)\
-      .str.replace('_', '', regex=True)
+        .str.replace(f, '', regex=True)\
+        .str.replace('_', '', regex=True)
     movesdf[f'{f}_json'] = ldf.to_json(orient='records', lines=True).splitlines()
     # print(f)
     # print(movesdf[f'{f}_json'].tolist()[0:10])
@@ -173,5 +188,6 @@ def main():
   print(len(df))
   print(len(general_df))
   print(general_df.columns)
+
 
 main()

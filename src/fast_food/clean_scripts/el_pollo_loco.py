@@ -29,8 +29,8 @@ df.dropna(inplace=True, axis=0, subset=['calories'])
 df['serving_size_units'] = df.serving_size.str.split(' ', expand=True)[1]
 df['serving_size'] = df.serving_size.str.split(' ', expand=True)[0]
 
-pd.set_option('display.max_rows', df.shape[0]+1)
-pd.set_option('display.max_columns', df.shape[1]+1)
+pd.set_option('display.max_rows', df.shape[0] + 1)
+pd.set_option('display.max_columns', df.shape[1] + 1)
 
 df['fat_units'] = 'g'
 df['protein_units'] = 'g'
@@ -43,6 +43,6 @@ ps = (lambda pdf: Enumerable([
   # lambda: pdf[['food', 'cal_per_gram', 'category']].groupby('category').food.agg(list),
   # lambda: pdf.category.value_counts(),
 ]))(df)
-u.foreach(lambda f: print(f()),ps)
+u.foreach(lambda f: print(f()), ps)
 
 # df.to_csv(config['file_locations']['clean_el_pollo_loco'], index=False)

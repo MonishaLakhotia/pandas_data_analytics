@@ -18,7 +18,7 @@ db_loc = config['file_locations']['data']
 # Read sqlite query results into a pandas DataFrame
 con = sqlite3.connect(db_loc)
 query = """
-SELECT 
+SELECT
 s.Description
 , q.questiontext
 , a.*

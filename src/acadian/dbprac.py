@@ -1,4 +1,4 @@
-import pyodbc 
+import pyodbc
 from pandas_data_analytics import *
 from py_linq import Enumerable
 import matplotlib.pyplot as plt
