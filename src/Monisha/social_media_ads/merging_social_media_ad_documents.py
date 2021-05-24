@@ -57,9 +57,37 @@ social_merge = pd.concat([facebook_instagram, pinterest], axis=0)
 ad_schedule_merge = pd.merge(social_merge, ad_schedule, left_index=True, right_index=True)
 
 #changing date columns to datetime
-ad_schedule_merge['End_Date'] = pd.to_datetime(ad_schedule_merge.End_Date, format='%m%d%Y', errors='ignore')
-ad_schedule_merge['Start_Date'] = pd.to_datetime(ad_schedule_merge.Start_Date, format='%m%d%Y', errors='ignore')
-ad_schedule_merge['Release_Date'] = pd.to_datetime(ad_schedule_merge.Release_Date, format='%m%d%Y', errors='ignore')
+ad_schedule_merge['End_Date'] = pd.to_datetime(ad_schedule_merge.End_Date)
+ad_schedule_merge['Start_Date'] = pd.to_datetime(ad_schedule_merge.Start_Date)
+ad_schedule_merge['Release_Date'] = pd.to_datetime(ad_schedule_merge.Release_Date)
 
-#convert to csv - test merge to check data - block out to use later (and maybe move to top or something)
-ad_schedule_merge.to_csv(r'~/Desktop/test_merge.csv')
+#dropping rows where spend == 0
+ad_schedule_merge.drop(ad_schedule_merge.loc[ad_schedule_merge.Spend == 0, :].index, axis=0, inplace=True)
+
+#changing objective to str.title()
+ad_schedule_merge['Objective'] = ad_schedule_merge.Objective.str.title()
+
+#filling Pinterest objective using Result_Type and Index Contains
+for value in ad_schedule_merge.Objective:
+  if ad_schedule_merge.Objective.isna().any():
+    if ad_schedule_merge.index.str.contains('Pinterest').any():
+      if ad_schedule_merge.Result_Type.all() == 'Clicks':        
+        ad_schedule_merge.Objective.fillna('Traffic', inplace=True)
+      elif ad_schedule_merge.Result_Type.all() == 'Impressions':
+        ad_schedule_merge.Objective.fillna('Brand Awareness', inplace=True)
+
+#filling NaN in clicks with 0.0
+ad_schedule_merge.Clicks.fillna(0.0, inplace=True)
+
+#removing ',' from results and changing to float
+ad_schedule_merge['Results'] = ad_schedule_merge.Results.str.replace(',', '').astype('float')
+
+#change reach to float
+ad_schedule_merge['Reach'] = ad_schedule_merge.Reach.astype('float')
+
+
+"""
+#SPECIFIC TO THIS DATAFRAME - Drop Christina Britton Rows - not sure on this
+#print(ad_schedule_merge.Author.value_counts(dropna=False))
+ad_schedule_merge.drop(ad_schedule_merge[ad_schedule_merge.Author == 'Christina Britton'].index, axis=0, inplace=True)
+"""

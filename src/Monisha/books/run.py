@@ -62,14 +62,7 @@ pd.set_option('display.max_rows', book_data.shape[0] + 1)
 pd.set_option('display.max_columns', 10000)
 pd.set_option('display.max_colwidth', 200)
 
-# display metrics/data
-pdf: pd.DataFrame = book_data
-ps = [
-  lambda: pdf.sample(5)
-  # lambda: pdf.Products.sort_values()
-  # lambda: pdf.dtypes,
-]
-u.foreach(lambda f: print(f()), ps)
+print(book_data.sample(5))
 
 # Write the cleaned data to a file
 book_data.to_csv(config['file_locations']['cleaned_data'], index=False)
