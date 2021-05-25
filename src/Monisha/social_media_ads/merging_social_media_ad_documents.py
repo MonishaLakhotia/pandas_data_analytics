@@ -1,6 +1,8 @@
 #merge ad analytics documents for facebook/instagram and pinterest; eventually twitter
 
+from numpy.core.numeric import NaN
 import pandas as pd
+import numpy as np
 
 ad_schedule = pd.read_csv('~/Desktop/Social_Ads_Analytics_2020/SocialAdsSchedule_2020.csv')
 facebook_instagram = pd.read_csv('~/Desktop/Social_Ads_Analytics_2020/FacebookData_2020.csv')
@@ -85,8 +87,22 @@ ad_schedule_merge['Results'] = ad_schedule_merge.Results.str.replace(',', '').as
 #change reach to float
 ad_schedule_merge['Reach'] = ad_schedule_merge.Reach.astype('float')
 
+#creating CPM, CPC, CTR column - calculations using reach
+ad_schedule_merge['CPM'] = (ad_schedule_merge['Spend'] / ad_schedule_merge['Reach']) * 1000
+ad_schedule_merge['CPC'] = (ad_schedule_merge['Spend'] / ad_schedule_merge['Clicks'])
+ad_schedule_merge['CTR'] = (ad_schedule_merge['Clicks'] / ad_schedule_merge['Reach'])
+
+#replacing CPC inf values with NaN
+ad_schedule_merge.CPC.replace([np.inf, -np.inf], np.nan, inplace=True)
 
 """
+#reordering columns
+column_order = ['Start_Date', 'End_Date', 'Budget', 'Spend', 'Objective', 'Reach', 'Clicks', 'CPM', 'CPC', 'CTR', 'Results', 'Cost_Per_Result', 'Result_Type']
+
+ad_schedule_merge.reindex(column_order, axis='columns')
+print(ad_schedule_merge.columns)
+
+
 #SPECIFIC TO THIS DATAFRAME - Drop Christina Britton Rows - not sure on this
 #print(ad_schedule_merge.Author.value_counts(dropna=False))
 ad_schedule_merge.drop(ad_schedule_merge[ad_schedule_merge.Author == 'Christina Britton'].index, axis=0, inplace=True)
