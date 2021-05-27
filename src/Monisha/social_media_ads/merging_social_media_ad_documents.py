@@ -28,6 +28,7 @@ facebook_instagram.Result_Type.replace({
   'video_thruplay_watched_actions': 'Video Views', 
   'actions:offsite_conversion.fb_pixel_add_to_cart': 'Conversion', 
   'reach': 'Reach'}, inplace=True)
+facebook_instagram['Results'] = facebook_instagram.Results.replace(',', '')
 
 #pinterest drop columns, rename columns, set index to Campaign_Name
 pinterest.drop(columns=['Campaign status', 'Campaign ID', 'Campaign creative type', 'Cost per result type', 'Campaign Budget', 'Campaign start date/time', 'Campaign end date/time'], inplace=True)
@@ -40,6 +41,7 @@ pinterest.rename(columns={
   'Cost per result': 'Cost_Per_Result', 
   'Result type': 'Result_Type'}, inplace=True)
 pinterest.set_index('Campaign_Name', inplace=True)
+pinterest['Results'] = pinterest.Results.str.replace(',', '')
 
 #ad_schedule rename 4 columns, set index to Campaign_Name, change Budget dtype to float, drop NaN values
 ad_schedule.rename(columns={
@@ -47,10 +49,11 @@ ad_schedule.rename(columns={
   'Start Date': 'Start_Date', 
   'End Date': 'End_Date', 
   'Ad Name': 'Campaign_Name', 
-  'Pub Day': 'Release_Date'}, inplace=True)
+  'Pub Day': 'Release_Date',
+  '@': 'Daily_Budget'}, inplace=True)
 ad_schedule.set_index('Campaign_Name', inplace=True)
 ad_schedule['Budget'] = ad_schedule.Budget.str.replace('$', '').str.replace(',', '').astype(float)
-ad_schedule.drop(columns=['Platform', 'Type', 'When', '@', 'Media', 'Audience File', 'Notes', 'Unnamed: 15', 'Placements'], inplace=True)
+ad_schedule.drop(columns=['Type', 'When', 'Media', 'Audience File', 'Notes', 'Unnamed: 15', 'Platform'], inplace=True)
 
 #merging facebook_instagram and pinterest (eventually twitter)
 social_merge = pd.concat([facebook_instagram, pinterest], axis=0)
@@ -82,7 +85,7 @@ for value in ad_schedule_merge.Objective:
 ad_schedule_merge.Clicks.fillna(0.0, inplace=True)
 
 #removing ',' from results and changing to float
-ad_schedule_merge['Results'] = ad_schedule_merge.Results.str.replace(',', '').astype('float')
+ad_schedule_merge['Results'] = ad_schedule_merge.Results.astype('float')
 
 #change reach to float
 ad_schedule_merge['Reach'] = ad_schedule_merge.Reach.astype('float')
@@ -95,15 +98,10 @@ ad_schedule_merge['CTR'] = (ad_schedule_merge['Clicks'] / ad_schedule_merge['Rea
 #replacing CPC inf values with NaN
 ad_schedule_merge.CPC.replace([np.inf, -np.inf], np.nan, inplace=True)
 
-"""
 #reordering columns
-column_order = ['Start_Date', 'End_Date', 'Budget', 'Spend', 'Objective', 'Reach', 'Clicks', 'CPM', 'CPC', 'CTR', 'Results', 'Cost_Per_Result', 'Result_Type']
+reordered = ad_schedule_merge[['Book', 'Author', 'Release_Date', 'Start_Date', 'End_Date', 'Budget', 'Daily_Budget', 'Spend', 'Placements', 'Audience', 'Objective', 'Reach', 'Clicks', 'CPM', 'CPC', 'CTR', 'Results', 'Cost_Per_Result', 'Result_Type']]
 
-ad_schedule_merge.reindex(column_order, axis='columns')
-print(ad_schedule_merge.columns)
+#sending to csv
+reordered.to_csv('~/Desktop/test.csv')
 
-
-#SPECIFIC TO THIS DATAFRAME - Drop Christina Britton Rows - not sure on this
-#print(ad_schedule_merge.Author.value_counts(dropna=False))
-ad_schedule_merge.drop(ad_schedule_merge[ad_schedule_merge.Author == 'Christina Britton'].index, axis=0, inplace=True)
-"""
+#about 9 hours - move the ga part to a new doc
