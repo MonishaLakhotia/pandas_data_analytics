@@ -1,4 +1,4 @@
-#merge ad analytics documents for facebook/instagram and pinterest; eventually twitter
+#merge ad analytics documents for facebook/instagram and pinterest with social ads schedule; eventually twitter
 
 from numpy.core.numeric import NaN
 import pandas as pd
@@ -104,4 +104,4 @@ reordered = ad_schedule_merge[['Book', 'Author', 'Release_Date', 'Start_Date', '
 #sending to csv
 reordered.to_csv('~/Desktop/test.csv')
 
-#about 9 hours - move the ga part to a new doc
+#move the ga part to a new doc
