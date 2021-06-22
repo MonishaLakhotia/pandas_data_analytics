@@ -47,7 +47,7 @@ pinterest['Results'] = pinterest.Results.str.replace(',', '')
 ad_schedule.rename(columns={
   'Amount': 'Budget', 
   'Start Date': 'Start_Date', 
-  'End Date': 'End_Date', 
+  'End Date': 'End_Date',
   'Ad Name': 'Campaign_Name', 
   'Pub Day': 'Release_Date',
   '@': 'Daily_Budget'}, inplace=True)
