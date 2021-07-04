@@ -3,6 +3,7 @@
 from numpy.core.numeric import NaN
 import pandas as pd
 import numpy as np
+import re
 
 ad_schedule = pd.read_csv('~/Desktop/Social_Ads_Analytics_2020/SocialAdsSchedule_2020.csv')
 facebook_instagram = pd.read_csv('~/Desktop/Social_Ads_Analytics_2020/FacebookData_2020.csv')
@@ -62,7 +63,7 @@ social_merge = pd.concat([facebook_instagram, pinterest], axis=0)
 ad_schedule_merge = pd.merge(social_merge, ad_schedule, left_index=True, right_index=True)
 
 #changing date columns to datetime
-date_col = ['End_Date', 'Start_Date', 'Release_Date']
+date_col = [column for column in ad_schedule_merge.columns if re.match('.*_Date',column)]
 for name in date_col:
   ad_schedule_merge[name] = pd.to_datetime(ad_schedule_merge[name])
 
