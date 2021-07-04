@@ -62,9 +62,9 @@ social_merge = pd.concat([facebook_instagram, pinterest], axis=0)
 ad_schedule_merge = pd.merge(social_merge, ad_schedule, left_index=True, right_index=True)
 
 #changing date columns to datetime
-ad_schedule_merge['End_Date'] = pd.to_datetime(ad_schedule_merge.End_Date)
-ad_schedule_merge['Start_Date'] = pd.to_datetime(ad_schedule_merge.Start_Date)
-ad_schedule_merge['Release_Date'] = pd.to_datetime(ad_schedule_merge.Release_Date)
+date_col = ['End_Date', 'Start_Date', 'Release_Date']
+for name in date_col:
+  ad_schedule_merge[name] = pd.to_datetime(ad_schedule_merge[name])
 
 #dropping rows where spend == 0
 ad_schedule_merge.drop(ad_schedule_merge.loc[ad_schedule_merge.Spend == 0, :].index, axis=0, inplace=True)
