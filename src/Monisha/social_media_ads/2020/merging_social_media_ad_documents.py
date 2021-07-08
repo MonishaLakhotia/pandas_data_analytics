@@ -110,6 +110,6 @@ ad_schedule_merge.CPC.replace([np.inf, -np.inf], np.nan, inplace=True)
 reordered = ad_schedule_merge[['Book', 'Author', 'Release_Date', 'Start_Date', 'End_Date', 'Budget', 'Daily_Budget', 'Spend', 'Placements', 'Audience', 'Objective', 'Reach', 'Clicks', 'CPM', 'CPC', 'CTR', 'Results', 'Cost_Per_Result', 'Result_Type']]
 
 #sending to csv
-reordered.to_csv('~/Desktop/test.csv')
+reordered.to_csv(config['file_locations']['output'])
 
 #move the ga part to a new doc
