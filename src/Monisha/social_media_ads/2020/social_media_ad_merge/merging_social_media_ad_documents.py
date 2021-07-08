@@ -83,13 +83,15 @@ ad_schedule_merge.drop(ad_schedule_merge.loc[ad_schedule_merge.Spend == 0, :].in
 ad_schedule_merge['Objective'] = ad_schedule_merge.Objective.str.title()
 
 #filling Pinterest objective using Result_Type and Index Contains
-for value in ad_schedule_merge.Objective:
-  if ad_schedule_merge.Objective.isna().any():
-    if ad_schedule_merge.index.str.contains('Pinterest').any():
-      if ad_schedule_merge.Result_Type.all() == 'Clicks':        
-        ad_schedule_merge.Objective.fillna('Traffic', inplace=True)
-      elif ad_schedule_merge.Result_Type.all() == 'Impressions':
-        ad_schedule_merge.Objective.fillna('Brand Awareness', inplace=True)
+ad_schedule_merge.reset_index(inplace=True)
+
+for index in range(len(ad_schedule_merge.Result_Type)):
+  if ad_schedule_merge.Result_Type[index] == 'Impressions' and ad_schedule_merge.Placements[index] == 'Pin Feed':
+    ad_schedule_merge.Objective[index] = 'Brand Awareness'
+  elif ad_schedule_merge.Result_Type[index] == 'Clicks' and ad_schedule_merge.Placements[index] == 'Pin Feed':
+    ad_schedule_merge.Objective[index] = 'Traffic'
+
+ad_schedule_merge.set_index('Campaign_Name', inplace=True)
 
 #filling NaN in clicks with 0.0
 ad_schedule_merge.Clicks.fillna(0.0, inplace=True)
@@ -111,5 +113,6 @@ reordered = ad_schedule_merge[['Book', 'Author', 'Release_Date', 'Start_Date', '
 
 #sending to csv
 reordered.to_csv(config['file_locations']['output'])
+reordered.to_csv('~/Desktop/test.csv')
 
 #move the ga part to a new doc

@@ -36,10 +36,11 @@ page_likes = all_data.loc[all_data.Objective == 'Page Likes', :]
 video_views = all_data.loc[all_data.Objective == 'Video Views', :]
 """
 Presentation notes
-Traffic        200
+Traffic        195
 Conversions     26
 Engagement      13
 Reach            9
+Brand Awareness  4
 Page Likes       3
 Video Views      2
 
@@ -47,7 +48,6 @@ Traffic breakdown:
 Link Clicks           94
 Landing Page Views    59
 Clicks                43
-Impressions            4
 """
 
 print(traffic.loc[traffic.Result_Type == 'Impressions'])
