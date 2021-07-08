@@ -1,0 +1,5 @@
+file_locations.facebook_instagram = "data/in/FacebookData_2020.csv"
+file_locations.pinterest = "data/in/PinterestData_2020.csv"
+file_locations.ad_schedule = "data/in/SocialAdsSchedule_2020.csv"
+file_locations.output = "data/out/output.csv"
+data_notes = "to do"
