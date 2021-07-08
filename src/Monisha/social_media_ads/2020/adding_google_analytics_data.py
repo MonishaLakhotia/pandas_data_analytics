@@ -38,6 +38,11 @@ the_boyfriend_project_pinterest = pd.read_csv('~/Desktop/Google_Analytics_2020/N
 the_happy_ever_after_playlist_instagram = pd.read_csv('~/Desktop/Google_Analytics_2020/No_Date_Overlap/misc/to add 2/the happy ever after playlist - instagram - platform specific  Analytics HBG+Imprint_ Forever Platform Specific No Overlap - 2020 -  PaidSocial 20200101-20201231-11.csv', skiprows=6)
 the_highland_rogue_pinterest = pd.read_csv('~/Desktop/Google_Analytics_2020/No_Date_Overlap/misc/to add 2/the highland rogue - pinterest - platform specific Analytics  HBG+Imprint_ Forever Platform Specific No Overlap - 2020 - PaidSocial  20200101-20201231-9.csv', skiprows=6)
 
+the_happy_ever_after_playlist_facebook = pd.read_csv('~/Desktop/Google_Analytics_2020/No_Date_Overlap/misc/to add 3/hea playlist - 1 facebook test Analytics HBG+Imprint_ Forever  Platform Specific No Overlap - 2020 - PaidSocial 20200407-20200413-1.csv', skiprows=6)
+dream_make_facebook = pd.read_csv('~/Desktop/Google_Analytics_2020/No_Date_Overlap/misc/to add 3/dream maker - 1 facebook - test Analytics HBG+Imprint_ Forever  Platform Specific No Overlap - 2020 - PaidSocial 20200610-20200630.csv', skiprows=6)
+the_boyfriend_project_facebook = pd.read_csv('~/Desktop/Google_Analytics_2020/No_Date_Overlap/misc/to add 3/the boyfriend project - 1 facebook - test Analytics HBG+Imprint_  Forever Platform Specific No Overlap - 2020 - PaidSocial  20200602-20200608-1.csv', skiprows=6)
+
+
 #google data that has keywords but no content tag, keywords content and one pinterest ad
 keywords_no_content = pd.read_csv('~/Desktop/Google_Analytics_2020/Keywords_No_Content/W Paris Secret - Keywords No Content Analytics HBG+Imprint_ Forever  Full View 2020 20200101-20201231-7.csv', skiprows=6)
 keywords_content_onepin = pd.read_csv('~/Desktop/Google_Analytics_2020/Keywords_Content_1Pinterest/Actual Keywords ContentAnalytics HBG+Imprint_ Forever Full View  2020 20200101-20201231-9.csv', skiprows=6)
@@ -371,7 +376,7 @@ def platform_specific_no_overlap(df):
 
   social_segment.drop(social_segment.loc[social_segment.Campaign_Name.str.contains('IGBoost'), :].index, axis=0, inplace=True)
   social_segment.drop_duplicates(subset='Start_Date', keep=False, inplace=True)  
-
+  social_segment.reset_index(inplace=True)
   #adding Campaign Names to df - note that this fills in some rows that should remain NaN but that's okay?
   for date in range(len(df_merged.Day)):
     for end_index in range(len(social_segment.End_Date)):
@@ -410,6 +415,19 @@ platform_specific_no_overlap(kiss_my_cupcake_pinterest)
 platform_specific_no_overlap(kiss_my_cupcake_facebook)
 platform_specific_no_overlap(the_boyfriend_project_pinterest)
 platform_specific_no_overlap(the_happy_ever_after_playlist_instagram)
+platform_specific_no_overlap(the_happy_ever_after_playlist_facebook)
+platform_specific_no_overlap(dream_make_facebook)
+platform_specific_no_overlap(the_boyfriend_project_facebook)
+
+#adding all Users and Click_To_Retail columns into one and dropping unnecessary columns
+cols_Users = [column for column in social_data.columns if re.match('Users.*', column)]
+social_data = social_data.assign(Total_Users = social_data[cols_Users].sum(axis=1))
+
+cols_Click_To_Retail = [column for column in social_data.columns if re.match('Click_To_Retail.*', column)]
+social_data = social_data.assign(Total_Click_To_Retail = social_data[cols_Click_To_Retail].sum(axis=1))
+
+social_data.drop(columns=social_data.loc[: , social_data.columns.str.contains('^Users.*|^Click_To_Retail.*')], inplace=True)
+
 
 
 """
