@@ -1,5 +1,4 @@
-file_locations.facebook_instagram = "data/in/FacebookData_2020.csv"
-file_locations.pinterest = "data/in/PinterestData_2020.csv"
-file_locations.ad_schedule = "data/in/SocialAdsSchedule_2020.csv"
+file_locations.social_merged = "data/in/test.csv"
+file_locations.google_merged = "data/in/google_merge_test.csv"
 file_locations.output = "data/out/output.csv"
-data_notes = "to do"
+data_notes = "data from result of merging_social_media_ad_documents and adding_google_analytics_data"
