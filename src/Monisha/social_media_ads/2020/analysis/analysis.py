@@ -42,9 +42,15 @@ Engagement      13
 Reach            9
 Page Likes       3
 Video Views      2
+
+Traffic breakdown:
+Link Clicks           94
+Landing Page Views    59
+Clicks                43
+Impressions            4
 """
 
-#print(conversions.Audience.value_counts())
+print(traffic.loc[traffic.Result_Type == 'Impressions'])
 
 #sns.barplot(x='Objective', y='Reach', data=all_data)
 #sns.barplot(x='Objective', y='Clicks', data=all_data)
