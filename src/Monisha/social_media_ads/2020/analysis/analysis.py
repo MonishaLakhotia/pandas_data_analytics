@@ -54,6 +54,8 @@ print(all_data.Placements_For_Chart.value_counts(normalize=True)) #for % totals 
 platform_df = pd.DataFrame(all_data.Placements_For_Chart.value_counts(normalize=True).sort_values(ascending=False)).mul(100).reset_index().rename(columns={'index': 'Platform', 'Placements_For_Chart': 'Percentage'})
 Platform_Chart = sns.catplot(x='Platform', y='Percentage', data=platform_df, kind='bar', palette='cool')
 Platform_Chart.set(title='Percent of Ads by Social Media Platform')
+Platform_Chart.set_xlabels(fontsize=11)
+Platform_Chart.set_ylabels(fontsize=11)
 Platform_Chart.ax.set_ylim(0,100)
 for p in Platform_Chart.ax.patches:
   Platform_Chart.ax.annotate(str(p.get_height().round(2)) + '%',
@@ -75,6 +77,8 @@ print(all_data.Objective.value_counts(normalize=True))
 objective_df = pd.DataFrame(all_data.Objective.value_counts(normalize=True).sort_values(ascending=False)).mul(100).reset_index().rename(columns={'index': 'Objective', 'Objective': "Percentage"})
 Objective_Chart = sns.catplot(x='Objective', y='Percentage', data=objective_df, kind='bar', palette='cool')
 Objective_Chart.set(title='Percent of Ads by Objective')
+Objective_Chart.set_xlabels(fontsize=11)
+Objective_Chart.set_ylabels(fontsize=11)
 Objective_Chart.ax.set_ylim(0,100)
 for p in Objective_Chart.ax.patches:
   Objective_Chart.ax.annotate(str(p.get_height().round(2)) + '%',
