@@ -15,7 +15,7 @@ social_merged = pd.read_csv(config['file_locations']['social_merged'])
 google_merged = pd.read_csv(config['file_locations']['google_merged'])
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
-#sns.set_context('talk')
+#sns.set_context('talk', font_scale=.5)
 
 #merging social data and google data
 all_data = pd.concat([social_merged, google_merged])
@@ -45,7 +45,7 @@ all_data.Placements_For_Chart.fillna('Pinterest', inplace=True) #fixes missing v
 all_data.loc[all_data.Placements_For_Chart.str.contains('FB\s.+Instagram'), 'Placements_For_Chart'] = 'Facebook/Instagram'
 all_data['Placements_For_Chart'] = all_data.Placements_For_Chart.str.replace('FB\s.+', 'Facebook', regex=True)
 
-
+"""
 #breakdown of Placements
 print(all_data.Placements_For_Chart.value_counts()) #for totals of Placements
 print(all_data.Placements_For_Chart.value_counts(normalize=True)) #for % totals of Placements
@@ -61,7 +61,7 @@ for p in Platform_Chart.ax.patches:
   ha='center', va='center',
   xytext=(0,5),
   textcoords='offset points')
-
+"""  
 
 
 """
@@ -69,6 +69,20 @@ for p in Platform_Chart.ax.patches:
 print(all_data.Objective.value_counts())
 print(all_data.Objective.value_counts(normalize=True))
 """
+
+#chart for Objective
+objective_df = pd.DataFrame(all_data.Objective.value_counts(normalize=True).sort_values(ascending=False)).mul(100).reset_index().rename(columns={'index': 'Objective', 'Objective': "Percentage"})
+Objective_Chart = sns.catplot(x='Objective', y='Percentage', data=objective_df, kind='bar', palette='cool')
+Objective_Chart.set(title='Percent of Ads by Objective')
+Objective_Chart.ax.set_ylim(0,100)
+for p in Objective_Chart.ax.patches:
+  Objective_Chart.ax.annotate(str(p.get_height().round(2)) + '%',
+  (p.get_x() + p.get_width()/2, p.get_height()),
+  ha='center', va='center',
+  xytext=(0,5),
+  textcoords='offset points')
+
+print(objective_df)
 
 traffic = all_data.loc[all_data.Objective == 'Traffic', :]
 conversions = all_data.loc[all_data.Objective == 'Conversions', :]
