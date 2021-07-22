@@ -51,9 +51,9 @@ print(all_data.Placements_For_Chart.value_counts()) #for totals of Placements
 print(all_data.Placements_For_Chart.value_counts(normalize=True)) #for % totals of Placements
 
 #chart for Placements
-platform_df = pd.DataFrame(all_data.Placements_For_Chart.value_counts(normalize=True)).mul(100).reset_index().rename(columns={'index': 'Platform', 'Placements_For_Chart': 'Percentage'})
-Platform_Chart = sns.catplot(x='Platform', y='Percentage', data=platform_df, kind='bar', order=['Facebook/Instagram', 'Facebook', 'Pinterest', 'Instagram'], palette='cool')
-Platform_Chart.set(xlabel='Platform', title='Percent of Ads by Social Media Platform')
+platform_df = pd.DataFrame(all_data.Placements_For_Chart.value_counts(normalize=True).sort_values(ascending=False)).mul(100).reset_index().rename(columns={'index': 'Platform', 'Placements_For_Chart': 'Percentage'})
+Platform_Chart = sns.catplot(x='Platform', y='Percentage', data=platform_df, kind='bar', palette='cool')
+Platform_Chart.set(title='Percent of Ads by Social Media Platform')
 Platform_Chart.ax.set_ylim(0,100)
 for p in Platform_Chart.ax.patches:
   Platform_Chart.ax.annotate(str(p.get_height().round(2)) + '%',
