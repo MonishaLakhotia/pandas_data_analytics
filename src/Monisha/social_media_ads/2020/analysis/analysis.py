@@ -94,11 +94,33 @@ Landing Page Views: 30.26%
 Clicks: 21.54%
 ''', fontsize=8.5, bbox={'fc': 'white', 'boxstyle': 'larrow'})
 
-"""
-#creating correlation heatmap
+#chart for correlation heatmap
 all_data_corr = all_data.corr()
 Corr_Heat_Map = sns.heatmap(all_data_corr, annot=True, cmap='Blues', linewidths=.5)
 Corr_Heat_Map.set_title('Correlations in Social Media Ads')
+"""
+
+#charts for spend vs x
+#ci=None will remove the confidence interval
+spend_vs_reach = sns.lmplot(x='Spend', y='Reach', data=all_data)
+spend_vs_clicks = sns.lmplot(x='Spend', y='Clicks', data=all_data)
+spend_vs_total_users = sns.lmplot(x='Spend', y='Total_Users', data=all_data)
+spend_vs_total_click_to_retail = sns.lmplot(x='Spend', y='Total_Click_To_Retail', data=all_data)
+spend_vs_cost_per_click_to_retail = sns.lmplot(x='Spend', y='Cost_Per_Click_To_Retail', data=all_data)
+
+#to rename the charts and y label
+list_of_graphs = [spend_vs_reach, spend_vs_total_users, spend_vs_clicks, spend_vs_cost_per_click_to_retail, spend_vs_total_click_to_retail]
+
+for graph in list_of_graphs:
+  y_label = str(graph.ax.get_ylabel).split()
+  y_label = y_label[5].replace('ylabel=','').replace('>>', '').strip().replace('_', ' ').replace('\'', '')
+  graph.set_ylabels(y_label)
+  y_axis = str(graph.ax.get_ylabel).split()
+  y_axis = ' '.join(y_axis[5:]).replace('ylabel=','').replace('>>', '').replace('\'', '')
+  graph.set(title=('Spend Per Ad vs ' + str(y_axis)))
+
+
+#spend_pair_grid = sns.PairGrid(all_data, x_vars='Spend', y_vars=['Reach', 'Clicks', 'Total_Users', 'Cost_Per_Click_To_Retail'])
 
 #splitting Objectives
 traffic = all_data.loc[all_data.Objective == 'Traffic', :]
