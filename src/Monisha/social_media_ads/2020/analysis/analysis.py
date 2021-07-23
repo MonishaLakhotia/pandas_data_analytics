@@ -95,6 +95,11 @@ Clicks: 21.54%
 ''', fontsize=8.5, bbox={'fc': 'white', 'boxstyle': 'larrow'})
 
 """
+#creating correlation heatmap
+all_data_corr = all_data.corr()
+Corr_Heat_Map = sns.heatmap(all_data_corr, annot=True, cmap='Blues', linewidths=.5)
+Corr_Heat_Map.set_title('Correlations in Social Media Ads')
+
 #splitting Objectives
 traffic = all_data.loc[all_data.Objective == 'Traffic', :]
 conversions = all_data.loc[all_data.Objective == 'Conversions', :]
@@ -102,21 +107,7 @@ engagement = all_data.loc[all_data.Objective == 'Engagement', :]
 reach = all_data.loc[all_data.Objective == 'Reach', :]
 page_likes = all_data.loc[all_data.Objective == 'Page Likes', :]
 video_views = all_data.loc[all_data.Objective == 'Video Views', :]
-"""
-Presentation notes
-Traffic        195
-Conversions     26
-Engagement      13
-Reach            9
-Brand Awareness  4
-Page Likes       3
-Video Views      2
 
-Traffic breakdown:
-Link Clicks           94
-Landing Page Views    59
-Clicks                43
-"""
 
 #print(traffic.loc[traffic.Result_Type == 'Impressions'])
 
@@ -139,8 +130,6 @@ Clicks                43
 #sns.barplot(x='Objective', y='Cost_Per_Click_To_Retail', data=all_data)
 
 
-#all_data_corr = all_data.corr()
-#sns.heatmap(all_data_corr, annot=True)
 #sns.lmplot(x='Spend', y='Clicks', data=all_data)
 #sns.lmplot(x='Spend', y='Reach', data=all_data)
 #sns.lmplot(x='Spend', y='CPC', data=all_data)
