@@ -2,6 +2,7 @@ from matplotlib.colors import Normalize
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import matplotlib.patches
 import os
 import toml
 import src.utils as u
@@ -63,14 +64,14 @@ for p in Platform_Chart.ax.patches:
   ha='center', va='center',
   xytext=(0,5),
   textcoords='offset points')
-"""  
 
-
-"""
 #breakdown by Objective
 print(all_data.Objective.value_counts())
 print(all_data.Objective.value_counts(normalize=True))
-"""
+
+#breakdown of Traffic
+print(all_data.loc[all_data.Objective == 'Traffic', 'Result_Type'].value_counts())
+print(all_data.loc[all_data.Objective == 'Traffic', 'Result_Type'].value_counts(normalize=True))
 
 #chart for Objective
 #objective_df = pd.DataFrame(all_data.loc[:, ['Objective', 'Result_Type']].value_counts(normalize=True).sort_values(ascending=False)).mul(100).reset_index().rename(columns={0: 'Percentage'})
@@ -87,9 +88,14 @@ for p in Objective_Chart.ax.patches:
   ha='center', va='center',
   xytext=(0,5),
   textcoords='offset points')
+plt.text(1, 60, '''Traffic Breakdown:
+Link Clicks: 48.21%
+Landing Page Views: 30.26%
+Clicks: 21.54%
+''', fontsize=8.5, bbox={'fc': 'white', 'boxstyle': 'larrow'})
 
-print(objective_df)
-
+"""
+#splitting Objectives
 traffic = all_data.loc[all_data.Objective == 'Traffic', :]
 conversions = all_data.loc[all_data.Objective == 'Conversions', :]
 engagement = all_data.loc[all_data.Objective == 'Engagement', :]
