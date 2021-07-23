@@ -74,6 +74,7 @@ print(all_data.Objective.value_counts(normalize=True))
 
 #chart for Objective
 #objective_df = pd.DataFrame(all_data.loc[:, ['Objective', 'Result_Type']].value_counts(normalize=True).sort_values(ascending=False)).mul(100).reset_index().rename(columns={0: 'Percentage'})
+#Objective_Chart = objective_df.set_index(['Objective', 'Result_Type'])['Percentage'].unstack().plot.bar(stacked=True)
 objective_df = pd.DataFrame(all_data.Objective.value_counts(normalize=True).sort_values(ascending=False)).mul(100).reset_index().rename(columns={'index': 'Objective', 'Objective': "Percentage"})
 Objective_Chart = sns.catplot(x='Objective', y='Percentage', data=objective_df, kind='bar', palette='cool')
 Objective_Chart.set(title='Percent of Ads by Objective')
