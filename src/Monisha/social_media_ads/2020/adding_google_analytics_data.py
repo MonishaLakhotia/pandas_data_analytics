@@ -435,6 +435,7 @@ social_data['Cost_Per_Click_To_Retail'] = social_data['Spend']/social_data['Tota
 social_data.drop(columns=['Book_Matching', 'Placement_Matching'], inplace=True)
 social_data.replace([np.inf, -np.inf], np.nan, inplace=True)
 social_data.replace(0, NaN, inplace=True)
+social_data.loc[social_data.Clicks < social_data.Total_Users, ['Total_Users', 'Total_Click_To_Retail']] = NaN
 
 social_data.to_csv('~/Desktop/google_merge_test.csv')
 print('done')
