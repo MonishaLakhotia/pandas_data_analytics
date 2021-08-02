@@ -98,7 +98,7 @@ Clicks: 21.54%
 all_data_corr = all_data.corr()
 Corr_Heat_Map = sns.heatmap(all_data_corr, annot=True, cmap='Blues', linewidths=.5)
 Corr_Heat_Map.set_title('Correlations in Social Media Ads')
-"""
+
 
 #charts for spend vs x
 #ci=None will remove the confidence interval
@@ -108,16 +108,32 @@ spend_vs_total_users = sns.lmplot(x='Spend', y='Total_Users', data=all_data)
 spend_vs_total_click_to_retail = sns.lmplot(x='Spend', y='Total_Click_To_Retail', data=all_data)
 spend_vs_cost_per_click_to_retail = sns.lmplot(x='Spend', y='Cost_Per_Click_To_Retail', data=all_data)
 
-#to rename the charts and y label
+#to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [spend_vs_reach, spend_vs_total_users, spend_vs_clicks, spend_vs_cost_per_click_to_retail, spend_vs_total_click_to_retail]
 
+
+#charts for reach vs x
+reach_vs_clicks = sns.lmplot(x='Reach', y='Clicks', data=all_data)
+reach_vs_cpm = sns.lmplot(x='Reach', y='CPM', data=all_data)
+reach_vs_ctr = sns.lmplot(x='Reach', y='CTR', data=all_data)
+reach_vs_total_users = sns.lmplot(x='Reach', y='Total_Users', data=all_data)
+reach_vs_total_click_to_retail = sns.lmplot(x='Reach', y='Total_Click_To_Retail', data=all_data)
+
+#to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
+list_of_graphs = [reach_vs_clicks, reach_vs_cpm, reach_vs_ctr, reach_vs_total_users, reach_vs_total_click_to_retail]
+"""
+
+#for loop that renames all of these
 for graph in list_of_graphs:
   y_label = str(graph.ax.get_ylabel).split()
   y_label = y_label[5].replace('ylabel=','').replace('>>', '').strip().replace('_', ' ').replace('\'', '')
   graph.set_ylabels(y_label)
   y_axis = str(graph.ax.get_ylabel).split()
   y_axis = ' '.join(y_axis[5:]).replace('ylabel=','').replace('>>', '').replace('\'', '')
-  graph.set(title=('Spend Per Ad vs ' + str(y_axis)))
+  x_axis = str(graph.ax.get_xlabel).split()
+  x_axis = ' '.join(x_axis[4])
+  x_axis = re.sub('.+=|\'|,', '', x_axis).replace(' ', '')
+  graph.set(title=(str(x_axis) + ' vs ' + str(y_axis)))
 
 
 #spend_pair_grid = sns.PairGrid(all_data, x_vars='Spend', y_vars=['Reach', 'Clicks', 'Total_Users', 'Cost_Per_Click_To_Retail'])
