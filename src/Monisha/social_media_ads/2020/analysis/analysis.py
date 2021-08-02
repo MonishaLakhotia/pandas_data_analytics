@@ -111,6 +111,7 @@ spend_vs_cost_per_click_to_retail = sns.lmplot(x='Spend', y='Cost_Per_Click_To_R
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [spend_vs_reach, spend_vs_total_users, spend_vs_clicks, spend_vs_cost_per_click_to_retail, spend_vs_total_click_to_retail]
 
+
 #charts for reach vs x
 reach_vs_clicks = sns.lmplot(x='Reach', y='Clicks', data=all_data)
 reach_vs_cpm = sns.lmplot(x='Reach', y='CPM', data=all_data)
@@ -129,6 +130,15 @@ clicks_vs_total_click_to_retail = sns.lmplot(x='Clicks', y='Total_Click_To_Retai
 
 list_of_graphs = [clicks_vs_ctr, clicks_vs_total_users, clicks_vs_total_click_to_retail]
 
+
+#charts for cpm vs x
+cpm_vs_ctr = sns.lmplot(x='CPM', y='CTR', data=all_data)
+cpm_vs_total_users = sns.lmplot(x='CPM', y='Total_Users', data=all_data) #don't include
+cpm_vs_total_click_to_retail = sns.lmplot(x='CPM', y='Total_Click_To_Retail', data=all_data) #don't include
+
+list_of_graphs = [cpm_vs_ctr, cpm_vs_total_users, cpm_vs_total_click_to_retail]
+
+"""
 #for loop that renames all of these
 for graph in list_of_graphs:
   y_label = str(graph.ax.get_ylabel).split()
@@ -143,9 +153,24 @@ for graph in list_of_graphs:
   #max_y_value = all_data[str(y_axis).replace(' ', '_')].max()
   #print(max_y_value)
   #graph.ax.set_xlim(auto=True)
+
+
 """
-print(all_data.loc[all_data.Result_Type == 'Clicks', :])
-#spend_pair_grid = sns.PairGrid(all_data, x_vars='Spend', y_vars=['Reach', 'Clicks', 'Total_Users', 'Cost_Per_Click_To_Retail'])
+#chart for result type vs users
+result_type_df = pd.DataFrame(all_data.loc[:, ['Result_Type', 'Total_Users', 'Clicks']])
+result_type_df = result_type_df.groupby('Result_Type').sum()
+result_type_df['Percent'] = result_type_df.Total_Users / result_type_df.Clicks
+result_type_df.reset_index(inplace=True)
+result_type_df.Percent.fillna(0, inplace=True)
+result_type_df.sort_values('Total_Users', ascending=False, inplace=True)
+result_type_graph = sns.barplot(x='Result_Type', y='Total_Users', data=result_type_df, palette='cool')
+result_type_graph.set(title='Total Users By Result Type')
+result_type_graph.axes.set_xlabel('Result Type', fontsize=11)
+result_type_graph.axes.set_ylabel('Total Users', fontsize=11)
+
+"""
+
+#sns.barplot(x='Result_Type', y='Clicks', data=result_type_df, palette='cool')
 
 #splitting Objectives
 traffic = all_data.loc[all_data.Objective == 'Traffic', :]
