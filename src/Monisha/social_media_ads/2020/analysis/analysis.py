@@ -111,7 +111,6 @@ spend_vs_cost_per_click_to_retail = sns.lmplot(x='Spend', y='Cost_Per_Click_To_R
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [spend_vs_reach, spend_vs_total_users, spend_vs_clicks, spend_vs_cost_per_click_to_retail, spend_vs_total_click_to_retail]
 
-"""
 #charts for reach vs x
 reach_vs_clicks = sns.lmplot(x='Reach', y='Clicks', data=all_data)
 reach_vs_cpm = sns.lmplot(x='Reach', y='CPM', data=all_data)
@@ -122,6 +121,13 @@ reach_vs_total_click_to_retail = sns.lmplot(x='Reach', y='Total_Click_To_Retail'
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [reach_vs_clicks, reach_vs_cpm, reach_vs_ctr, reach_vs_total_users, reach_vs_total_click_to_retail]
 
+
+#charts for clicks vs x
+clicks_vs_ctr = sns.lmplot(x='Clicks', y='CTR', data=all_data)
+clicks_vs_total_users = sns.lmplot(x='Clicks', y='Total_Users', data=all_data)
+clicks_vs_total_click_to_retail = sns.lmplot(x='Clicks', y='Total_Click_To_Retail', data=all_data)
+
+list_of_graphs = [clicks_vs_ctr, clicks_vs_total_users, clicks_vs_total_click_to_retail]
 
 #for loop that renames all of these
 for graph in list_of_graphs:
@@ -137,9 +143,8 @@ for graph in list_of_graphs:
   #max_y_value = all_data[str(y_axis).replace(' ', '_')].max()
   #print(max_y_value)
   #graph.ax.set_xlim(auto=True)
-
-
-
+"""
+print(all_data.loc[all_data.Result_Type == 'Clicks', :])
 #spend_pair_grid = sns.PairGrid(all_data, x_vars='Spend', y_vars=['Reach', 'Clicks', 'Total_Users', 'Cost_Per_Click_To_Retail'])
 
 #splitting Objectives
