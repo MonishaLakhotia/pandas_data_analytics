@@ -428,15 +428,19 @@ social_data = social_data.assign(Total_Click_To_Retail = social_data[cols_Click_
 
 social_data.drop(columns=social_data.loc[: , social_data.columns.str.contains('^Users.*|^Click_To_Retail.*')], inplace=True)
 
+#misc cleaning
+social_data.drop(columns=['Book_Matching', 'Placement_Matching'], inplace=True)
+social_data.replace([np.inf, -np.inf], np.nan, inplace=True)
+social_data.replace(0, NaN, inplace=True)
+social_data.Clicks.fillna(0, inplace = True)
+social_data.loc[social_data.Clicks < social_data.Total_Users, ['Total_Users', 'Total_Click_To_Retail']] = NaN
+
 #creating cost per User and Click_To_Retail columns
 social_data['Cost_Per_User'] = social_data['Spend']/social_data['Total_Users']
 social_data['Cost_Per_Click_To_Retail'] = social_data['Spend']/social_data['Total_Click_To_Retail']
 
-social_data.drop(columns=['Book_Matching', 'Placement_Matching'], inplace=True)
-social_data.replace([np.inf, -np.inf], np.nan, inplace=True)
-social_data.replace(0, NaN, inplace=True)
-social_data.loc[social_data.Clicks < social_data.Total_Users, ['Total_Users', 'Total_Click_To_Retail']] = NaN
-
+#print(social_data.loc[(social_data.Clicks == NaN) & (social_data.Total_Users != NaN)])
+print(social_data.loc[social_data.Result_Type == 'Clicks', :])
 social_data.to_csv('~/Desktop/google_merge_test.csv')
 print('done')
 
