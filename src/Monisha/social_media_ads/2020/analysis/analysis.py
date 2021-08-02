@@ -128,6 +128,7 @@ clicks_vs_ctr = sns.lmplot(x='Clicks', y='CTR', data=all_data)
 clicks_vs_total_users = sns.lmplot(x='Clicks', y='Total_Users', data=all_data)
 clicks_vs_total_click_to_retail = sns.lmplot(x='Clicks', y='Total_Click_To_Retail', data=all_data)
 
+#to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [clicks_vs_ctr, clicks_vs_total_users, clicks_vs_total_click_to_retail]
 
 
@@ -136,9 +137,18 @@ cpm_vs_ctr = sns.lmplot(x='CPM', y='CTR', data=all_data)
 cpm_vs_total_users = sns.lmplot(x='CPM', y='Total_Users', data=all_data) #don't include
 cpm_vs_total_click_to_retail = sns.lmplot(x='CPM', y='Total_Click_To_Retail', data=all_data) #don't include
 
+#to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [cpm_vs_ctr, cpm_vs_total_users, cpm_vs_total_click_to_retail]
 
 """
+#charts for ctr vs x
+ctr_vs_total_users = sns.lmplot(x='CTR', y='Total_Users', data=all_data)
+ctr_vs_total_click_to_retail = sns.lmplot(x='CTR', y='Total_Click_To_Retail', data=all_data)
+
+#to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
+list_of_graphs = [ctr_vs_total_users, ctr_vs_total_click_to_retail]
+
+
 #for loop that renames all of these
 for graph in list_of_graphs:
   y_label = str(graph.ax.get_ylabel).split()
