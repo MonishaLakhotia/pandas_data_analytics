@@ -147,7 +147,7 @@ ctr_vs_total_click_to_retail = sns.lmplot(x='CTR', y='Total_Click_To_Retail', da
 
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [ctr_vs_total_users, ctr_vs_total_click_to_retail]
-"""
+
 
 #charts for users vs x
 users_vs_cost_per_user = sns.lmplot(x='Total_Users', y='Cost_Per_User', data=all_data)
@@ -155,7 +155,13 @@ users_vs_total_click_to_retail = sns.lmplot(x='Total_Users', y='Total_Click_To_R
 
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [users_vs_cost_per_user, users_vs_total_click_to_retail]
+"""
 
+#charts for cost per user vs x
+cost_per_user_vs_cost_per_click_to_retail = sns.lmplot(x='Cost_Per_User', y='Cost_Per_Click_To_Retail', data=all_data)
+
+#to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
+list_of_graphs = [cost_per_user_vs_cost_per_click_to_retail]
 
 #for loop that renames all of these
 for graph in list_of_graphs:
@@ -166,7 +172,8 @@ for graph in list_of_graphs:
   y_axis = ' '.join(y_axis[5:]).replace('ylabel=','').replace('>>', '').replace('\'', '')
   x_axis = str(graph.ax.get_xlabel).split()
   x_axis = ' '.join(x_axis[4])
-  x_axis = re.sub('.+=|\'|,', '', x_axis).replace(' ', '')
+  x_axis = re.sub('.+=|\'|,|\s', '', x_axis).replace('_', ' ')
+  graph.set_xlabels(x_axis)
   graph.set(title=(str(x_axis) + ' vs ' + str(y_axis)))
   #max_y_value = all_data[str(y_axis).replace(' ', '_')].max()
   #print(max_y_value)
