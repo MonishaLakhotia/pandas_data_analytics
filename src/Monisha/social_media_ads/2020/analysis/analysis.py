@@ -166,17 +166,26 @@ for graph in list_of_graphs:
 
 
 """
-#chart for result type vs users
-result_type_df = pd.DataFrame(all_data.loc[:, ['Result_Type', 'Total_Users', 'Clicks']])
+#chart for result type vs users/click to retail
+#creating df
+result_type_df = pd.DataFrame(all_data.loc[:, ['Result_Type', 'Total_Users', 'Clicks', 'Total_Click_To_Retail]])
 result_type_df = result_type_df.groupby('Result_Type').sum()
 result_type_df['Percent'] = result_type_df.Total_Users / result_type_df.Clicks
 result_type_df.reset_index(inplace=True)
 result_type_df.Percent.fillna(0, inplace=True)
 result_type_df.sort_values('Total_Users', ascending=False, inplace=True)
-result_type_graph = sns.barplot(x='Result_Type', y='Total_Users', data=result_type_df, palette='cool')
-result_type_graph.set(title='Total Users By Result Type')
-result_type_graph.axes.set_xlabel('Result Type', fontsize=11)
-result_type_graph.axes.set_ylabel('Total Users', fontsize=11)
+
+#creating user graph
+result_type_user_graph = sns.barplot(x='Result_Type', y='Total_Users', data=result_type_df, palette='cool')
+result_type_user_graph.set(title='Total Users By Result Type')
+result_type_user_graph.axes.set_xlabel('Result Type', fontsize=11)
+result_type_user_graph.axes.set_ylabel('Total Users', fontsize=11)
+
+#creating result graph
+result_type_retail_graph = sns.barplot(x='Result_Type', y='Total_Click_To_Retail', data=result_type_df, palette='cool')
+result_type_retail_graph.set(title='Total Clicks to Retail By Result Type')
+result_type_retail_graph.axes.set_xlabel('Result Type', fontsize=11)
+result_type_retail_graph.axes.set_ylabel('Total Clicks to Retail', fontsize=11)
 
 """
 
