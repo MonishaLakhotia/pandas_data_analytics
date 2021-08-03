@@ -271,9 +271,19 @@ result_type_cost_per_retail_graph.axes.set_ylabel('Click To Retail Rate', fontsi
 vals = result_type_cost_per_retail_graph.get_yticks()
 result_type_cost_per_retail_graph.set_yticklabels(['{:,.2%}'.format(x) for x in vals])
 """
-print(result_type_df)
 
-#sns.barplot(x='Result_Type', y='Clicks', data=result_type_df, palette='cool')
+#creating keywords df
+keywords_df = pd.DataFrame(all_data.loc[:, ['Spend', 'Audience', 'Reach', 'Clicks', 'Total_Users', 'Total_Click_To_Retail']])
+keywords_df = keywords_df.groupby('Audience').sum()
+keywords_df['CPM'] = (keywords_df['Spend'] / keywords_df['Reach']) * 1000
+keywords_df['CPC'] = keywords_df['Spend'] / keywords_df['Clicks']
+keywords_df['CTR'] = keywords_df['Clicks'] / keywords_df['Reach']
+keywords_df['Cost_Per_User'] = keywords_df['Spend'] / keywords_df['Total_Users']
+keywords_df['Cost_Per_Click_To_Retail'] = keywords_df['Spend'] / keywords_df['Total_Click_To_Retail']
+keywords_df['Click_To_Retail_Rate'] = keywords_df['Total_Click_To_Retail'] / keywords_df['Total_Users']
+
+
+print(keywords_df)
 
 #splitting Objectives
 traffic = all_data.loc[all_data.Objective == 'Traffic', :]
