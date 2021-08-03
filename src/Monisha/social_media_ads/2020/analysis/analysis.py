@@ -1,4 +1,5 @@
 from matplotlib.colors import Normalize
+from numpy.lib.function_base import average
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -274,6 +275,10 @@ result_type_cost_per_retail_graph.set_yticklabels(['{:,.2%}'.format(x) for x in 
 
 #creating keywords df
 keywords_df = pd.DataFrame(all_data.loc[:, ['Spend', 'Audience', 'Reach', 'Clicks', 'Total_Users', 'Total_Click_To_Retail']])
+keywords_df['Audience'] = keywords_df.Audience.str.title()
+keywords_df['Audience'] = keywords_df.Audience.str.split(' - ', expand=True)
+keywords_df['Audience'] = keywords_df.Audience.str.replace('\s+\(Just\s.*Keyword;\sAll\sAges\)', ' Keyword', regex=True).str.replace(' Based', '').str.replace('Snowfall\sAudience\s.+', 'Snowfall Audience', regex=True)
+keywords_df['Audience'] = keywords_df.Audience.str.replace('N/A', 'Misc Pinterest').str.replace('.+Pinterest', 'Misc Pinterest')
 keywords_df = keywords_df.groupby('Audience').sum()
 keywords_df['CPM'] = (keywords_df['Spend'] / keywords_df['Reach']) * 1000
 keywords_df['CPC'] = keywords_df['Spend'] / keywords_df['Clicks']
@@ -281,9 +286,46 @@ keywords_df['CTR'] = keywords_df['Clicks'] / keywords_df['Reach']
 keywords_df['Cost_Per_User'] = keywords_df['Spend'] / keywords_df['Total_Users']
 keywords_df['Cost_Per_Click_To_Retail'] = keywords_df['Spend'] / keywords_df['Total_Click_To_Retail']
 keywords_df['Click_To_Retail_Rate'] = keywords_df['Total_Click_To_Retail'] / keywords_df['Total_Users']
+keywords_df.replace([np.inf, -np.inf], np.nan, inplace=True)
+#keywords_df.reset_index(inplace=True)
+#keywords_df['Audience'] = keywords_df.Audience.str.title()
+#keywords_df['Audience'] = re.sub('+Keyword.+', 'Keyword', str(keywords_df.Audience))
+#keywords_df['Audience'] = re.sub('.*Keyword.*', 'Keyword', str(keywords_df.Audience))
 
+for_nan = ['Clicks', 'Total_Users', 'Total_Click_To_Retail', 'Reach', 'CTR']
+for value in for_nan:
+  keywords_df[value] = keywords_df[value].replace(0, np.nan)
+  keywords_df[value] = keywords_df[value].replace(0.000000, np.nan)
 
-print(keywords_df)
+#creates and saves graphs for cpm, cpc, cost_per_user, cost_per_click_to_retail
+cols_for_graphs = ['CPM', 'CPC', 'Cost_Per_User', 'Cost_Per_Click_To_Retail']
+for col in cols_for_graphs:
+  keywords_df.sort_values(col, inplace=True)
+  keywords_df_head = keywords_df.head(10)
+  barplot = sns.catplot(x=keywords_df_head.index, y=col, data=keywords_df_head, kind='bar', palette='cool', ci=None)
+  y_label = str(barplot.ax.get_ylabel).split()
+  y_label = y_label[5].replace('ylabel=','').replace('>>', '').strip().replace('_', ' ').replace('\'', '')
+  barplot.set_ylabels(y_label + ' ($)')
+  y_axis = str(barplot.ax.get_ylabel).split()
+  y_axis = ' '.join(y_axis[5:]).replace('ylabel=','').replace('>>', '').replace('\'', '')
+  x_axis = str(barplot.ax.get_xlabel).split()
+  x_axis = ' '.join(x_axis[4])
+  x_axis = re.sub('.+=|\'|,|\s', '', x_axis).replace('_', ' ')
+  barplot.set_xlabels(x_axis)
+  y_for_title = y_label.replace(' ($)', '')
+  barplot.set(title=(str(y_for_title) + ' by ' + str(x_axis)))
+  barplot.set_xticklabels(rotation=45, horizontalalignment='right', fontsize='x-small')
+  left_lim, right_lim = plt.ylim()
+  mean_value = keywords_df_head[col].mean()
+  right_lim = right_lim - mean_value
+  min_value = keywords_df_head[col].min().round(2)
+  min_name = keywords_df_head[col].idxmin()
+  plt.text(left_lim, right_lim, r'''Lowest {}:
+  {} (${})'''.format(y_for_title, min_name, min_value), fontsize=8, bbox={'fc': 'white'})
+  #saves the fig, commented out for now - DOES WORK
+  #my_file = 'keywords_df_' + col + '.png'
+  #plt.savefig(my_file, bbox_inches='tight')
+
 
 #splitting Objectives
 traffic = all_data.loc[all_data.Objective == 'Traffic', :]
