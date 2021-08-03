@@ -180,13 +180,13 @@ for graph in list_of_graphs:
   #print(max_y_value)
   #graph.ax.set_xlim(auto=True)
 """
-print(all_data.CPM.describe())
+
 #chart for result type vs x
 #creating df
 result_type_df = pd.DataFrame(all_data.loc[:, ['Result_Type', 'Spend', 'Total_Users', 'Clicks', 'Total_Click_To_Retail', 'Reach']])
 result_type_df = result_type_df.groupby('Result_Type').sum()
 result_type_df['CPM'] = (result_type_df['Spend'] / result_type_df['Reach']) * 1000
-result_type_df['CPC'] = (result_type_df['Spend'] / result_type_df['Clicks'])
+result_type_df['CPC'] = result_type_df['Spend'] / result_type_df['Clicks']
 result_type_df['CTR'] = (result_type_df['Clicks'] / result_type_df['Reach'])
 result_type_df['Cost_Per_User'] = (result_type_df['Spend'] / result_type_df['Total_Users'])
 result_type_df['Cost_Per_Click_To_Retail'] = (result_type_df['Spend'] / result_type_df['Total_Click_To_Retail'])
@@ -204,7 +204,7 @@ result_type_user_graph.set(title='Total Users By Result Type')
 result_type_user_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_user_graph.axes.set_ylabel('Total Users', fontsize=11)
 
-#creating result graph
+#creating retail graph
 result_type_retail_graph = sns.barplot(x='Result_Type', y='Total_Click_To_Retail', data=result_type_df, palette='cool')
 result_type_retail_graph.set(title='Total Clicks To Retail By Result Type')
 result_type_retail_graph.axes.set_xlabel('Result Type', fontsize=11)
@@ -224,6 +224,7 @@ result_type_reach_graph.set(title='Reach By Result Type')
 result_type_reach_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_reach_graph.axes.set_ylabel('Reach', fontsize=11)
 
+"""
 
 #creating ctr graph
 result_type_df.sort_values('CTR', inplace=True, ascending=False)
@@ -231,25 +232,24 @@ result_type_ctr_graph = sns.barplot(x='Result_Type', y='CTR', data=result_type_d
 result_type_ctr_graph.set(title='CTR By Result Type')
 result_type_ctr_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_ctr_graph.axes.set_ylabel('CTR', fontsize=11)
+vals = result_type_ctr_graph.get_yticks()
+result_type_ctr_graph.set_yticklabels(['{:,.2%}'.format(x) for x in vals])
 
-
+"""
 #creating cpc graph
 result_type_df.sort_values('CPC', inplace=True, ascending=False)
 result_type_cpc_graph = sns.barplot(x='Result_Type', y='CPC', data=result_type_df, palette='cool')
 result_type_cpc_graph.set(title='CPC By Result Type')
 result_type_cpc_graph.axes.set_xlabel('Result Type', fontsize=11)
-result_type_cpc_graph.axes.set_ylabel('CPC', fontsize=11)
-"""
+result_type_cpc_graph.axes.set_ylabel('CPC ($)', fontsize=11)
+
 #creating cpm graph
 result_type_df.sort_values('CPM', inplace=True, ascending=False)
 result_type_cpm_graph = sns.barplot(x='Result_Type', y='CPM', data=result_type_df, palette='cool')
 result_type_cpm_graph.set(title='CPM By Result Type')
 result_type_cpm_graph.axes.set_xlabel('Result Type', fontsize=11)
-result_type_cpm_graph.axes.set_ylabel('CPM', fontsize=11)
-
-
-
-print(result_type_df)
+result_type_cpm_graph.axes.set_ylabel('CPM ($)', fontsize=11)
+"""
 
 
 #sns.barplot(x='Result_Type', y='Clicks', data=result_type_df, palette='cool')
