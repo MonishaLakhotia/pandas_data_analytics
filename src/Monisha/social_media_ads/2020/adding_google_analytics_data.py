@@ -440,7 +440,6 @@ social_data['Cost_Per_User'] = social_data['Spend']/social_data['Total_Users']
 social_data['Cost_Per_Click_To_Retail'] = social_data['Spend']/social_data['Total_Click_To_Retail']
 
 #print(social_data.loc[(social_data.Clicks == NaN) & (social_data.Total_Users != NaN)])
-print(social_data.loc[social_data.Result_Type == 'Clicks', :])
 social_data.to_csv('~/Desktop/google_merge_test.csv')
 print('done')
 

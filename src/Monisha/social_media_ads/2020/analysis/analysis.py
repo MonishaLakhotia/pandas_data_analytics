@@ -179,7 +179,7 @@ for graph in list_of_graphs:
   #print(max_y_value)
   #graph.ax.set_xlim(auto=True)
 """
-
+print(all_data.CPM.describe())
 #chart for result type vs users/click to retail
 #creating df
 result_type_df = pd.DataFrame(all_data.loc[:, ['Result_Type', 'Total_Users', 'Clicks', 'Total_Click_To_Retail', 'CPC', 'Reach', 'CPM', 'CTR', 'Cost_Per_User', 'Cost_Per_Click_To_Retail']])
