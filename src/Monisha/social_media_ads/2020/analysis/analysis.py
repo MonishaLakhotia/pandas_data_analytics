@@ -190,6 +190,7 @@ result_type_df['CPC'] = result_type_df['Spend'] / result_type_df['Clicks']
 result_type_df['CTR'] = (result_type_df['Clicks'] / result_type_df['Reach'])
 result_type_df['Cost_Per_User'] = (result_type_df['Spend'] / result_type_df['Total_Users'])
 result_type_df['Cost_Per_Click_To_Retail'] = (result_type_df['Spend'] / result_type_df['Total_Click_To_Retail'])
+result_type_df['Click_To_Retail_Rate'] = (result_type_df['Total_Click_To_Retail'] / result_type_df['Total_Users'])
 result_type_df.CPC.replace([np.inf, -np.inf], np.nan, inplace=True)
 result_type_df.Cost_Per_User.replace([np.inf, -np.inf], np.nan, inplace=True)
 result_type_df.Cost_Per_Click_To_Retail.replace([np.inf, -np.inf], np.nan, inplace=True)
@@ -224,8 +225,6 @@ result_type_reach_graph.set(title='Reach By Result Type')
 result_type_reach_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_reach_graph.axes.set_ylabel('Reach', fontsize=11)
 
-"""
-
 #creating ctr graph
 result_type_df.sort_values('CTR', inplace=True, ascending=False)
 result_type_ctr_graph = sns.barplot(x='Result_Type', y='CTR', data=result_type_df, palette='cool')
@@ -235,7 +234,6 @@ result_type_ctr_graph.axes.set_ylabel('CTR', fontsize=11)
 vals = result_type_ctr_graph.get_yticks()
 result_type_ctr_graph.set_yticklabels(['{:,.2%}'.format(x) for x in vals])
 
-"""
 #creating cpc graph
 result_type_df.sort_values('CPC', inplace=True, ascending=False)
 result_type_cpc_graph = sns.barplot(x='Result_Type', y='CPC', data=result_type_df, palette='cool')
@@ -249,8 +247,31 @@ result_type_cpm_graph = sns.barplot(x='Result_Type', y='CPM', data=result_type_d
 result_type_cpm_graph.set(title='CPM By Result Type')
 result_type_cpm_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_cpm_graph.axes.set_ylabel('CPM ($)', fontsize=11)
-"""
 
+#creating cost per user graph
+result_type_df.sort_values('Cost_Per_User', inplace=True, ascending=False)
+result_type_cost_per_user_graph = sns.barplot(x='Result_Type', y='Cost_Per_User', data=result_type_df, palette='cool')
+result_type_cost_per_user_graph.set(title='Cost Per User By Result Type')
+result_type_cost_per_user_graph.axes.set_xlabel('Result Type', fontsize=11)
+result_type_cost_per_user_graph.axes.set_ylabel('Cost Per User ($)', fontsize=11)
+
+#creating cost per click to retail graph
+result_type_df.sort_values('Cost_Per_Click_To_Retail', inplace=True, ascending=False)
+result_type_cost_per_retail_graph = sns.barplot(x='Result_Type', y='Cost_Per_Click_To_Retail', data=result_type_df, palette='cool')
+result_type_cost_per_retail_graph.set(title='Cost Per Click To Retail By Result Type')
+result_type_cost_per_retail_graph.axes.set_xlabel('Result Type', fontsize=11)
+result_type_cost_per_retail_graph.axes.set_ylabel('Cost Per Click To Retail ($)', fontsize=11)
+
+#creating click to retail rate graph
+result_type_df.sort_values('Click_To_Retail_Rate', inplace=True, ascending=False)
+result_type_cost_per_retail_graph = sns.barplot(x='Result_Type', y='Click_To_Retail_Rate', data=result_type_df, palette='cool')
+result_type_cost_per_retail_graph.set(title='Click To Retail Rate By Result Type')
+result_type_cost_per_retail_graph.axes.set_xlabel('Result Type', fontsize=11)
+result_type_cost_per_retail_graph.axes.set_ylabel('Click To Retail Rate', fontsize=11)
+vals = result_type_cost_per_retail_graph.get_yticks()
+result_type_cost_per_retail_graph.set_yticklabels(['{:,.2%}'.format(x) for x in vals])
+"""
+print(result_type_df)
 
 #sns.barplot(x='Result_Type', y='Clicks', data=result_type_df, palette='cool')
 
