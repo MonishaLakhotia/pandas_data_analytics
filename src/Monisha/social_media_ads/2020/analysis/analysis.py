@@ -155,7 +155,7 @@ users_vs_total_click_to_retail = sns.lmplot(x='Total_Users', y='Total_Click_To_R
 
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [users_vs_cost_per_user, users_vs_total_click_to_retail]
-"""
+
 
 #charts for cost per user vs x
 cost_per_user_vs_cost_per_click_to_retail = sns.lmplot(x='Cost_Per_User', y='Cost_Per_Click_To_Retail', data=all_data)
@@ -178,31 +178,47 @@ for graph in list_of_graphs:
   #max_y_value = all_data[str(y_axis).replace(' ', '_')].max()
   #print(max_y_value)
   #graph.ax.set_xlim(auto=True)
-
-
 """
+
 #chart for result type vs users/click to retail
 #creating df
-result_type_df = pd.DataFrame(all_data.loc[:, ['Result_Type', 'Total_Users', 'Clicks', 'Total_Click_To_Retail]])
+result_type_df = pd.DataFrame(all_data.loc[:, ['Result_Type', 'Total_Users', 'Clicks', 'Total_Click_To_Retail', 'CPC', 'Reach', 'CPM', 'CTR', 'Cost_Per_User', 'Cost_Per_Click_To_Retail']])
 result_type_df = result_type_df.groupby('Result_Type').sum()
 result_type_df['Percent'] = result_type_df.Total_Users / result_type_df.Clicks
 result_type_df.reset_index(inplace=True)
 result_type_df.Percent.fillna(0, inplace=True)
 result_type_df.sort_values('Total_Users', ascending=False, inplace=True)
 
+"""
 #creating user graph
 result_type_user_graph = sns.barplot(x='Result_Type', y='Total_Users', data=result_type_df, palette='cool')
 result_type_user_graph.set(title='Total Users By Result Type')
 result_type_user_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_user_graph.axes.set_ylabel('Total Users', fontsize=11)
 
+
 #creating result graph
 result_type_retail_graph = sns.barplot(x='Result_Type', y='Total_Click_To_Retail', data=result_type_df, palette='cool')
-result_type_retail_graph.set(title='Total Clicks to Retail By Result Type')
+result_type_retail_graph.set(title='Total Clicks To Retail By Result Type')
 result_type_retail_graph.axes.set_xlabel('Result Type', fontsize=11)
-result_type_retail_graph.axes.set_ylabel('Total Clicks to Retail', fontsize=11)
+result_type_retail_graph.axes.set_ylabel('Total Clicks To Retail', fontsize=11)
 
+
+#creating clicks graph
+result_type_df.sort_values('Clicks', inplace=True, ascending=False)
+result_type_click_graph = sns.barplot(x='Result_Type', y='Clicks', data=result_type_df, palette='cool')
+result_type_click_graph.set(title='Clicks By Result Type')
+result_type_click_graph.axes.set_xlabel('Result Type', fontsize=11)
+result_type_click_graph.axes.set_ylabel('Clicks', fontsize=11)
+
+#creating reach graph
+result_type_df.sort_values('Reach', inplace=True, ascending=False)
+result_type_reach_graph = sns.barplot(x='Result_Type', y='Reach', data=result_type_df, palette='cool')
+result_type_reach_graph.set(title='Reach By Result Type')
+result_type_reach_graph.axes.set_xlabel('Result Type', fontsize=11)
+result_type_reach_graph.axes.set_ylabel('Reach', fontsize=11)
 """
+print(result_type_df)
 
 #sns.barplot(x='Result_Type', y='Clicks', data=result_type_df, palette='cool')
 
