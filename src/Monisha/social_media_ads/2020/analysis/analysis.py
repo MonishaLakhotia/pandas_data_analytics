@@ -196,13 +196,11 @@ result_type_user_graph.set(title='Total Users By Result Type')
 result_type_user_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_user_graph.axes.set_ylabel('Total Users', fontsize=11)
 
-
 #creating result graph
 result_type_retail_graph = sns.barplot(x='Result_Type', y='Total_Click_To_Retail', data=result_type_df, palette='cool')
 result_type_retail_graph.set(title='Total Clicks To Retail By Result Type')
 result_type_retail_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_retail_graph.axes.set_ylabel('Total Clicks To Retail', fontsize=11)
-
 
 #creating clicks graph
 result_type_df.sort_values('Clicks', inplace=True, ascending=False)
@@ -217,8 +215,33 @@ result_type_reach_graph = sns.barplot(x='Result_Type', y='Reach', data=result_ty
 result_type_reach_graph.set(title='Reach By Result Type')
 result_type_reach_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_reach_graph.axes.set_ylabel('Reach', fontsize=11)
+
+#creating ctr graph
+result_type_df.sort_values('CTR', inplace=True, ascending=False)
+result_type_ctr_graph = sns.barplot(x='Result_Type', y='CTR', data=result_type_df, palette='cool')
+result_type_ctr_graph.set(title='CTR By Result Type')
+result_type_ctr_graph.axes.set_xlabel('Result Type', fontsize=11)
+result_type_ctr_graph.axes.set_ylabel('CTR', fontsize=11)
+
+
+#creating cpc graph
+result_type_df.sort_values('CPC', inplace=True, ascending=False)
+result_type_cpc_graph = sns.barplot(x='Result_Type', y='CPC', data=result_type_df, palette='cool')
+result_type_cpc_graph.set(title='CPC By Result Type')
+result_type_cpc_graph.axes.set_xlabel('Result Type', fontsize=11)
+result_type_cpc_graph.axes.set_ylabel('CPC', fontsize=11)
+
+#creating cpm graph
+result_type_df.sort_values('CPM', inplace=True, ascending=False)
+result_type_cpm_graph = sns.barplot(x='Result_Type', y='CPM', data=result_type_df, palette='cool')
+result_type_cpm_graph.set(title='CPM By Result Type')
+result_type_cpm_graph.axes.set_xlabel('Result Type', fontsize=11)
+result_type_cpm_graph.axes.set_ylabel('CPM', fontsize=11)
 """
+
+
 print(result_type_df)
+
 
 #sns.barplot(x='Result_Type', y='Clicks', data=result_type_df, palette='cool')
 
