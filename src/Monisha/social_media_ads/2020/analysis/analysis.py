@@ -7,6 +7,7 @@ import os
 import toml
 import src.utils as u
 import re
+import numpy as np
 
 this_dir = os.path.dirname(os.path.realpath(__file__))
 config = toml.load(os.path.join(this_dir, 'config.toml'))
@@ -180,13 +181,20 @@ for graph in list_of_graphs:
   #graph.ax.set_xlim(auto=True)
 """
 print(all_data.CPM.describe())
-#chart for result type vs users/click to retail
+#chart for result type vs x
 #creating df
-result_type_df = pd.DataFrame(all_data.loc[:, ['Result_Type', 'Total_Users', 'Clicks', 'Total_Click_To_Retail', 'CPC', 'Reach', 'CPM', 'CTR', 'Cost_Per_User', 'Cost_Per_Click_To_Retail']])
+result_type_df = pd.DataFrame(all_data.loc[:, ['Result_Type', 'Spend', 'Total_Users', 'Clicks', 'Total_Click_To_Retail', 'Reach']])
 result_type_df = result_type_df.groupby('Result_Type').sum()
-result_type_df['Percent'] = result_type_df.Total_Users / result_type_df.Clicks
+result_type_df['CPM'] = (result_type_df['Spend'] / result_type_df['Reach']) * 1000
+result_type_df['CPC'] = (result_type_df['Spend'] / result_type_df['Clicks'])
+result_type_df['CTR'] = (result_type_df['Clicks'] / result_type_df['Reach'])
+result_type_df['Cost_Per_User'] = (result_type_df['Spend'] / result_type_df['Total_Users'])
+result_type_df['Cost_Per_Click_To_Retail'] = (result_type_df['Spend'] / result_type_df['Total_Click_To_Retail'])
+result_type_df.CPC.replace([np.inf, -np.inf], np.nan, inplace=True)
+result_type_df.Cost_Per_User.replace([np.inf, -np.inf], np.nan, inplace=True)
+result_type_df.Cost_Per_Click_To_Retail.replace([np.inf, -np.inf], np.nan, inplace=True)
+result_type_df.CTR.replace('0.000000', np.nan, inplace=True)
 result_type_df.reset_index(inplace=True)
-result_type_df.Percent.fillna(0, inplace=True)
 result_type_df.sort_values('Total_Users', ascending=False, inplace=True)
 
 """
@@ -216,6 +224,7 @@ result_type_reach_graph.set(title='Reach By Result Type')
 result_type_reach_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_reach_graph.axes.set_ylabel('Reach', fontsize=11)
 
+
 #creating ctr graph
 result_type_df.sort_values('CTR', inplace=True, ascending=False)
 result_type_ctr_graph = sns.barplot(x='Result_Type', y='CTR', data=result_type_df, palette='cool')
@@ -230,14 +239,14 @@ result_type_cpc_graph = sns.barplot(x='Result_Type', y='CPC', data=result_type_d
 result_type_cpc_graph.set(title='CPC By Result Type')
 result_type_cpc_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_cpc_graph.axes.set_ylabel('CPC', fontsize=11)
-
+"""
 #creating cpm graph
 result_type_df.sort_values('CPM', inplace=True, ascending=False)
 result_type_cpm_graph = sns.barplot(x='Result_Type', y='CPM', data=result_type_df, palette='cool')
 result_type_cpm_graph.set(title='CPM By Result Type')
 result_type_cpm_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_cpm_graph.axes.set_ylabel('CPM', fontsize=11)
-"""
+
 
 
 print(result_type_df)
