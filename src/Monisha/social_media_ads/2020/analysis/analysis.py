@@ -52,7 +52,7 @@ all_data['Placements_For_Chart'] = all_data.Placements_For_Chart.str.replace('FB
 #breakdown of Placements
 print(all_data.Placements_For_Chart.value_counts()) #for totals of Placements
 print(all_data.Placements_For_Chart.value_counts(normalize=True)) #for % totals of Placements
-"""
+
 #chart for Placements
 platform_df = pd.DataFrame(all_data.Placements_For_Chart.value_counts(normalize=True).sort_values(ascending=False)).mul(100).reset_index().rename(columns={'index': 'Platform', 'Placements_For_Chart': 'Percentage'})
 Platform_Chart = sns.catplot(x='Platform', y='Percentage', data=platform_df, kind='bar', palette='cool')
@@ -72,8 +72,9 @@ Platform_Chart.set_yticklabels(['{}%'.format(x) for x in vals])
 
 #plt.savefig('chart_for_platforms.png', bbox_inches='tight')
 
-
 """
+
+
 #breakdown by Objective
 print(all_data.Objective.value_counts())
 print(all_data.Objective.value_counts(normalize=True))
@@ -83,14 +84,12 @@ print(all_data.loc[all_data.Objective == 'Traffic', 'Result_Type'].value_counts(
 print(all_data.loc[all_data.Objective == 'Traffic', 'Result_Type'].value_counts(normalize=True))
 
 #chart for Objective
-#objective_df = pd.DataFrame(all_data.loc[:, ['Objective', 'Result_Type']].value_counts(normalize=True).sort_values(ascending=False)).mul(100).reset_index().rename(columns={0: 'Percentage'})
-#Objective_Chart = objective_df.set_index(['Objective', 'Result_Type'])['Percentage'].unstack().plot.bar(stacked=True)
 objective_df = pd.DataFrame(all_data.Objective.value_counts(normalize=True).sort_values(ascending=False)).mul(100).reset_index().rename(columns={'index': 'Objective', 'Objective': "Percentage"})
 Objective_Chart = sns.catplot(x='Objective', y='Percentage', data=objective_df, kind='bar', palette='cool')
 Objective_Chart.set(title='Percent of Ads by Objective')
 Objective_Chart.set_xlabels(fontsize=11)
 Objective_Chart.set_ylabels(fontsize=11)
-Objective_Chart.ax.set_ylim(0,100)
+#Objective_Chart.ax.set_ylim(0,100)
 for p in Objective_Chart.ax.patches:
   Objective_Chart.ax.annotate(str(p.get_height().round(2)) + '%',
   (p.get_x() + p.get_width()/2, p.get_height()),
@@ -102,7 +101,13 @@ Link Clicks: 48.21%
 Landing Page Views: 30.26%
 Clicks: 21.54%
 ''', fontsize=8.5, bbox={'fc': 'white', 'boxstyle': 'larrow'})
+Objective_Chart.set_xticklabels(rotation=25, horizontalalignment='right')
+vals = Objective_Chart.ax.get_yticks()
+Objective_Chart.set_yticklabels(['{}%'.format(x) for x in vals])
 
+plt.savefig('chart_for_objectives.png', bbox_inches='tight')
+
+"""
 #chart for correlation heatmap
 all_data_corr = all_data.corr()
 Corr_Heat_Map = sns.heatmap(all_data_corr, annot=True, cmap='Blues', linewidths=.5)
