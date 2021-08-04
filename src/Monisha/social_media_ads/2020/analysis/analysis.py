@@ -287,6 +287,7 @@ keywords_df['Cost_Per_User'] = keywords_df['Spend'] / keywords_df['Total_Users']
 keywords_df['Cost_Per_Click_To_Retail'] = keywords_df['Spend'] / keywords_df['Total_Click_To_Retail']
 keywords_df['Click_To_Retail_Rate'] = keywords_df['Total_Click_To_Retail'] / keywords_df['Total_Users']
 keywords_df.replace([np.inf, -np.inf], np.nan, inplace=True)
+keywords_df.drop(keywords_df.loc[keywords_df.index.str.contains('Christina-Britton'), :].index, inplace=True)
 #keywords_df.reset_index(inplace=True)
 #keywords_df['Audience'] = keywords_df.Audience.str.title()
 #keywords_df['Audience'] = re.sub('+Keyword.+', 'Keyword', str(keywords_df.Audience))
@@ -297,6 +298,7 @@ for value in for_nan:
   keywords_df[value] = keywords_df[value].replace(0, np.nan)
   keywords_df[value] = keywords_df[value].replace(0.000000, np.nan)
 
+"""
 #creates and saves graphs for cpm, cpc, cost_per_user, cost_per_click_to_retail
 cols_for_graphs = ['CPM', 'CPC', 'Cost_Per_User', 'Cost_Per_Click_To_Retail']
 for col in cols_for_graphs:
@@ -325,7 +327,40 @@ for col in cols_for_graphs:
   #saves the fig, commented out for now - DOES WORK
   #my_file = 'keywords_df_' + col + '.png'
   #plt.savefig(my_file, bbox_inches='tight')
+"""
 
+#creates and saves graphs for ctr, click_to_retail_rate
+cols_for_rate_graphs = ['CTR', 'Click_To_Retail_Rate']
+for col in cols_for_rate_graphs:
+  keywords_df.sort_values(col, ascending=False, inplace=True)
+  keywords_df_head = keywords_df.head(20)
+  barplot = sns.catplot(x=keywords_df_head.index, y=col, data=keywords_df_head, kind='bar', palette='cool', ci=None)
+  y_label = str(barplot.ax.get_ylabel).split()
+  y_label = y_label[5].replace('ylabel=','').replace('>>', '').strip().replace('_', ' ').replace('\'', '')
+  barplot.set_ylabels(y_label)
+  y_axis = str(barplot.ax.get_ylabel).split()
+  y_axis = ' '.join(y_axis[5:]).replace('ylabel=','').replace('>>', '').replace('\'', '')
+  x_axis = str(barplot.ax.get_xlabel).split()
+  x_axis = ' '.join(x_axis[4])
+  x_axis = re.sub('.+=|\'|,|\s', '', x_axis).replace('_', ' ')
+  barplot.set_xlabels(x_axis)
+  barplot.set(title=(str(y_axis) + ' by ' + str(x_axis)))
+  barplot.set_xticklabels(rotation=45, horizontalalignment='right', fontsize='x-small')
+  vals = barplot.ax.get_yticks()
+  barplot.set_yticklabels(['{:,.2%}'.format(x) for x in vals])
+  left_lim, right_lim = plt.ylim()
+  mean_value = keywords_df_head[col].std()
+  right_lim = right_lim - mean_value
+  left_lim = left_lim + 4.5
+  max_value = keywords_df_head[col].max().round(4) * 100
+  max_name = keywords_df_head[col].idxmax()
+  plt.text(left_lim, right_lim, r'''Highest {}:
+  {} ({}%)'''.format(y_axis, max_name, max_value), fontsize=8, bbox={'fc': 'white'})
+  #saves the fig, commented out for now - DOES WORK
+  #my_file = 'keywords_df_' + col + '.png'
+  #plt.savefig(my_file, bbox_inches='tight')
+
+print(keywords_df.sort_values('CTR', ascending=False).head())
 
 #splitting Objectives
 traffic = all_data.loc[all_data.Objective == 'Traffic', :]
