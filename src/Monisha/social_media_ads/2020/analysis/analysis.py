@@ -400,7 +400,38 @@ for col in cols_for_graphs:
   plt.text(left_lim, right_lim, r'''Lowest {}:
   {} (${})'''.format(y_for_title, min_name, min_value), fontsize=8, bbox={'fc': 'white'})
   #saves the fig, commented out for now - DOES WORK
-  #my_file = 'keywords_df_' + col + '.png'
+  #my_file = 'audience_df_' + col + '.png'
+  #plt.savefig(my_file, bbox_inches='tight')
+
+#creates and saves graphs for ctr, click_to_retail_rate
+cols_for_rate_graphs = ['CTR', 'Click_To_Retail_Rate']
+for col in cols_for_rate_graphs:
+  authors_df.sort_values(col, ascending=False, inplace=True)
+  authors_df_head = authors_df.head(5)
+  barplot = sns.catplot(x=authors_df_head.index, y=col, data=authors_df_head, kind='bar', palette='cool', ci=None)
+  y_label = str(barplot.ax.get_ylabel).split()
+  y_label = y_label[5].replace('ylabel=','').replace('>>', '').strip().replace('_', ' ').replace('\'', '')
+  barplot.set_ylabels(y_label)
+  y_axis = str(barplot.ax.get_ylabel).split()
+  y_axis = ' '.join(y_axis[5:]).replace('ylabel=','').replace('>>', '').replace('\'', '')
+  x_axis = str(barplot.ax.get_xlabel).split()
+  x_axis = ' '.join(x_axis[4])
+  x_axis = re.sub('.+=|\'|,|\s', '', x_axis).replace('_', ' ')
+  barplot.set_xlabels(x_axis)
+  barplot.set(title=(str(y_axis) + ' by ' + str(x_axis)))
+  barplot.set_xticklabels(rotation=45, horizontalalignment='right', fontsize='x-small')
+  vals = barplot.ax.get_yticks()
+  barplot.set_yticklabels(['{:,.2%}'.format(x) for x in vals])
+  left_lim, right_lim = plt.ylim()
+  mean_value = authors_df_head[col].std()
+  right_lim = right_lim - mean_value
+  left_lim = left_lim + 2.5
+  max_value = authors_df_head[col].max().round(4) * 100
+  max_name = authors_df_head[col].idxmax()
+  plt.text(left_lim, right_lim, r'''Highest {}:
+  {} ({}%)'''.format(y_axis, max_name, max_value), fontsize=8, bbox={'fc': 'white'})
+  #saves the fig, commented out for now - DOES WORK
+  #my_file = 'authors_df_' + col + '.png'
   #plt.savefig(my_file, bbox_inches='tight')
 """
 
