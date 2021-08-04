@@ -288,10 +288,6 @@ keywords_df['Cost_Per_Click_To_Retail'] = keywords_df['Spend'] / keywords_df['To
 keywords_df['Click_To_Retail_Rate'] = keywords_df['Total_Click_To_Retail'] / keywords_df['Total_Users']
 keywords_df.replace([np.inf, -np.inf], np.nan, inplace=True)
 keywords_df.drop(keywords_df.loc[keywords_df.index.str.contains('Christina-Britton'), :].index, inplace=True)
-#keywords_df.reset_index(inplace=True)
-#keywords_df['Audience'] = keywords_df.Audience.str.title()
-#keywords_df['Audience'] = re.sub('+Keyword.+', 'Keyword', str(keywords_df.Audience))
-#keywords_df['Audience'] = re.sub('.*Keyword.*', 'Keyword', str(keywords_df.Audience))
 
 for_nan = ['Clicks', 'Total_Users', 'Total_Click_To_Retail', 'Reach', 'CTR']
 for value in for_nan:
@@ -327,13 +323,12 @@ for col in cols_for_graphs:
   #saves the fig, commented out for now - DOES WORK
   #my_file = 'keywords_df_' + col + '.png'
   #plt.savefig(my_file, bbox_inches='tight')
-"""
 
 #creates and saves graphs for ctr, click_to_retail_rate
 cols_for_rate_graphs = ['CTR', 'Click_To_Retail_Rate']
 for col in cols_for_rate_graphs:
   keywords_df.sort_values(col, ascending=False, inplace=True)
-  keywords_df_head = keywords_df.head(20)
+  keywords_df_head = keywords_df.head(10)
   barplot = sns.catplot(x=keywords_df_head.index, y=col, data=keywords_df_head, kind='bar', palette='cool', ci=None)
   y_label = str(barplot.ax.get_ylabel).split()
   y_label = y_label[5].replace('ylabel=','').replace('>>', '').strip().replace('_', ' ').replace('\'', '')
@@ -360,7 +355,23 @@ for col in cols_for_rate_graphs:
   #my_file = 'keywords_df_' + col + '.png'
   #plt.savefig(my_file, bbox_inches='tight')
 
-print(keywords_df.sort_values('CTR', ascending=False).head())
+"""
+#creating authors df
+authors_df = pd.DataFrame(all_data.loc[:, ['Authors', 'Spend', 'Reach', 'Clicks', 'Total_Users', 'Total_Clicks_To_Retail']])
+authors_df.groupby('Authors').sum()
+authors_df['CPM'] = (authors_df['Spend'] / authors_df['Reach']) * 1000
+authors_df['CPC'] = authors_df['Spend'] / authors_df['Clicks']
+authors_df['CTR'] = authors_df['Clicks'] / authors_df['Reach']
+authors_df['Cost_Per_User'] = authors_df['Spend'] / authors_df['Total_Users']
+authors_df['Cost_Per_Click_To_Retail'] = authors_df['Spend'] / authors_df['Total_Click_To_Retail']
+authors_df['Click_To_Retail_Rate'] = authors_df['Total_Click_To_Retail'] / authors_df['Total_Users']
+authors_df.replace([np.inf, -np.inf], np.nan, inplace=True)
+
+for_nan = ['Clicks', 'Total_Users', 'Total_Click_To_Retail', 'Reach', 'CTR']
+for value in for_nan:
+  keywords_df[value] = keywords_df[value].replace(0, np.nan)
+  keywords_df[value] = keywords_df[value].replace(0.000000, np.nan)
+
 
 #splitting Objectives
 traffic = all_data.loc[all_data.Objective == 'Traffic', :]
@@ -371,30 +382,6 @@ page_likes = all_data.loc[all_data.Objective == 'Page Likes', :]
 video_views = all_data.loc[all_data.Objective == 'Video Views', :]
 
 
-#print(traffic.loc[traffic.Result_Type == 'Impressions'])
-
-#sns.barplot(x='Objective', y='Reach', data=all_data)
-#sns.barplot(x='Objective', y='Clicks', data=all_data)
-#sns.barplot(x='Objective', y='CPM', data=all_data)
-#sns.barplot(x='Result_Type', y='CPM', data=all_data)
-#sns.barplot(x='Objective', y='CPC', data=all_data)
-#sns.barplot(x='Result_Type', y='CPC', data=all_data)
-
-#sns.barplot(x='Objective', y='CTR', data=all_data)
-#sns.barplot(x='Objective', y='Total_Users', data=all_data)
-#sns.barplot(x='Objective', y='Total_Users', data=all_data)
-#sns.barplot(x='Result_Type', y='Total_Users', data=all_data)
-
-#sns.barplot(x='Objective', y='Total_Click_To_Retail', data=all_data)
-#sns.barplot(x='Result_Type', y='Total_Click_To_Retail', data=all_data)
-
-#sns.barplot(x='Objective', y='Cost_Per_User', data=all_data)
-#sns.barplot(x='Objective', y='Cost_Per_Click_To_Retail', data=all_data)
-
-
-#sns.lmplot(x='Spend', y='Clicks', data=all_data)
-#sns.lmplot(x='Spend', y='Reach', data=all_data)
-#sns.lmplot(x='Spend', y='CPC', data=all_data)
 #sns.pairplot(all_data)
 
 plt.show()
