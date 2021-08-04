@@ -52,21 +52,28 @@ all_data['Placements_For_Chart'] = all_data.Placements_For_Chart.str.replace('FB
 #breakdown of Placements
 print(all_data.Placements_For_Chart.value_counts()) #for totals of Placements
 print(all_data.Placements_For_Chart.value_counts(normalize=True)) #for % totals of Placements
-
+"""
 #chart for Placements
 platform_df = pd.DataFrame(all_data.Placements_For_Chart.value_counts(normalize=True).sort_values(ascending=False)).mul(100).reset_index().rename(columns={'index': 'Platform', 'Placements_For_Chart': 'Percentage'})
 Platform_Chart = sns.catplot(x='Platform', y='Percentage', data=platform_df, kind='bar', palette='cool')
 Platform_Chart.set(title='Percent of Ads by Social Media Platform')
 Platform_Chart.set_xlabels(fontsize=11)
 Platform_Chart.set_ylabels(fontsize=11)
-Platform_Chart.ax.set_ylim(0,100)
+#Platform_Chart.ax.set_ylim(0,100)
 for p in Platform_Chart.ax.patches:
   Platform_Chart.ax.annotate(str(p.get_height().round(2)) + '%',
   (p.get_x() + p.get_width()/2., p.get_height()),
   ha='center', va='center',
   xytext=(0,5),
   textcoords='offset points')
+Platform_Chart.set_xticklabels(rotation=25, horizontalalignment='right')
+vals = Platform_Chart.ax.get_yticks()
+Platform_Chart.set_yticklabels(['{}%'.format(x) for x in vals])
 
+#plt.savefig('chart_for_platforms.png', bbox_inches='tight')
+
+
+"""
 #breakdown by Objective
 print(all_data.Objective.value_counts())
 print(all_data.Objective.value_counts(normalize=True))
