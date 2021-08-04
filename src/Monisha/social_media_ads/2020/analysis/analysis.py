@@ -357,8 +357,8 @@ for col in cols_for_rate_graphs:
 
 """
 #creating authors df
-authors_df = pd.DataFrame(all_data.loc[:, ['Authors', 'Spend', 'Reach', 'Clicks', 'Total_Users', 'Total_Clicks_To_Retail']])
-authors_df.groupby('Authors').sum()
+authors_df = pd.DataFrame(all_data.loc[:, ['Author', 'Spend', 'Reach', 'Clicks', 'Total_Users', 'Total_Click_To_Retail']])
+authors_df = authors_df.groupby('Author').sum()
 authors_df['CPM'] = (authors_df['Spend'] / authors_df['Reach']) * 1000
 authors_df['CPC'] = authors_df['Spend'] / authors_df['Clicks']
 authors_df['CTR'] = authors_df['Clicks'] / authors_df['Reach']
@@ -369,9 +369,40 @@ authors_df.replace([np.inf, -np.inf], np.nan, inplace=True)
 
 for_nan = ['Clicks', 'Total_Users', 'Total_Click_To_Retail', 'Reach', 'CTR']
 for value in for_nan:
-  keywords_df[value] = keywords_df[value].replace(0, np.nan)
-  keywords_df[value] = keywords_df[value].replace(0.000000, np.nan)
+  authors_df[value] = authors_df[value].replace(0, np.nan)
+  authors_df[value] = authors_df[value].replace(0.000000, np.nan)
 
+"""
+#creates and saves graphs for cpm, cpc, cost_per_user, cost_per_click_to_retail
+cols_for_graphs = ['CPM', 'CPC', 'Cost_Per_User', 'Cost_Per_Click_To_Retail']
+for col in cols_for_graphs:
+  authors_df.sort_values(col, inplace=True)
+  authors_df_head = authors_df.head(5)
+  barplot = sns.catplot(x=authors_df_head.index, y=col, data=authors_df_head, kind='bar', palette='cool', ci=None)
+  y_label = str(barplot.ax.get_ylabel).split()
+  y_label = y_label[5].replace('ylabel=','').replace('>>', '').strip().replace('_', ' ').replace('\'', '')
+  barplot.set_ylabels(y_label)
+  y_axis = str(barplot.ax.get_ylabel).split()
+  y_axis = ' '.join(y_axis[5:]).replace('ylabel=','').replace('>>', '').replace('\'', '')
+  x_axis = str(barplot.ax.get_xlabel).split()
+  x_axis = ' '.join(x_axis[4])
+  x_axis = re.sub('.+=|\'|,|\s', '', x_axis).replace('_', ' ')
+  barplot.set_xlabels(x_axis)
+  y_for_title = y_label.replace(' ($)', '')
+  barplot.set(title=(str(y_for_title) + ' by ' + str(x_axis)))
+  barplot.set_xticklabels(rotation=45, horizontalalignment='right', fontsize='x-small')
+  left_lim, right_lim = plt.ylim()
+  mean_value = authors_df_head[col].mean()
+  std_value = authors_df_head[col].std()
+  right_lim = right_lim - mean_value + std_value
+  min_value = authors_df_head[col].min().round(2)
+  min_name = authors_df_head[col].idxmin()
+  plt.text(left_lim, right_lim, r'''Lowest {}:
+  {} (${})'''.format(y_for_title, min_name, min_value), fontsize=8, bbox={'fc': 'white'})
+  #saves the fig, commented out for now - DOES WORK
+  #my_file = 'keywords_df_' + col + '.png'
+  #plt.savefig(my_file, bbox_inches='tight')
+"""
 
 #splitting Objectives
 traffic = all_data.loc[all_data.Objective == 'Traffic', :]
