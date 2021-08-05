@@ -216,7 +216,7 @@ result_type_df['Click_To_Retail_Rate'] = (result_type_df['Total_Click_To_Retail'
 result_type_df.CPC.replace([np.inf, -np.inf], np.nan, inplace=True)
 result_type_df.Cost_Per_User.replace([np.inf, -np.inf], np.nan, inplace=True)
 result_type_df.Cost_Per_Click_To_Retail.replace([np.inf, -np.inf], np.nan, inplace=True)
-result_type_df.CTR.replace('0.000000', np.nan, inplace=True)
+result_type_df.CTR.replace(0.000000, np.nan, inplace=True)
 result_type_df.reset_index(inplace=True)
 result_type_df.sort_values('Total_Users', ascending=False, inplace=True)
 
@@ -236,7 +236,6 @@ result_type_retail_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_retail_graph.axes.set_ylabel('Total Clicks To Retail', fontsize=11)
 plt.xticks(rotation=25, horizontalalignment='right')
 plt.savefig('result_type_vs_clicks_to_retail', bbox_inches='tight')
-
 
 #creating clicks graph
 result_type_df.sort_values('Clicks', inplace=True, ascending=False)
@@ -265,6 +264,12 @@ result_type_ctr_graph.axes.set_ylabel('CTR', fontsize=11)
 vals = result_type_ctr_graph.get_yticks()
 result_type_ctr_graph.set_yticklabels(['{:,.2%}'.format(x) for x in vals])
 plt.xticks(rotation=25, horizontalalignment='right')
+for p in result_type_ctr_graph.patches:
+  result_type_ctr_graph.annotate(str((p.get_height() * 100).round(2)) + '%',
+  (p.get_x() + p.get_width()/2., p.get_height()),
+  ha='center', va='center',
+  xytext=(0,5),
+  textcoords='offset points')
 plt.savefig('result_type_vs_ctr', bbox_inches='tight')
 
 #creating cpc graph
@@ -274,6 +279,12 @@ result_type_cpc_graph.set(title='CPC By Result Type')
 result_type_cpc_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_cpc_graph.axes.set_ylabel('CPC ($)', fontsize=11)
 plt.xticks(rotation=25, horizontalalignment='right')
+for p in result_type_cpc_graph.patches:
+  result_type_cpc_graph.annotate('$' + str(p.get_height().round(2)),
+  (p.get_x() + p.get_width()/2., p.get_height()),
+  ha='center', va='center',
+  xytext=(0,5),
+  textcoords='offset points')
 plt.savefig('result_type_vs_cpc', bbox_inches='tight')
 
 #creating cpm graph
@@ -284,6 +295,13 @@ result_type_cpm_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_cpm_graph.axes.set_ylabel('CPM ($)', fontsize=11)
 plt.xticks(rotation=25, horizontalalignment='right')
 plt.savefig('result_type_vs_cpm', bbox_inches='tight')
+for p in result_type_cpm_graph.patches:
+  result_type_cpm_graph.annotate('$' + str(p.get_height().round(2)),
+  (p.get_x() + p.get_width()/2., p.get_height()),
+  ha='center', va='center',
+  xytext=(0,5),
+  textcoords='offset points')
+plt.savefig('result_type_vs_cpm', bbox_inches='tight')
 
 #creating cost per user graph
 result_type_df.sort_values('Cost_Per_User', inplace=True, ascending=False)
@@ -292,7 +310,14 @@ result_type_cost_per_user_graph.set(title='Cost Per User By Result Type')
 result_type_cost_per_user_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_cost_per_user_graph.axes.set_ylabel('Cost Per User ($)', fontsize=11)
 plt.xticks(rotation=25, horizontalalignment='right')
+for p in result_type_cost_per_user_graph.patches:
+  result_type_cost_per_user_graph.annotate('$' + str(p.get_height().round(2)),
+  (p.get_x() + p.get_width()/2., p.get_height()),
+  ha='center', va='center',
+  xytext=(0,5),
+  textcoords='offset points')
 plt.savefig('result_type_vs_cost_per_user', bbox_inches='tight')
+
 
 #creating cost per click to retail graph
 result_type_df.sort_values('Cost_Per_Click_To_Retail', inplace=True, ascending=False)
@@ -301,8 +326,14 @@ result_type_cost_per_retail_graph.set(title='Cost Per Click To Retail By Result 
 result_type_cost_per_retail_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_cost_per_retail_graph.axes.set_ylabel('Cost Per Click To Retail ($)', fontsize=11)
 plt.xticks(rotation=25, horizontalalignment='right')
+for p in result_type_cost_per_retail_graph.patches:
+  result_type_cost_per_retail_graph.annotate('$' + str(p.get_height().round(2)),
+  (p.get_x() + p.get_width()/2., p.get_height()),
+  ha='center', va='center',
+  xytext=(0,5),
+  textcoords='offset points')
 plt.savefig('result_type_vs_cost_per_retail_click', bbox_inches='tight')
-
+"""
 #creating click to retail rate graph
 result_type_df.sort_values('Click_To_Retail_Rate', inplace=True, ascending=False)
 result_type_cost_per_retail_graph = sns.barplot(x='Result_Type', y='Click_To_Retail_Rate', data=result_type_df, palette='cool')
@@ -312,8 +343,15 @@ result_type_cost_per_retail_graph.axes.set_ylabel('Click To Retail Rate', fontsi
 vals = result_type_cost_per_retail_graph.get_yticks()
 result_type_cost_per_retail_graph.set_yticklabels(['{:,.2%}'.format(x) for x in vals])
 plt.xticks(rotation=25, horizontalalignment='right')
-plt.savefig('result_type_vs_retail_click_rate', bbox_inches='tight')
+for p in result_type_cost_per_retail_graph.patches:
+  result_type_cost_per_retail_graph.annotate(str((p.get_height() * 100).round(2)) + '%',
+  (p.get_x() + p.get_width()/2., p.get_height()),
+  ha='center', va='center',
+  xytext=(0,5),
+  textcoords='offset points')
 
+plt.savefig('result_type_vs_retail_click_rate', bbox_inches='tight')
+"""
 """
 
 #creating keywords df
