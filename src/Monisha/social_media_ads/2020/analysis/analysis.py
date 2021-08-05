@@ -106,7 +106,7 @@ vals = Objective_Chart.ax.get_yticks()
 Objective_Chart.set_yticklabels(['{}%'.format(x) for x in vals])
 
 plt.savefig('chart_for_objectives.png', bbox_inches='tight')
-"""
+
 #chart for correlation heatmap
 all_data_corr = all_data.corr()
 plt.figure(figsize=(12,9))
@@ -116,6 +116,7 @@ plt.xticks(rotation=40, horizontalalignment='right')
 plt.savefig('chart_for_correlation.png', bbox_inches='tight')
 """
 
+"""
 #charts for spend vs x
 #ci=None will remove the confidence interval
 spend_vs_reach = sns.lmplot(x='Spend', y='Reach', data=all_data)
@@ -127,7 +128,6 @@ spend_vs_cost_per_click_to_retail = sns.lmplot(x='Spend', y='Cost_Per_Click_To_R
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [spend_vs_reach, spend_vs_total_users, spend_vs_clicks, spend_vs_cost_per_click_to_retail, spend_vs_total_click_to_retail]
 
-
 #charts for reach vs x
 reach_vs_clicks = sns.lmplot(x='Reach', y='Clicks', data=all_data)
 reach_vs_cpm = sns.lmplot(x='Reach', y='CPM', data=all_data)
@@ -138,7 +138,7 @@ reach_vs_total_click_to_retail = sns.lmplot(x='Reach', y='Total_Click_To_Retail'
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [reach_vs_clicks, reach_vs_cpm, reach_vs_ctr, reach_vs_total_users, reach_vs_total_click_to_retail]
 
-
+"
 #charts for clicks vs x
 clicks_vs_ctr = sns.lmplot(x='Clicks', y='CTR', data=all_data)
 clicks_vs_total_users = sns.lmplot(x='Clicks', y='Total_Users', data=all_data)
@@ -179,6 +179,7 @@ cost_per_user_vs_cost_per_click_to_retail = sns.lmplot(x='Cost_Per_User', y='Cos
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [cost_per_user_vs_cost_per_click_to_retail]
 
+
 #for loop that renames all of these
 for graph in list_of_graphs:
   y_label = str(graph.ax.get_ylabel).split()
@@ -194,6 +195,12 @@ for graph in list_of_graphs:
   #max_y_value = all_data[str(y_axis).replace(' ', '_')].max()
   #print(max_y_value)
   #graph.ax.set_xlim(auto=True)
+  #saves the fig, commented out for now - DOESN'T WORK
+  for_naming_x = x_axis.lower().replace(' ', '_')
+  for_naming_y = y_label.lower().replace(' ', '_')
+  my_file = for_naming_x + '_vs_' + for_naming_y + '.png'
+  plt.savefig(my_file, bbox_inches='tight')
+
 """
 
 #chart for result type vs x
@@ -460,4 +467,4 @@ video_views = all_data.loc[all_data.Objective == 'Video Views', :]
 
 #sns.pairplot(all_data)
 
-plt.show()
+#plt.show()
