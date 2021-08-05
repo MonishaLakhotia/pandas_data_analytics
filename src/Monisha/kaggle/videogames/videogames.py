@@ -46,14 +46,59 @@ global_sales_total = publisher_merge.Global_Sales.sum().round(2)
 global_sales_total *= 1000000
 print('The total global sales are ${}.'.format(global_sales_total))
 
-#best by publisher, genre, platform - based on global sales
+print()
+
+#best/worst by publisher, genre, platform - based on global sales
 list_of_best = ['Publisher', 'Genre', 'Platform']
 for value in list_of_best:
   best = publisher_merge.groupby(value).Global_Sales.sum()
-  top_five = best.head()
+  top_five = best.sort_values(ascending=False).head()
   top_five_index = ', '.join(top_five.index)
+  five_worst = best.sort_values(ascending=False).tail()
+  five_worst_index = ', '.join(five_worst.index)
   category = value.lower()
   print('The five {}s with the highest global sales are {}.'.format(category, top_five_index))
+  print('The five {}s with the lowest global sales are {}.'.format(category, five_worst_index))
+
+
+print()
+
+#best/worst publisher, genre, platform combo
+sales = ['Global_Sales', 'NA_Sales', 'EU_Sales', 'JP_Sales']
+for sales in sales:
+  groupby = publisher_merge.groupby(['Publisher', 'Genre', 'Platform'])[sales].sum()
+  groupby.sort_values(inplace=True, ascending=False)
+  top_groupby = ', '.join(groupby.idxmax())
+  bottom_groupby = ', '.join(groupby.idxmin())
+  for_text = str(sales).lower().replace('_', ' ')
+  print('The publisher, genre, platform combo with the highest {} is: {}.'.format(for_text, top_groupby))
+  print('The publisher, genre, platform combo with the lowest {} is: {}.'.format(for_text, bottom_groupby))
+
+print()
+
+#country with the highest sales
+total_na = publisher_merge.NA_Sales.sum()
+total_eu = publisher_merge.EU_Sales.sum()
+total_jp = publisher_merge.JP_Sales.sum()
+total_df = pd.Series([total_na, total_eu, total_jp], index = ['NA', 'EU', 'JP'], name='Sales')
+name = total_df.idxmax()
+print('The country with the highest sales is {}.'.format(name))
+
+print()
+
+#year with the most games released
+year = publisher_merge.groupby('Year').Name.nunique()
+print('The year with the most games releases is ' + str(year.idxmax()) + '.')
+
+print()
+
+#average sales
+sales = ['Global_Sales', 'NA_Sales', 'EU_Sales', 'JP_Sales']
+for sales in sales:
+  average = (publisher_merge[sales].mean() * 1000000).round(2)
+  category = sales.lower().replace('_', ' ')
+  print('The average {} is ${}.'.format(category, average))
+
 
 
 
