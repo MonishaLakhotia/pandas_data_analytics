@@ -1,3 +1,4 @@
+from sys import platform
 from numpy.core.numeric import NaN
 import pandas as pd
 import numpy as np
@@ -5,6 +6,8 @@ import re
 import os
 import toml
 import src.utils as u
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # get the directory path where this script is
 this_dir = os.path.dirname(os.path.realpath(__file__))
@@ -98,8 +101,5 @@ for sales in sales:
   average = (publisher_merge[sales].mean() * 1000000).round(2)
   category = sales.lower().replace('_', ' ')
   print('The average {} is ${}.'.format(category, average))
-
-
-
 
 print(publisher_merge.info())
