@@ -74,7 +74,7 @@ Platform_Chart.set_yticklabels(['{}%'.format(x) for x in vals])
 
 """
 
-
+"""
 #breakdown by Objective
 print(all_data.Objective.value_counts())
 print(all_data.Objective.value_counts(normalize=True))
@@ -106,13 +106,15 @@ vals = Objective_Chart.ax.get_yticks()
 Objective_Chart.set_yticklabels(['{}%'.format(x) for x in vals])
 
 plt.savefig('chart_for_objectives.png', bbox_inches='tight')
-
 """
 #chart for correlation heatmap
 all_data_corr = all_data.corr()
+plt.figure(figsize=(12,9))
 Corr_Heat_Map = sns.heatmap(all_data_corr, annot=True, cmap='Blues', linewidths=.5)
 Corr_Heat_Map.set_title('Correlations in Social Media Ads')
-
+plt.xticks(rotation=40, horizontalalignment='right')
+plt.savefig('chart_for_correlation.png', bbox_inches='tight')
+"""
 
 #charts for spend vs x
 #ci=None will remove the confidence interval
