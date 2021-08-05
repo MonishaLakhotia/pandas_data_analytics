@@ -1,3 +1,0 @@
-file_locations.ramen = "data/in/ramen-ratings.csv"
-file_locations.output = "data/out/output.csv"
-data_notes = "from https://www.kaggle.com/residentmario/ramen-ratings"
