@@ -226,12 +226,17 @@ result_type_user_graph = sns.barplot(x='Result_Type', y='Total_Users', data=resu
 result_type_user_graph.set(title='Total Users By Result Type')
 result_type_user_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_user_graph.axes.set_ylabel('Total Users', fontsize=11)
+plt.xticks(rotation=25, horizontalalignment='right')
+plt.savefig('result_type_vs_user_chart', bbox_inches='tight')
 
 #creating retail graph
 result_type_retail_graph = sns.barplot(x='Result_Type', y='Total_Click_To_Retail', data=result_type_df, palette='cool')
 result_type_retail_graph.set(title='Total Clicks To Retail By Result Type')
 result_type_retail_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_retail_graph.axes.set_ylabel('Total Clicks To Retail', fontsize=11)
+plt.xticks(rotation=25, horizontalalignment='right')
+plt.savefig('result_type_vs_clicks_to_retail', bbox_inches='tight')
+
 
 #creating clicks graph
 result_type_df.sort_values('Clicks', inplace=True, ascending=False)
@@ -239,6 +244,8 @@ result_type_click_graph = sns.barplot(x='Result_Type', y='Clicks', data=result_t
 result_type_click_graph.set(title='Clicks By Result Type')
 result_type_click_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_click_graph.axes.set_ylabel('Clicks', fontsize=11)
+plt.xticks(rotation=25, horizontalalignment='right')
+plt.savefig('result_type_vs_clicks', bbox_inches='tight')
 
 #creating reach graph
 result_type_df.sort_values('Reach', inplace=True, ascending=False)
@@ -246,6 +253,8 @@ result_type_reach_graph = sns.barplot(x='Result_Type', y='Reach', data=result_ty
 result_type_reach_graph.set(title='Reach By Result Type')
 result_type_reach_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_reach_graph.axes.set_ylabel('Reach', fontsize=11)
+plt.xticks(rotation=25, horizontalalignment='right')
+plt.savefig('result_type_vs_reach', bbox_inches='tight')
 
 #creating ctr graph
 result_type_df.sort_values('CTR', inplace=True, ascending=False)
@@ -255,6 +264,8 @@ result_type_ctr_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_ctr_graph.axes.set_ylabel('CTR', fontsize=11)
 vals = result_type_ctr_graph.get_yticks()
 result_type_ctr_graph.set_yticklabels(['{:,.2%}'.format(x) for x in vals])
+plt.xticks(rotation=25, horizontalalignment='right')
+plt.savefig('result_type_vs_ctr', bbox_inches='tight')
 
 #creating cpc graph
 result_type_df.sort_values('CPC', inplace=True, ascending=False)
@@ -262,6 +273,8 @@ result_type_cpc_graph = sns.barplot(x='Result_Type', y='CPC', data=result_type_d
 result_type_cpc_graph.set(title='CPC By Result Type')
 result_type_cpc_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_cpc_graph.axes.set_ylabel('CPC ($)', fontsize=11)
+plt.xticks(rotation=25, horizontalalignment='right')
+plt.savefig('result_type_vs_cpc', bbox_inches='tight')
 
 #creating cpm graph
 result_type_df.sort_values('CPM', inplace=True, ascending=False)
@@ -269,6 +282,8 @@ result_type_cpm_graph = sns.barplot(x='Result_Type', y='CPM', data=result_type_d
 result_type_cpm_graph.set(title='CPM By Result Type')
 result_type_cpm_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_cpm_graph.axes.set_ylabel('CPM ($)', fontsize=11)
+plt.xticks(rotation=25, horizontalalignment='right')
+plt.savefig('result_type_vs_cpm', bbox_inches='tight')
 
 #creating cost per user graph
 result_type_df.sort_values('Cost_Per_User', inplace=True, ascending=False)
@@ -276,6 +291,8 @@ result_type_cost_per_user_graph = sns.barplot(x='Result_Type', y='Cost_Per_User'
 result_type_cost_per_user_graph.set(title='Cost Per User By Result Type')
 result_type_cost_per_user_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_cost_per_user_graph.axes.set_ylabel('Cost Per User ($)', fontsize=11)
+plt.xticks(rotation=25, horizontalalignment='right')
+plt.savefig('result_type_vs_cost_per_user', bbox_inches='tight')
 
 #creating cost per click to retail graph
 result_type_df.sort_values('Cost_Per_Click_To_Retail', inplace=True, ascending=False)
@@ -283,6 +300,8 @@ result_type_cost_per_retail_graph = sns.barplot(x='Result_Type', y='Cost_Per_Cli
 result_type_cost_per_retail_graph.set(title='Cost Per Click To Retail By Result Type')
 result_type_cost_per_retail_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_cost_per_retail_graph.axes.set_ylabel('Cost Per Click To Retail ($)', fontsize=11)
+plt.xticks(rotation=25, horizontalalignment='right')
+plt.savefig('result_type_vs_cost_per_retail_click', bbox_inches='tight')
 
 #creating click to retail rate graph
 result_type_df.sort_values('Click_To_Retail_Rate', inplace=True, ascending=False)
@@ -292,6 +311,9 @@ result_type_cost_per_retail_graph.axes.set_xlabel('Result Type', fontsize=11)
 result_type_cost_per_retail_graph.axes.set_ylabel('Click To Retail Rate', fontsize=11)
 vals = result_type_cost_per_retail_graph.get_yticks()
 result_type_cost_per_retail_graph.set_yticklabels(['{:,.2%}'.format(x) for x in vals])
+plt.xticks(rotation=25, horizontalalignment='right')
+plt.savefig('result_type_vs_retail_click_rate', bbox_inches='tight')
+
 """
 
 #creating keywords df
