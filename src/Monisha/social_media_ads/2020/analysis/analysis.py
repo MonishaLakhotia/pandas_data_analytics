@@ -110,7 +110,7 @@ plt.savefig('chart_for_objectives.png', bbox_inches='tight')
 #chart for correlation heatmap
 all_data_corr = all_data.corr()
 plt.figure(figsize=(12,9))
-Corr_Heat_Map = sns.heatmap(all_data_corr, annot=True, cmap='Blues', linewidths=.5)
+Corr_Heat_Map = sns.heatmap(all_data_corr, annot=True, cmap='YlOrRd', linewidths=.5)
 Corr_Heat_Map.set_title('Correlations in Social Media Ads')
 plt.xticks(rotation=40, horizontalalignment='right')
 plt.savefig('chart_for_correlation.png', bbox_inches='tight')
