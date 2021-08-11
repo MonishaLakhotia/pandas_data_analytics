@@ -116,33 +116,61 @@ plt.xticks(rotation=40, horizontalalignment='right')
 plt.savefig('chart_for_correlation.png', bbox_inches='tight')
 """
 
-"""
+
 #charts for spend vs x
+#as a def
+def rename_save(graph):
+  y_label = str(graph.ax.get_ylabel).split()
+  y_label = y_label[5].replace('ylabel=','').replace('>>', '').strip().replace('_', ' ').replace('\'', '')
+  graph.set_ylabels(y_label)
+  y_axis = str(graph.ax.get_ylabel).split()
+  y_axis = ' '.join(y_axis[5:]).replace('ylabel=','').replace('>>', '').replace('\'', '')
+  x_axis = str(graph.ax.get_xlabel).split()
+  x_axis = ' '.join(x_axis[4])
+  x_axis = re.sub('.+=|\'|,|\s', '', x_axis).replace('_', ' ')
+  graph.set_xlabels(x_axis)
+  graph.set(title=(str(x_axis) + ' vs ' + str(y_axis)))
+  #max_y_value = all_data[str(y_axis).replace(' ', '_')].max()
+  #print(max_y_value)
+  #graph.ax.set_xlim(auto=True)
+  #saves the fig, commented out for now - DOESN'T WORK
+  for_naming_x = x_axis.lower().replace(' ', '_')
+  for_naming_y = y_label.lower().replace(' ', '_')
+  my_file = for_naming_x + '_vs_' + for_naming_y + '.png'
+  plt.savefig(my_file, bbox_inches='tight')
+
 #ci=None will remove the confidence interval
-spend_vs_reach = sns.lmplot(x='Spend', y='Reach', data=all_data)
-spend_vs_clicks = sns.lmplot(x='Spend', y='Clicks', data=all_data)
-spend_vs_total_users = sns.lmplot(x='Spend', y='Total_Users', data=all_data)
-spend_vs_total_click_to_retail = sns.lmplot(x='Spend', y='Total_Click_To_Retail', data=all_data)
-spend_vs_cost_per_click_to_retail = sns.lmplot(x='Spend', y='Cost_Per_Click_To_Retail', data=all_data)
+spend_vs_reach = sns.lmplot(x='Spend', y='Reach', data=all_data, line_kws={'color': 'orange'}, scatter_kws={'color': '#CC0000'})
+rename_save(spend_vs_reach)  
+spend_vs_clicks = sns.lmplot(x='Spend', y='Clicks', data=all_data, line_kws={'color': 'orange'}, scatter_kws={'color': '#CC0000'})
+rename_save(spend_vs_clicks)
+spend_vs_total_users = sns.lmplot(x='Spend', y='Total_Users', data=all_data, line_kws={'color': 'orange'}, scatter_kws={'color': '#CC0000'})
+rename_save(spend_vs_total_users)
+spend_vs_total_click_to_retail = sns.lmplot(x='Spend', y='Total_Click_To_Retail', data=all_data, line_kws={'color': 'orange'}, scatter_kws={'color': '#CC0000'})
+rename_save(spend_vs_total_click_to_retail)
+spend_vs_cost_per_click_to_retail = sns.lmplot(x='Spend', y='Cost_Per_Click_To_Retail', data=all_data, line_kws={'color': 'orange'}, scatter_kws={'color': '#CC0000'})
 
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
-list_of_graphs = [spend_vs_reach, spend_vs_total_users, spend_vs_clicks, spend_vs_cost_per_click_to_retail, spend_vs_total_click_to_retail]
+#list_of_graphs = [spend_vs_reach, spend_vs_total_users, spend_vs_clicks, spend_vs_cost_per_click_to_retail, spend_vs_total_click_to_retail]
 
 #charts for reach vs x
 reach_vs_clicks = sns.lmplot(x='Reach', y='Clicks', data=all_data)
 reach_vs_cpm = sns.lmplot(x='Reach', y='CPM', data=all_data)
 reach_vs_ctr = sns.lmplot(x='Reach', y='CTR', data=all_data)
-reach_vs_total_users = sns.lmplot(x='Reach', y='Total_Users', data=all_data)
+reach_vs_total_users = sns.lmplot(x='Reach', y='Total_Users', data=all_data, line_kws={'color': 'orange'}, scatter_kws={'color': '#CC0000'})
+rename_save(reach_vs_total_users)
 reach_vs_total_click_to_retail = sns.lmplot(x='Reach', y='Total_Click_To_Retail', data=all_data)
 
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [reach_vs_clicks, reach_vs_cpm, reach_vs_ctr, reach_vs_total_users, reach_vs_total_click_to_retail]
 
-"
+
 #charts for clicks vs x
 clicks_vs_ctr = sns.lmplot(x='Clicks', y='CTR', data=all_data)
-clicks_vs_total_users = sns.lmplot(x='Clicks', y='Total_Users', data=all_data)
-clicks_vs_total_click_to_retail = sns.lmplot(x='Clicks', y='Total_Click_To_Retail', data=all_data)
+clicks_vs_total_users = sns.lmplot(x='Clicks', y='Total_Users', data=all_data, line_kws={'color': 'orange'}, scatter_kws={'color': '#CC0000'})
+rename_save(clicks_vs_total_users)
+clicks_vs_total_click_to_retail = sns.lmplot(x='Clicks', y='Total_Click_To_Retail', data=all_data, line_kws={'color': 'orange'}, scatter_kws={'color': '#CC0000'})
+rename_save(clicks_vs_total_click_to_retail)
 
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [clicks_vs_ctr, clicks_vs_total_users, clicks_vs_total_click_to_retail]
@@ -167,7 +195,8 @@ list_of_graphs = [ctr_vs_total_users, ctr_vs_total_click_to_retail]
 
 #charts for users vs x
 users_vs_cost_per_user = sns.lmplot(x='Total_Users', y='Cost_Per_User', data=all_data)
-users_vs_total_click_to_retail = sns.lmplot(x='Total_Users', y='Total_Click_To_Retail', data=all_data)
+users_vs_total_click_to_retail = sns.lmplot(x='Total_Users', y='Total_Click_To_Retail', data=all_data, line_kws={'color': 'orange'}, scatter_kws={'color': '#CC0000'})
+rename_save(users_vs_total_click_to_retail)
 
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [users_vs_cost_per_user, users_vs_total_click_to_retail]
@@ -179,7 +208,7 @@ cost_per_user_vs_cost_per_click_to_retail = sns.lmplot(x='Cost_Per_User', y='Cos
 #to rename the charts and y label - SEE FOR LOOP THAT RENAMES ALL OF THESE
 list_of_graphs = [cost_per_user_vs_cost_per_click_to_retail]
 
-
+"""
 #for loop that renames all of these
 for graph in list_of_graphs:
   y_label = str(graph.ax.get_ylabel).split()
@@ -200,7 +229,9 @@ for graph in list_of_graphs:
   for_naming_y = y_label.lower().replace(' ', '_')
   my_file = for_naming_x + '_vs_' + for_naming_y + '.png'
   plt.savefig(my_file, bbox_inches='tight')
+"""
 
+"""
 """
 
 #chart for result type vs x
@@ -504,7 +535,7 @@ for col in cols_for_graphs:
   #saves the fig, commented out for now - DOES WORK
   my_file = 'audience_df_' + col + '.png'
   plt.savefig(my_file, bbox_inches='tight')
-"""
+
 #creates and saves graphs for ctr, click_to_retail_rate
 cols_for_rate_graphs = ['CTR', 'Click_To_Retail_Rate']
 for col in cols_for_rate_graphs:
@@ -542,7 +573,7 @@ for col in cols_for_rate_graphs:
   #saves the fig, commented out for now - DOES WORK
   my_file = 'authors_df_' + col + '.png'
   plt.savefig(my_file, bbox_inches='tight')
-"""
+
 """
 
 #splitting Objectives
