@@ -411,7 +411,7 @@ for col in cols_for_graphs:
   #saves the fig, commented out for now - DOES WORK
   my_file = 'keywords_df_' + col + '.png'
   plt.savefig(my_file, bbox_inches='tight')
-"""
+
 #creates and saves graphs for ctr, click_to_retail_rate
 cols_for_rate_graphs = ['CTR', 'Click_To_Retail_Rate']
 for col in cols_for_rate_graphs:
@@ -449,7 +449,7 @@ for col in cols_for_rate_graphs:
   #saves the fig, commented out for now - DOES WORK
   my_file = 'keywords_df_' + col + '.png'
   plt.savefig(my_file, bbox_inches='tight')
-"""
+
 """
 #creating authors df
 authors_df = pd.DataFrame(all_data.loc[:, ['Author', 'Spend', 'Reach', 'Clicks', 'Total_Users', 'Total_Click_To_Retail']])
@@ -486,18 +486,25 @@ for col in cols_for_graphs:
   y_for_title = y_label.replace(' ($)', '')
   barplot.set(title=(str(y_for_title) + ' by ' + str(x_axis)))
   barplot.set_xticklabels(rotation=45, horizontalalignment='right', fontsize='x-small')
-  left_lim, right_lim = plt.ylim()
-  mean_value = authors_df_head[col].mean()
-  std_value = authors_df_head[col].std()
-  right_lim = right_lim - mean_value + std_value
-  min_value = authors_df_head[col].min().round(2)
-  min_name = authors_df_head[col].idxmin()
-  plt.text(left_lim, right_lim, r'''Lowest {}:
-  {} (${})'''.format(y_for_title, min_name, min_value), fontsize=8, bbox={'fc': 'white'})
+  #left_lim, right_lim = plt.ylim()
+  #mean_value = authors_df_head[col].mean()
+  #std_value = authors_df_head[col].std()
+  #right_lim = right_lim - mean_value + std_value
+  #min_value = authors_df_head[col].min().round(2)
+  #min_name = authors_df_head[col].idxmin()
+  #plt.text(left_lim, right_lim, r'''Lowest {}:
+  #{} (${})'''.format(y_for_title, min_name, min_value), fontsize=8, bbox={'fc': 'white'})
+  for p in barplot.ax.patches:
+    barplot.ax.annotate('$' + str(p.get_height().round(2)),
+  (p.get_x() + p.get_width()/2., p.get_height()),
+  ha='center', va='center',
+  xytext=(0,5),
+  textcoords='offset points',
+  fontsize=8)
   #saves the fig, commented out for now - DOES WORK
-  #my_file = 'audience_df_' + col + '.png'
-  #plt.savefig(my_file, bbox_inches='tight')
-
+  my_file = 'audience_df_' + col + '.png'
+  plt.savefig(my_file, bbox_inches='tight')
+"""
 #creates and saves graphs for ctr, click_to_retail_rate
 cols_for_rate_graphs = ['CTR', 'Click_To_Retail_Rate']
 for col in cols_for_rate_graphs:
@@ -517,17 +524,25 @@ for col in cols_for_rate_graphs:
   barplot.set_xticklabels(rotation=45, horizontalalignment='right', fontsize='x-small')
   vals = barplot.ax.get_yticks()
   barplot.set_yticklabels(['{:,.2%}'.format(x) for x in vals])
-  left_lim, right_lim = plt.ylim()
-  mean_value = authors_df_head[col].std()
-  right_lim = right_lim - mean_value
-  left_lim = left_lim + 2.5
-  max_value = authors_df_head[col].max().round(4) * 100
-  max_name = authors_df_head[col].idxmax()
-  plt.text(left_lim, right_lim, r'''Highest {}:
-  {} ({}%)'''.format(y_axis, max_name, max_value), fontsize=8, bbox={'fc': 'white'})
+  #left_lim, right_lim = plt.ylim()
+  #mean_value = authors_df_head[col].std()
+  #right_lim = right_lim - mean_value
+  #left_lim = left_lim + 2.5
+  #max_value = authors_df_head[col].max().round(4) * 100
+  #max_name = authors_df_head[col].idxmax()
+  #plt.text(left_lim, right_lim, r'''Highest {}:
+  #{} ({}%)'''.format(y_axis, max_name, max_value), fontsize=8, bbox={'fc': 'white'})
+  for p in barplot.ax.patches:
+    barplot.ax.annotate(str((p.get_height() * 100).round(2)) + '%',
+  (p.get_x() + p.get_width()/2., p.get_height()),
+  ha='center', va='center',
+  xytext=(0,5),
+  textcoords='offset points',
+  fontsize=7.5)
   #saves the fig, commented out for now - DOES WORK
-  #my_file = 'authors_df_' + col + '.png'
-  #plt.savefig(my_file, bbox_inches='tight')
+  my_file = 'authors_df_' + col + '.png'
+  plt.savefig(my_file, bbox_inches='tight')
+"""
 """
 
 #splitting Objectives
