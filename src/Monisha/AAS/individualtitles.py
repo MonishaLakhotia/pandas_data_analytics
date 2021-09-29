@@ -5,7 +5,7 @@ import src.utils as u
 import re
 import toml
 
-#pd.set_option('display.max_rows', None)
+pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 
 # get the directory path where this script is
@@ -20,19 +20,38 @@ files = sorted(glob(individual_titles))
 # reads every csv file that matches a text pattern and puts them all into 1 dataframe
 book_data: pd.DataFrame = pd.concat((pd.read_csv(file) for file in files), ignore_index=True)
 
+
 #separating Products into Title, Additional_Info, and Book_Series
-book_data[['Title', 2]] = book_data.Products.str.split(':', expand=True)
-book_data[['Additional_Info', 'Book_Series']] = book_data[2].str.split('(', expand=True)
-book_data['Title'] = book_data.Title.str.split('(', expand=True)
-book_data['Book_Series'] = book_data.Book_Series.str.replace(')', '')
+book_data['Products'] = book_data.Products.str.replace('\(with bonus novel\)', '')
+book_data[['Title', 'Series']] = book_data.Products.str.split('\(', expand=True)
+book_data[['To_Drop', 'Additional_Info']] = book_data.Products.str.split('.*:', expand=True)
 
-book_data.drop(columns=['Products', 2], inplace=True)
+#dropping To_Drop and Products and formatting Title/Series/Additional Info
+book_data.drop(['To_Drop', 'Products'], 1, inplace=True)
+book_data['Title'] = book_data.Title.str.replace(':.*', '')
+book_data['Series'] = book_data.Series.str.replace('\)', '')
+book_data['Additional_Info'] = book_data.Additional_Info.str.replace('\(.*\)', '')
 
-#print(book_data.loc[book_data.Products.str.contains('Must Love Cowboys'), :])
+
+
+
+
+#dropping Products and 2
+#book_data.drop(columns=['Products', 2], inplace=True)
+
+#print(book_data.Products.str.split())
+#print(book_data['Title'])
+#print(book_data.Test)
+#print(book_data[2].value_counts(dropna=False))
+#print(book_data.Additional_Info)
+#print(book_data.Book_Series)
+#print(book_data.loc[book_data.Book_Series.isna(), 'Products'])
+#print(book_data.Products)
+
 
 """
 TO DO:
--Drop Series Products and 2
+
 -Figure out how to split series so book # is it's own series
 -Figure out next steps - 
   -add format
@@ -48,3 +67,4 @@ TO DO:
 
 
 print(book_data)
+#print(book_data.loc[book_data.Title.str.contains('Must Love Cowboys'), :])
