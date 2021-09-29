@@ -35,38 +35,24 @@ to_strip = ['Title', 'Series', 'Additional_Info']
 for col in to_strip:
   book_data[col] = book_data[col].str.strip()
 
-
-
-
-#dropping Products and 2
-#book_data.drop(columns=['Products', 2], inplace=True)
-
-#print(book_data.Products.str.split())
-#print(book_data['Title'])
-#print(book_data.Test)
-#print(book_data[2].value_counts(dropna=False))
-#print(book_data.Additional_Info)
-#print(book_data.Book_Series)
-#print(book_data.loc[book_data.Book_Series.isna(), 'Products'])
-#print(book_data.Products)
-
+#separates Series from Series_Number
+book_data['Series_Number'] = book_data.Series.str.replace('.*(?<!\d)', '')
+book_data['Series'] = book_data.Series.str.replace(',\s\d|\sBook\s\d$', '')
 
 """
 TO DO:
-
--Figure out how to split series so book # is it's own series
 -Figure out next steps - 
-  -add format
   -figure out how to add author names and pub dates
   -probably merging all duplicates together... actually wait to do this? 
     -create a different dataframe for it so I can see difference between ebook and print numbers
     -can do this but remember that this data frame's creation needs to be after the original df
     -then make sure everthing that should merge did, 
   -try to figure out subgenres as well
+  -try to figure out what to do about books missing the Series_Number
 
 """
 
 
-
-print(book_data)
+[print(book_data.Series_Number)]
+#print(book_data)
 #print(book_data.loc[book_data.Title.str.contains('Must Love Cowboys'), :])
