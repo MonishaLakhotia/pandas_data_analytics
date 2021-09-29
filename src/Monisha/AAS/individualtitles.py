@@ -37,7 +37,7 @@ for col in to_strip:
 
 #separates Series from Series_Number
 book_data['Series_Number'] = book_data.Series.str.replace('.*(?<!\d)', '')
-book_data['Series'] = book_data.Series.str.replace(',\s\d|\sBook\s\d$', '')
+book_data['Series'] = book_data.Series.str.replace(',\s\d|\sBook\s\d', '')
 
 """
 TO DO:
@@ -53,6 +53,6 @@ TO DO:
 """
 
 
-[print(book_data.Series_Number)]
+print(book_data.Series_Number)
 #print(book_data)
 #print(book_data.loc[book_data.Title.str.contains('Must Love Cowboys'), :])
