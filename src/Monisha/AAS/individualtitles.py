@@ -20,7 +20,6 @@ files = sorted(glob(individual_titles))
 # reads every csv file that matches a text pattern and puts them all into 1 dataframe
 book_data: pd.DataFrame = pd.concat((pd.read_csv(file) for file in files), ignore_index=True)
 
-
 #separating Products into Title, Additional_Info, and Book_Series
 book_data['Products'] = book_data.Products.str.replace('\(with bonus novel\)', '')
 book_data[['Title', 'Series']] = book_data.Products.str.split('\(', expand=True)
@@ -32,6 +31,9 @@ book_data['Title'] = book_data.Title.str.replace(':.*', '')
 book_data['Series'] = book_data.Series.str.replace('\)', '')
 book_data['Additional_Info'] = book_data.Additional_Info.str.replace('\(.*\)', '')
 
+to_strip = ['Title', 'Series', 'Additional_Info']
+for col in to_strip:
+  book_data[col] = book_data[col].str.strip()
 
 
 
