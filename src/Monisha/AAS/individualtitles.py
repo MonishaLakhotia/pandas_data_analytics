@@ -26,6 +26,8 @@ book_data[['Additional_Info', 'Book_Series']] = book_data[2].str.split('(', expa
 book_data['Title'] = book_data.Title.str.split('(', expand=True)
 book_data['Book_Series'] = book_data.Book_Series.str.replace(')', '')
 
+book_data.drop(columns=['Products', 2], inplace=True)
+
 #print(book_data.loc[book_data.Products.str.contains('Must Love Cowboys'), :])
 
 """
@@ -45,4 +47,4 @@ TO DO:
 
 
 
-#print(book_data)
+print(book_data)
