@@ -39,28 +39,47 @@ for col in to_strip:
 book_data['Series_Number'] = book_data.Series.str.replace('.*(?<!\d)', '')
 book_data['Series'] = book_data.Series.str.replace(',\s\d|\sBook\s\d', '')
 
+#renames columns
+book_data.rename({'CTR': 'CTR', 
+'Spend(USD)': 'Spend', 
+'CPC(USD)': 'CPC', 
+'Sales(USD)': 'Sales',
+'ACOS': 'ACOS'}, axis=1, inplace=True)
+
+#drops ASIN and ROAS columns
+#book_data.drop(['ASIN', 'ROAS'], axis=1, inplace=True)
 
 
+#creates function to fix CTR, CPC, and ACOS when merging 
+def agg_functions(df):
+  df['CTR'] = df.Clicks / df.Impressions
+  df['CPC'] = df.Spend / df.Clicks
+  df['ACOS'] = df.Spend / df.Sales
 
 #to merge duplicates (allows NaN) - KEEP THIS AFTER THE REST OF THE CLEANING
 merge_titles = book_data.groupby(['Title'], dropna=False).sum()
+agg_functions(merge_titles)
 
 """
 NOTE on merge: will have to add Author to the list when you have it 
 Decide on whether to include any other non-int information to this one 
 Or if you just want to create a new df for that info as well
+
+
 """
 
 """
 TO DO:
 -Figure out next steps - 
   -figure out how to add author names and pub dates
-  -probably merging all duplicates together... actually wait to do this? 
-    -create a different dataframe for it so I can see difference between ebook and print numbers
-    -can do this but remember that this data frame's creation needs to be after the original df
-    -then make sure everthing that should merge did, 
+  -add ebook and print numbers
+  
   -try to figure out subgenres as well
   -try to figure out what to do about books missing the Series_Number
+  -decide if you want to create new dfs for other info like subgenre or ebook v print
+  or if you want to merge some of the into the merge df as well
+NOTE
+the CTR and ACOS are not in % form, need to multiply by 100 
 
 """
 
