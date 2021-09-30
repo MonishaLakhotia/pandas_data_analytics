@@ -1,5 +1,6 @@
 from glob import glob
 import os
+from numpy.core.numeric import NaN
 import pandas as pd
 import src.utils as u
 import re
@@ -46,8 +47,13 @@ book_data.rename({'CTR': 'CTR',
 'Sales(USD)': 'Sales',
 'ACOS': 'ACOS'}, axis=1, inplace=True)
 
+book_data['Format'] = NaN
 
-print(book_data.head())
+for index in range(len(book_data.ASIN)):
+  if book_data.ASIN[index].startswith('B'):
+    book_data.Format[index] = 'eBook'
+  elif book_data.ASIN[index].isnumeric() or book_data.ASIN[index].endswith('X'):
+    book_data.Format[index] = 'Print'
 
 #creates function to fix CTR, CPC, and ACOS when merging 
 def agg_functions(df):
@@ -71,7 +77,6 @@ Or if you just want to create a new df for that info as well
 TO DO:
 -Figure out next steps - 
   -figure out how to add author names and pub dates
-  -add ebook and print numbers
   -try to figure out subgenres as well
   -try to figure out what to do about books missing the Series_Number
   -also deal with reordering cols
