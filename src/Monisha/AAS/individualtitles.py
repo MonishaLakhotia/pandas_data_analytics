@@ -25,8 +25,8 @@ book_data['Products'] = book_data.Products.str.replace('\(with bonus novel\)', '
 book_data[['Title', 'Series']] = book_data.Products.str.split('\(', expand=True)
 book_data[['To_Drop', 'Additional_Info']] = book_data.Products.str.split('.*:', expand=True)
 
-#dropping To_Drop and Products and formatting Title/Series/Additional Info
-book_data.drop(['To_Drop', 'Products'], 1, inplace=True)
+#dropping unneeded cols and formatting Title/Series/Additional Info
+book_data.drop(['To_Drop', 'Products', 'State', 'SKU', 'ROAS', 'Status'], 1, inplace=True)
 book_data['Title'] = book_data.Title.str.replace(':.*', '')
 book_data['Series'] = book_data.Series.str.replace('\)', '')
 book_data['Additional_Info'] = book_data.Additional_Info.str.replace('\(.*\)', '')
@@ -46,9 +46,8 @@ book_data.rename({'CTR': 'CTR',
 'Sales(USD)': 'Sales',
 'ACOS': 'ACOS'}, axis=1, inplace=True)
 
-#drops ASIN and ROAS columns
-#book_data.drop(['ASIN', 'ROAS'], axis=1, inplace=True)
 
+print(book_data.head())
 
 #creates function to fix CTR, CPC, and ACOS when merging 
 def agg_functions(df):
@@ -73,9 +72,9 @@ TO DO:
 -Figure out next steps - 
   -figure out how to add author names and pub dates
   -add ebook and print numbers
-  
   -try to figure out subgenres as well
   -try to figure out what to do about books missing the Series_Number
+  -also deal with reordering cols
   -decide if you want to create new dfs for other info like subgenre or ebook v print
   or if you want to merge some of the into the merge df as well
 NOTE
