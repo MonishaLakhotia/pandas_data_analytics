@@ -47,6 +47,7 @@ book_data.rename({'CTR': 'CTR',
 'Sales(USD)': 'Sales',
 'ACOS': 'ACOS'}, axis=1, inplace=True)
 
+#creates Format column
 book_data['Format'] = NaN
 
 for index in range(len(book_data.ASIN)):
@@ -70,7 +71,6 @@ NOTE on merge: will have to add Author to the list when you have it
 Decide on whether to include any other non-int information to this one 
 Or if you just want to create a new df for that info as well
 
-
 """
 
 """
@@ -79,15 +79,11 @@ TO DO:
   -figure out how to add author names and pub dates
   -try to figure out subgenres as well
   -try to figure out what to do about books missing the Series_Number
+  -also figure out if any columns need to be changes to int
   -also deal with reordering cols
   -decide if you want to create new dfs for other info like subgenre or ebook v print
   or if you want to merge some of the into the merge df as well
 NOTE
-the CTR and ACOS are not in % form, need to multiply by 100 
+the CTR and ACOS are not in % form, need to multiply by 100 and add percent sign
 
 """
-
-
-#print(book_data.Series_Number)
-#print(book_data)
-#print(book_data.loc[book_data.Title.str.contains('Must Love Cowboys'), :])
