@@ -39,6 +39,18 @@ for col in to_strip:
 book_data['Series_Number'] = book_data.Series.str.replace('.*(?<!\d)', '')
 book_data['Series'] = book_data.Series.str.replace(',\s\d|\sBook\s\d', '')
 
+
+
+
+#to merge duplicates (allows NaN) - KEEP THIS AFTER THE REST OF THE CLEANING
+merge_titles = book_data.groupby(['Title'], dropna=False).sum()
+
+"""
+NOTE on merge: will have to add Author to the list when you have it 
+Decide on whether to include any other non-int information to this one 
+Or if you just want to create a new df for that info as well
+"""
+
 """
 TO DO:
 -Figure out next steps - 
@@ -53,6 +65,6 @@ TO DO:
 """
 
 
-print(book_data.Series_Number)
+#print(book_data.Series_Number)
 #print(book_data)
 #print(book_data.loc[book_data.Title.str.contains('Must Love Cowboys'), :])
