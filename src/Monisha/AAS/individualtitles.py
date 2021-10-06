@@ -6,7 +6,9 @@ import src.utils as u
 import re
 import toml
 import requests
+from bs4 import BeautifulSoup
 #make sure to pip install requests again code: python -m pip install requests
+#make sure to pip install bs4 again code: pip install beautifulsoup4
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
