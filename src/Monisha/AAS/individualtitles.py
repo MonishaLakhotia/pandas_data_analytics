@@ -63,6 +63,7 @@ for index in range(len(book_data.ASIN)):
     book_data.Format[index] = 'Print'
 
 """
+#ATTEMPTS AT SCRAPING - BREAKS THE CODE SO DON'T USE
 #lists headers
 HEADERS = ({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36',
 'Accept-Language': 'en-US, en;q=0.5'})
