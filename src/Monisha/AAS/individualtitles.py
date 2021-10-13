@@ -75,7 +75,7 @@ reordered = book_data_merge[['ASIN', 'Title', 'Author', 'Pub_Date',
 'Impressions', 'Clicks', 'Orders', 'Spend', 'Sales',
 'CTR',  'CPC', 'ACOS']]
 
-#creates function to fix CTR, CPC, and ACOS when merging - KEEP THIS AFTER THE REST OF THE CLEANING FOR NOW
+#creates function to fix CTR, CPC, and ACOS when merging and sort by Orders/ACOS - KEEP THIS AFTER THE REST OF THE CLEANING FOR NOW
 def agg_functions(df):
   df['CTR'] = df.Clicks / df.Impressions
   df['CPC'] = df.Spend / df.Clicks
@@ -87,20 +87,20 @@ title_author = reordered.groupby(['Title', 'Author'], dropna=False).sum()
 agg_functions(title_author)
 
 
-"""
-NOTE on merge: will have to add Author to the list when you have it 
-Decide on whether to include any other non-int information to this one 
-Or if you just want to create a new df for that info as well
-
-"""
 
 """
 TO DO:
 -Figure out next steps - 
-  -need to do the ASIN merge I think too
-  -decide if you want to create new dfs for other info like subgenre or ebook v print
-  or if you want to merge some of the into the merge df as well
+  -subgenre df
+  -print vs ebook df
+  -backlist vs front list df
+  -authors df
+  -need to do the ASIN merge I think too (EH mAYBE NOT)
 NOTE
 the CTR and ACOS are not in % form, need to multiply by 100 and add percent sign
+
+dfs to print:
+reordered (this is the raw data)
+title_author (this is best title and author)
 
 """
