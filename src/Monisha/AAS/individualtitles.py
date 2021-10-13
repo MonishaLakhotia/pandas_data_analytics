@@ -80,10 +80,12 @@ def agg_functions(df):
   df['CTR'] = df.Clicks / df.Impressions
   df['CPC'] = df.Spend / df.Clicks
   df['ACOS'] = df.Spend / df.Sales
+  df.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
 
-#to merge duplicates (allows NaN) - KEEP THIS AFTER THE REST OF THE CLEANING
-merge_titles = book_data.groupby(['Title'], dropna=False).sum()
-agg_functions(merge_titles)
+#to groupby title and author (allows NaN) - KEEP THIS AFTER THE REST OF THE CLEANING
+title_author = reordered.groupby(['Title', 'Author'], dropna=False).sum()
+agg_functions(title_author)
+
 
 """
 NOTE on merge: will have to add Author to the list when you have it 
@@ -95,7 +97,6 @@ Or if you just want to create a new df for that info as well
 """
 TO DO:
 -Figure out next steps - 
-  -also deal with reordering cols
   -need to do the ASIN merge I think too
   -decide if you want to create new dfs for other info like subgenre or ebook v print
   or if you want to merge some of the into the merge df as well
