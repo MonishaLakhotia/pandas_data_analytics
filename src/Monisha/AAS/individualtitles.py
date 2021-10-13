@@ -68,6 +68,13 @@ book_data_merge.loc[book_data_merge.Title == 'Sex/Life', 'Title'] = '44 Chapters
 #changes Pub_Date to datetime
 book_data_merge['Pub_Date'] = pd.to_datetime(book_data_merge.Pub_Date)
 
+#reorders columns
+reordered = book_data_merge[['ASIN', 'Title', 'Author', 'Pub_Date', 
+'Format', 'Series', 'Series_Number', 'Additional_Info', 
+'Assumed_Subgenre', 'First_BISAC_Subject',
+'Impressions', 'Clicks', 'Orders', 'Spend', 'Sales',
+'CTR',  'CPC', 'ACOS']]
+
 #creates function to fix CTR, CPC, and ACOS when merging - KEEP THIS AFTER THE REST OF THE CLEANING FOR NOW
 def agg_functions(df):
   df['CTR'] = df.Clicks / df.Impressions
@@ -88,8 +95,8 @@ Or if you just want to create a new df for that info as well
 """
 TO DO:
 -Figure out next steps - 
-  -also figure out if any columns need to be changes to int
   -also deal with reordering cols
+  -need to do the ASIN merge I think too
   -decide if you want to create new dfs for other info like subgenre or ebook v print
   or if you want to merge some of the into the merge df as well
 NOTE
