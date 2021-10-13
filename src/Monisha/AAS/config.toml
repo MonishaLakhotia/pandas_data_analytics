@@ -1,2 +1,3 @@
 file_locations.individual_titles = "data/IndividualCampaigns/Sponsored_*.csv"
+file_locations.books_master_doc = "data/books_master_doc.csv"
 data_notes = "see AAS_DataCleaningNotes_2021 doc on work Mac"

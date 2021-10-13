@@ -16,6 +16,7 @@ config = toml.load(os.path.join(this_dir, 'config.toml'))
 # prefix partial file paths found in the config.toml with the full path
 u.set_full_paths(config, this_dir)
 
+master_doc = config['file_locations']['individual_titles']
 individual_titles = config['file_locations']['individual_titles']
 files = sorted(glob(individual_titles))
 # reads every csv file that matches a text pattern and puts them all into 1 dataframe
@@ -68,7 +69,6 @@ def agg_functions(df):
 merge_titles = book_data.groupby(['Title'], dropna=False).sum()
 agg_functions(merge_titles)
 
-print(merge_titles)
 """
 NOTE on merge: will have to add Author to the list when you have it 
 Decide on whether to include any other non-int information to this one 
