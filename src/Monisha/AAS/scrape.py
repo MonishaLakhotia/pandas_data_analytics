@@ -40,6 +40,10 @@ for index in range(len(urls_df.ASIN)):
   urls_df.URL[index] = 'https://www.amazon.com/gp/product/' + urls_df.ASIN[index]
 
 #TEST - fetches url
+proxies = {"http": "http://10.10.1.10:3128",
+           "https": "http://10.10.1.10:1080"}
+#DON'T NEED PROXIES
+
 page = requests.get(urls_df.URL[0], headers=HEADERS).text
 
 #TEST - creates the object that will contain all the info for the URL
@@ -47,6 +51,7 @@ soup = BeautifulSoup(page, 'lxml')
 
 #TEST - to pull text
 title = soup.find(id='productTitle').get_text().strip()
+sleep(5)
 print(title)
 
 """
