@@ -62,9 +62,11 @@ book_data_merge = pd.merge(book_data, master_doc, on=['ASIN', 'Title'])
 book_data_merge.drop(columns=['Unnamed: 6', 'Unnamed: 7', 'Unnamed: 8'], inplace=True)
 
 #fixes issue with 44 Chapters//SexLife
-#print(book_data_merge.loc[book_data_merge.Title == 'Sex/Life'])
 book_data_merge.loc[book_data_merge.Title == 'Sex/Life', 'Additional_Info'] = NaN
 book_data_merge.loc[book_data_merge.Title == 'Sex/Life', 'Title'] = '44 Chapters About 4 Men'
+
+#changes Pub_Date to datetime
+book_data_merge['Pub_Date'] = pd.to_datetime(book_data_merge.Pub_Date)
 
 #creates function to fix CTR, CPC, and ACOS when merging - KEEP THIS AFTER THE REST OF THE CLEANING FOR NOW
 def agg_functions(df):
@@ -86,9 +88,6 @@ Or if you just want to create a new df for that info as well
 """
 TO DO:
 -Figure out next steps - 
-  -figure out how to add author names and pub dates
-  -try to figure out subgenres as well
-  -try to figure out what to do about books missing the Series_Number
   -also figure out if any columns need to be changes to int
   -also deal with reordering cols
   -decide if you want to create new dfs for other info like subgenre or ebook v print
