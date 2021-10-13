@@ -16,7 +16,7 @@ config = toml.load(os.path.join(this_dir, 'config.toml'))
 # prefix partial file paths found in the config.toml with the full path
 u.set_full_paths(config, this_dir)
 
-master_doc = config['file_locations']['individual_titles']
+master_doc = pd.read_csv(config['file_locations']['books_master_doc'])
 individual_titles = config['file_locations']['individual_titles']
 files = sorted(glob(individual_titles))
 # reads every csv file that matches a text pattern and puts them all into 1 dataframe
@@ -57,6 +57,8 @@ for index in range(len(book_data.ASIN)):
   elif book_data.ASIN[index].isnumeric() or book_data.ASIN[index].endswith('X'):
     book_data.Format[index] = 'Print'
 
+book_data_merge = pd.merge(book_data, master_doc, on=['ASIN', 'Title'])
+book_data_merge.drop(columns=['Unnamed: 6', 'Unnamed: 7', 'Unnamed: 8'], inplace=True)
 
 
 #creates function to fix CTR, CPC, and ACOS when merging - KEEP THIS AFTER THE REST OF THE CLEANING FOR NOW
