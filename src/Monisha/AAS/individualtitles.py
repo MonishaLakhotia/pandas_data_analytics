@@ -57,9 +57,14 @@ for index in range(len(book_data.ASIN)):
   elif book_data.ASIN[index].isnumeric() or book_data.ASIN[index].endswith('X'):
     book_data.Format[index] = 'Print'
 
+#merges master doc to fill in missing info
 book_data_merge = pd.merge(book_data, master_doc, on=['ASIN', 'Title'])
 book_data_merge.drop(columns=['Unnamed: 6', 'Unnamed: 7', 'Unnamed: 8'], inplace=True)
 
+#fixes issue with 44 Chapters//SexLife
+#print(book_data_merge.loc[book_data_merge.Title == 'Sex/Life'])
+book_data_merge.loc[book_data_merge.Title == 'Sex/Life', 'Additional_Info'] = NaN
+book_data_merge.loc[book_data_merge.Title == 'Sex/Life', 'Title'] = '44 Chapters About 4 Men'
 
 #creates function to fix CTR, CPC, and ACOS when merging - KEEP THIS AFTER THE REST OF THE CLEANING FOR NOW
 def agg_functions(df):
