@@ -83,11 +83,20 @@ def agg_functions(df):
   df.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
 
 #runs agg_functions on reordered
-agg_functions(reordered)
 
 #to groupby title and author (allows NaN) - KEEP THIS AFTER THE REST OF THE CLEANING
 title_author = reordered.groupby(['Title', 'Author'], dropna=False).sum()
-agg_functions(title_author)
+
+#to group by subgenre (both assumed and BISAC)
+assumed_subgenre = reordered.groupby('Assumed_Subgenre', dropna=False).sum()
+BISAC_subgenre = reordered.groupby('First_BISAC_Subject', dropna=False).sum()
+
+
+dataframes = [reordered, title_author, assumed_subgenre, BISAC_subgenre]
+for df in dataframes:
+  agg_functions(df)
+
+
 
 
 
@@ -100,6 +109,7 @@ TO DO:
   -authors df
   -need to do the ASIN merge I think too (EH mAYBE NOT)
   -probably download all and send to self to decide what else is left 
+  -issue with the BISAC df - some spacing is off
 NOTE
 the CTR and ACOS are not in % form, need to multiply by 100 and add percent sign
 
