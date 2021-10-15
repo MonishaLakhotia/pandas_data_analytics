@@ -6,6 +6,7 @@ import src.utils as u
 import re
 import toml
 from datetime import date
+from dateutil.relativedelta import relativedelta
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
@@ -67,7 +68,7 @@ book_data_merge.loc[book_data_merge.Title == 'Sex/Life', 'Additional_Info'] = Na
 book_data_merge.loc[book_data_merge.Title == 'Sex/Life', 'Title'] = '44 Chapters About 4 Men'
 
 #changes Pub_Date to datetime
-book_data_merge['Pub_Date'] = pd.to_datetime(book_data_merge.Pub_Date)
+book_data_merge['Pub_Date'] = pd.to_datetime(book_data_merge.Pub_Date).dt.date
 
 #reorders columns
 reordered = book_data_merge[['ASIN', 'Title', 'Author', 'Pub_Date', 
@@ -97,10 +98,10 @@ format = reordered.groupby('Format', dropna=False).sum()
 authors = reordered.groupby('Author', dropna=False).sum()
 
 #for datetime df
-today = date.today()
-print(today)
+six_months = date.today() - relativedelta(months=+6)
+print(six_months)
 
-
+backlist = reordered.loc[reordered.Pub_Date < six_months]
 
 #for loop with agg_functions
 dataframes = [reordered, title_author, assumed_subgenre, 
