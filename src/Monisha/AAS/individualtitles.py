@@ -63,9 +63,10 @@ for index in range(len(book_data.ASIN)):
 book_data_merge = pd.merge(book_data, master_doc, on=['ASIN', 'Title'])
 book_data_merge.drop(columns=['Unnamed: 6', 'Unnamed: 7', 'Unnamed: 8'], inplace=True)
 
-#fixes issue with 44 Chapters//SexLife
+#fixes issue with 44 Chapters//SexLife, Series_Number col
 book_data_merge.loc[book_data_merge.Title == 'Sex/Life', 'Additional_Info'] = NaN
 book_data_merge.loc[book_data_merge.Title == 'Sex/Life', 'Title'] = '44 Chapters About 4 Men'
+book_data_merge['Series_Number'] = book_data_merge.Series_Number.replace('', NaN)
 
 #changes Pub_Date to datetime
 book_data_merge['Pub_Date'] = pd.to_datetime(book_data_merge.Pub_Date).dt.date
@@ -89,7 +90,7 @@ title_author = reordered.groupby(['Title', 'Author'], dropna=False).sum()
 
 #for loop to groupby subgenre, format, author (allows NaN)- KEEP THIS AFTER THE REST OF THE CLEANING
 d={}
-to_groupby = ['Assumed_Subgenre', 'First_BISAC_Subject', 'Format', 'Author']
+to_groupby = ['Assumed_Subgenre', 'First_BISAC_Subject', 'Format', 'Author', 'Series_Number']
 for series_group in to_groupby:
   df_name = series_group.lower()
   d[df_name] = pd.DataFrame(reordered.groupby(series_group, dropna=False).sum())
@@ -115,12 +116,12 @@ frontlist_asin_merge = frontlist.groupby(['ASIN', 'Title', 'Author', 'Pub_Date']
 
 #for loop with agg_functions
 dataframes = [reordered, title_author, d['assumed_subgenre'],
-d['first_bisac_subject'], d['format'], d['author'], 
+d['first_bisac_subject'], d['format'], d['author'], d['series_number'], 
 backlist_asin_merge, frontlist_asin_merge]
 for df in dataframes:
   agg_functions(df)
 
-
+print(d['series_number'])
 """ 
 NOTE: Delete this red bit once you've successfully saved dataframes, should not need
 #for loop with agg_functions
@@ -138,17 +139,11 @@ for df in dataframes:
 TO DO:
 -Figure out next steps - 
   -probably download all and send to self to decide what else is left 
-  -didn't do anything with the series numbers
   -issue with the BISAC df - some spacing is off
 NOTE
 the CTR and ACOS are not in % form, need to multiply by 100 and add percent sign
 
 dfs to print:
-reordered (this is the raw data)
-title_author (this is best title and author)
-assumed_subgenre (this is assumed subgenre)
-BISAC_subgenre (this is by BISAC)
-format (this is ebook v print)
-author (this is authors)
+see dataframes list
 
 """
