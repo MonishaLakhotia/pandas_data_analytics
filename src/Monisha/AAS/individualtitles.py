@@ -87,6 +87,14 @@ def agg_functions(df):
 #to groupby title and author (allows NaN) - KEEP THIS AFTER THE REST OF THE CLEANING
 title_author = reordered.groupby(['Title', 'Author'], dropna=False).sum()
 
+d={}
+to_groupby = ['Assumed_Subgenre', 'First_BISAC_Subject', 'Format', 'Author']
+for series_group in to_groupby:
+  df_name = series_group.lower()
+  d[df_name] = pd.DataFrame(reordered.groupby(series_group, dropna=False).sum())
+
+"""
+NOTE: Delete this red bit once you've successfully saved dataframes, should not need
 #to group by subgenre (both assumed and BISAC) (allows NaN)
 assumed_subgenre = reordered.groupby('Assumed_Subgenre', dropna=False).sum()
 BISAC_subgenre = reordered.groupby('First_BISAC_Subject', dropna=False).sum()
@@ -96,7 +104,7 @@ format = reordered.groupby('Format', dropna=False).sum()
 
 #to group by authors (allows NaN)
 authors = reordered.groupby('Author', dropna=False).sum()
-
+"""
 #to group by backlist and front list (allows NaN)
 six_months = date.today() - relativedelta(months=+6)
 backlist = reordered.loc[reordered.Pub_Date < six_months]
@@ -105,10 +113,21 @@ frontlist = reordered.loc[reordered.Pub_Date >= six_months]
 frontlist_asin_merge = frontlist.groupby(['ASIN', 'Title', 'Author', 'Pub_Date'], dropna=False).sum()
 
 #for loop with agg_functions
-dataframes = [reordered, title_author, assumed_subgenre, 
+dataframes = [reordered, title_author, d['assumed_subgenre'],
+d['first_bisac_subject'], d['format'], d['author'], backlist_asin_merge, frontlist_asin_merge]
+for df in dataframes:
+  agg_functions(df)
+
+
+""" 
+NOTE: Delete this red bit once you've successfully saved dataframes, should not need
+#for loop with agg_functions
+dataframes = [reordered, title_author, d['assumed_subgenre'],
 BISAC_subgenre, format, authors, backlist_asin_merge, frontlist_asin_merge]
 for df in dataframes:
   agg_functions(df)
+  """
+
 
 
 
