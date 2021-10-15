@@ -92,15 +92,18 @@ BISAC_subgenre = reordered.groupby('First_BISAC_Subject', dropna=False).sum()
 #to group by format
 format = reordered.groupby('Format', dropna=False).sum()
 
-print(format)
+#to group by authors 
+authors = reordered.groupby('Author', dropna=False).sum()
+
+print(authors)
 
 #for loop with agg_functions
 dataframes = [reordered, title_author, assumed_subgenre, 
-BISAC_subgenre, format]
+BISAC_subgenre, format, authors]
 for df in dataframes:
   agg_functions(df)
 
-print(format)
+print(authors)
 
 
 
@@ -108,7 +111,6 @@ print(format)
 """
 TO DO:
 -Figure out next steps - 
-  -print vs ebook df
   -backlist vs front list df
   -authors df
   -need to do the ASIN merge I think too (EH mAYBE NOT)
