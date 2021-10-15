@@ -97,15 +97,16 @@ format = reordered.groupby('Format', dropna=False).sum()
 #to group by authors (allows NaN)
 authors = reordered.groupby('Author', dropna=False).sum()
 
-#for datetime df
+#to group by backlist and front list (allows NaN)
 six_months = date.today() - relativedelta(months=+6)
-print(six_months)
-
 backlist = reordered.loc[reordered.Pub_Date < six_months]
+backlist_asin_merge = backlist.groupby(['ASIN', 'Title', 'Author', 'Pub_Date'], dropna=False).sum()
+frontlist = reordered.loc[reordered.Pub_Date >= six_months]
+frontlist_asin_merge = frontlist.groupby(['ASIN', 'Title', 'Author', 'Pub_Date'], dropna=False).sum()
 
 #for loop with agg_functions
 dataframes = [reordered, title_author, assumed_subgenre, 
-BISAC_subgenre, format, authors]
+BISAC_subgenre, format, authors, backlist_asin_merge, frontlist_asin_merge]
 for df in dataframes:
   agg_functions(df)
 
@@ -115,8 +116,8 @@ for df in dataframes:
 """
 TO DO:
 -Figure out next steps - 
-  -backlist vs front list df
   -probably download all and send to self to decide what else is left 
+  -didn't do anything with the series numbers
   -issue with the BISAC df - some spacing is off
 NOTE
 the CTR and ACOS are not in % form, need to multiply by 100 and add percent sign
