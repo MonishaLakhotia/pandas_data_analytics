@@ -87,6 +87,7 @@ def agg_functions(df):
 #to groupby title and author (allows NaN) - KEEP THIS AFTER THE REST OF THE CLEANING
 title_author = reordered.groupby(['Title', 'Author'], dropna=False).sum()
 
+#for loop to groupby subgenre, format, author (allows NaN)- KEEP THIS AFTER THE REST OF THE CLEANING
 d={}
 to_groupby = ['Assumed_Subgenre', 'First_BISAC_Subject', 'Format', 'Author']
 for series_group in to_groupby:
@@ -114,7 +115,8 @@ frontlist_asin_merge = frontlist.groupby(['ASIN', 'Title', 'Author', 'Pub_Date']
 
 #for loop with agg_functions
 dataframes = [reordered, title_author, d['assumed_subgenre'],
-d['first_bisac_subject'], d['format'], d['author'], backlist_asin_merge, frontlist_asin_merge]
+d['first_bisac_subject'], d['format'], d['author'], 
+backlist_asin_merge, frontlist_asin_merge]
 for df in dataframes:
   agg_functions(df)
 
