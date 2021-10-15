@@ -82,6 +82,9 @@ def agg_functions(df):
   df['ACOS'] = df.Spend / df.Sales
   df.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
 
+#runs agg_functions on reordered
+agg_functions(reordered)
+
 #to groupby title and author (allows NaN) - KEEP THIS AFTER THE REST OF THE CLEANING
 title_author = reordered.groupby(['Title', 'Author'], dropna=False).sum()
 agg_functions(title_author)
@@ -91,11 +94,12 @@ agg_functions(title_author)
 """
 TO DO:
 -Figure out next steps - 
-  -subgenre df
+  -subgenre df (both assumed and BISAC)
   -print vs ebook df
   -backlist vs front list df
   -authors df
   -need to do the ASIN merge I think too (EH mAYBE NOT)
+  -probably download all and send to self to decide what else is left 
 NOTE
 the CTR and ACOS are not in % form, need to multiply by 100 and add percent sign
 
