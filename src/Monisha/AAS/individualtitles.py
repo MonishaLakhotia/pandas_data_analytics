@@ -95,15 +95,11 @@ format = reordered.groupby('Format', dropna=False).sum()
 #to group by authors 
 authors = reordered.groupby('Author', dropna=False).sum()
 
-print(authors)
-
 #for loop with agg_functions
 dataframes = [reordered, title_author, assumed_subgenre, 
 BISAC_subgenre, format, authors]
 for df in dataframes:
   agg_functions(df)
-
-print(authors)
 
 
 
@@ -112,8 +108,6 @@ print(authors)
 TO DO:
 -Figure out next steps - 
   -backlist vs front list df
-  -authors df
-  -need to do the ASIN merge I think too (EH mAYBE NOT)
   -probably download all and send to self to decide what else is left 
   -issue with the BISAC df - some spacing is off
 NOTE
@@ -122,5 +116,9 @@ the CTR and ACOS are not in % form, need to multiply by 100 and add percent sign
 dfs to print:
 reordered (this is the raw data)
 title_author (this is best title and author)
+assumed_subgenre (this is assumed subgenre)
+BISAC_subgenre (this is by BISAC)
+format (this is ebook v print)
+author (this is authors)
 
 """
