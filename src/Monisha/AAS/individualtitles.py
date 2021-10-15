@@ -78,13 +78,6 @@ reordered = book_data_merge[['ASIN', 'Title', 'Author', 'Pub_Date',
 'Impressions', 'Clicks', 'Orders', 'Spend', 'Sales',
 'CTR',  'CPC', 'ACOS']]
 
-#creates function to fix CTR, CPC, and ACOS when merging and sort by Orders/ACOS - KEEP THIS AFTER THE REST OF THE CLEANING FOR NOW
-def agg_functions(df):
-  df['CTR'] = df.Clicks / df.Impressions
-  df['CPC'] = df.Spend / df.Clicks
-  df['ACOS'] = df.Spend / df.Sales
-  df.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
-
 #to groupby title and author (allows NaN) - KEEP THIS AFTER THE REST OF THE CLEANING
 title_author = reordered.groupby(['Title', 'Author'], dropna=False).sum()
 
@@ -114,6 +107,13 @@ backlist_asin_merge = backlist.groupby(['ASIN', 'Title', 'Author', 'Pub_Date'], 
 frontlist = reordered.loc[reordered.Pub_Date >= six_months]
 frontlist_asin_merge = frontlist.groupby(['ASIN', 'Title', 'Author', 'Pub_Date'], dropna=False).sum()
 
+#creates function to fix CTR, CPC, and ACOS when merging and sort by Orders/ACOS - KEEP THIS AFTER THE REST OF THE CLEANING FOR NOW
+def agg_functions(df):
+  df['CTR'] = df.Clicks / df.Impressions
+  df['CPC'] = df.Spend / df.Clicks
+  df['ACOS'] = df.Spend / df.Sales
+  df.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
+
 #for loop with agg_functions
 dataframes = [reordered, title_author, d['assumed_subgenre'],
 d['first_bisac_subject'], d['format'], d['author'], d['series_number'], 
@@ -121,7 +121,6 @@ backlist_asin_merge, frontlist_asin_merge]
 for df in dataframes:
   agg_functions(df)
 
-print(d['series_number'])
 """ 
 NOTE: Delete this red bit once you've successfully saved dataframes, should not need
 #for loop with agg_functions
