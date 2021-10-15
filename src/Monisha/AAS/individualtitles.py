@@ -85,14 +85,14 @@ def agg_functions(df):
 #to groupby title and author (allows NaN) - KEEP THIS AFTER THE REST OF THE CLEANING
 title_author = reordered.groupby(['Title', 'Author'], dropna=False).sum()
 
-#to group by subgenre (both assumed and BISAC)
+#to group by subgenre (both assumed and BISAC) (allows NaN)
 assumed_subgenre = reordered.groupby('Assumed_Subgenre', dropna=False).sum()
 BISAC_subgenre = reordered.groupby('First_BISAC_Subject', dropna=False).sum()
 
-#to group by format
+#to group by format (allows NaN)
 format = reordered.groupby('Format', dropna=False).sum()
 
-#to group by authors 
+#to group by authors (allows NaN)
 authors = reordered.groupby('Author', dropna=False).sum()
 
 #for loop with agg_functions
