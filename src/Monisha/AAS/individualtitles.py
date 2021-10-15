@@ -5,6 +5,7 @@ import pandas as pd
 import src.utils as u
 import re
 import toml
+from datetime import date
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
@@ -94,6 +95,12 @@ format = reordered.groupby('Format', dropna=False).sum()
 
 #to group by authors (allows NaN)
 authors = reordered.groupby('Author', dropna=False).sum()
+
+#for datetime df
+today = date.today()
+print(today)
+
+
 
 #for loop with agg_functions
 dataframes = [reordered, title_author, assumed_subgenre, 
