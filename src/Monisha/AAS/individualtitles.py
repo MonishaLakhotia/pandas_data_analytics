@@ -82,8 +82,6 @@ def agg_functions(df):
   df['ACOS'] = df.Spend / df.Sales
   df.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
 
-#runs agg_functions on reordered
-
 #to groupby title and author (allows NaN) - KEEP THIS AFTER THE REST OF THE CLEANING
 title_author = reordered.groupby(['Title', 'Author'], dropna=False).sum()
 
@@ -91,11 +89,18 @@ title_author = reordered.groupby(['Title', 'Author'], dropna=False).sum()
 assumed_subgenre = reordered.groupby('Assumed_Subgenre', dropna=False).sum()
 BISAC_subgenre = reordered.groupby('First_BISAC_Subject', dropna=False).sum()
 
+#to group by format
+format = reordered.groupby('Format', dropna=False).sum()
 
-dataframes = [reordered, title_author, assumed_subgenre, BISAC_subgenre]
+print(format)
+
+#for loop with agg_functions
+dataframes = [reordered, title_author, assumed_subgenre, 
+BISAC_subgenre, format]
 for df in dataframes:
   agg_functions(df)
 
+print(format)
 
 
 
@@ -103,7 +108,6 @@ for df in dataframes:
 """
 TO DO:
 -Figure out next steps - 
-  -subgenre df (both assumed and BISAC)
   -print vs ebook df
   -backlist vs front list df
   -authors df
