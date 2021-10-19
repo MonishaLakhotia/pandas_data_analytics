@@ -2,6 +2,7 @@ from glob import glob
 import os
 from numpy.core.numeric import NaN
 import pandas as pd
+import numpy as np
 import src.utils as u
 import re
 import toml
@@ -81,7 +82,6 @@ reordered = book_data_merge[['ASIN', 'Title', 'Author', 'Pub_Date',
 'Impressions', 'Clicks', 'Orders', 'Spend', 'Sales',
 'CTR',  'CPC', 'ACOS']]
 
-
 #for loop to groupby subgenre, format, author (allows NaN)
 d={}
 to_groupby = ['Assumed_Subgenre', 'First_BISAC_Subject', 'Format', 'Author', 'Series_Number']
@@ -108,11 +108,14 @@ def agg_functions(df):
   df['CTR'] = df.Clicks / df.Impressions
   df['CPC'] = df.Spend / df.Clicks
   df['ACOS'] = df.Spend / df.Sales
+  df.ACOS.replace([np.inf, -np.inf], np.nan, inplace=True)
+  df.CTR.replace(0, np.nan, inplace=True)
   df.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
 
 for df in d.keys():
   agg_functions(d[df])
 
+print(d['title_author'].loc[d['title_author'].CTR == 0])
 #to save as multisheet xlsx
 file_location = ExcelWriter(config['file_locations']['output'])
 for key in d:
@@ -124,6 +127,7 @@ NOTE
 TO DO:
 -Figure out next steps - 
   -will have to deal with inf situation again - see one of the previous codes for fix
+  -also ctr can't be 0
   -see email with notes on what needs to be done
 
 NOTE
