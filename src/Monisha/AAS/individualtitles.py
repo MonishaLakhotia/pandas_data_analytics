@@ -103,19 +103,18 @@ d['frontlist'] = pd.DataFrame(frontlist.groupby(['ASIN', 'Title', 'Author', 'Pub
 reordered.set_index(reordered.Title, inplace=True)
 d['raw'] = reordered
 
-#creates function to fix CTR, CPC, and ACOS when merging and sort by Orders/ACOS - KEEP THIS AFTER THE REST OF THE CLEANING FOR NOW
+#creates function to fix CTR, CPC, and ACOS when merging and sort by Orders/ACOS
 def agg_functions(df):
   df['CTR'] = df.Clicks / df.Impressions
   df['CPC'] = df.Spend / df.Clicks
   df['ACOS'] = df.Spend / df.Sales
   df.ACOS.replace([np.inf, -np.inf], np.nan, inplace=True)
   df.CTR.replace(0, np.nan, inplace=True)
-  df.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
 
 for df in d.keys():
   agg_functions(d[df])
+  d[df].sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
 
-print(d['title_author'].loc[d['title_author'].CTR == 0])
 #to save as multisheet xlsx
 file_location = ExcelWriter(config['file_locations']['output'])
 for key in d:
@@ -126,8 +125,6 @@ file_location.save()
 NOTE
 TO DO:
 -Figure out next steps - 
-  -will have to deal with inf situation again - see one of the previous codes for fix
-  -also ctr can't be 0
   -see email with notes on what needs to be done
 
 NOTE
