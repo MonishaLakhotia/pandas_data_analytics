@@ -120,17 +120,13 @@ for key in d:
 file_location.save()  
 
 """
+NOTE
 TO DO:
 -Figure out next steps - 
-  -probably download all and send to self to decide what else is left 
-  -COMMIT these changes before you do the next set of changes
-  -double check all the agg functions to make sure it's correct
   -will have to deal with inf situation again - see one of the previous codes for fix
+  -see email with notes on what needs to be done
 
 NOTE
 the CTR and ACOS are not in % form, need to multiply by 100 and add percent sign
-
-dfs to print:
-see dataframes list
 
 """
