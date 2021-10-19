@@ -1,3 +1,4 @@
-file_locations.individual_titles = "data/IndividualCampaigns/Sponsored_*.csv"
-file_locations.books_master_doc = "data/books_master_doc.csv"
+file_locations.individual_titles = "data/in/IndividualCampaigns/Sponsored_*.csv"
+file_locations.books_master_doc = "data/in/books_master_doc.csv"
+file_locations.output = "data/out/output.csv"
 data_notes = "see AAS_DataCleaningNotes_2021 doc on work Mac"
