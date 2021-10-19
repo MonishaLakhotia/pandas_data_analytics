@@ -7,6 +7,8 @@ import re
 import toml
 from datetime import date
 from dateutil.relativedelta import relativedelta
+from pandas import ExcelWriter
+import openpyxl
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
@@ -48,7 +50,8 @@ book_data.rename({'CTR': 'CTR',
 'Spend(USD)': 'Spend', 
 'CPC(USD)': 'CPC', 
 'Sales(USD)': 'Sales',
-'ACOS': 'ACOS'}, axis=1, inplace=True)
+'ACOS': 'ACOS'}, 
+axis=1, inplace=True)
 
 #creates Format column
 book_data['Format'] = NaN
@@ -100,12 +103,15 @@ format = reordered.groupby('Format', dropna=False).sum()
 #to group by authors (allows NaN)
 authors = reordered.groupby('Author', dropna=False).sum()
 """
-#to group by backlist and front list (allows NaN)
+#to group by backlist and front list (allows NaN)- KEEP THIS AFTER THE REST OF THE CLEANING
 six_months = date.today() - relativedelta(months=+6)
 backlist = reordered.loc[reordered.Pub_Date < six_months]
 backlist_asin_merge = backlist.groupby(['ASIN', 'Title', 'Author', 'Pub_Date'], dropna=False).sum()
 frontlist = reordered.loc[reordered.Pub_Date >= six_months]
 frontlist_asin_merge = frontlist.groupby(['ASIN', 'Title', 'Author', 'Pub_Date'], dropna=False).sum()
+
+#sets index for reordered to Title
+reordered.set_index(reordered.Title, inplace=True)
 
 #creates function to fix CTR, CPC, and ACOS when merging and sort by Orders/ACOS - KEEP THIS AFTER THE REST OF THE CLEANING FOR NOW
 def agg_functions(df):
@@ -120,6 +126,18 @@ d['first_bisac_subject'], d['format'], d['author'], d['series_number'],
 backlist_asin_merge, frontlist_asin_merge]
 for df in dataframes:
   agg_functions(df)
+
+#to save as multisheet xlsx
+file_location = ExcelWriter(config['file_locations']['output'])
+
+def save_xls(list_dfs, xls_path):
+  with ExcelWriter(xls_path) as writer:
+
+    for n, df in enumerate(list_dfs):
+      df.to_excel(writer,'sheet%s' % n)  
+    writer.save()
+
+save_xls(dataframes,file_location)
 
 """ 
 NOTE: Delete this red bit once you've successfully saved dataframes, should not need
@@ -138,7 +156,6 @@ for df in dataframes:
 TO DO:
 -Figure out next steps - 
   -probably download all and send to self to decide what else is left 
-  -issue with the BISAC df - some spacing is off
 NOTE
 the CTR and ACOS are not in % form, need to multiply by 100 and add percent sign
 
