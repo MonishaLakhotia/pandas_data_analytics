@@ -127,30 +127,6 @@ for df in d.keys():
   meeting_format(d[df])
 
 
-
-
-#print('${:,.2f}'.format(1234.5))
-print(d['backlist'].Impressions)
-"""
-d['raw'][['Impressions', 'Clicks', 'Orders']] = d['raw'][['Impressions', 'Clicks', 'Orders']].apply(
-  lambda series: series.apply(lambda x: '{:,}'.format(x))) #WORKS FOR MULTIPLE COLUMNS
-d['raw'][['CTR', 'ACOS']] = d['raw'][['CTR', 'ACOS']].apply(
-    lambda series: series.apply(lambda x: '{:.2f}%'.format((x*100)))) #WORKS FOR MULTIPLE COLUMNS
-
-#d['raw'][['Spend', 'Sales', 'CPC']] = d['raw'][['Spend', 'Sales', 'CPC']].apply(
- # lambda series: series.apply(lambda x: '${:,.2f}'.format(x))) #WORKS FOR MULTIPLE COLUMNS
-
-#d['raw']['Spend'] = d['raw']['Spend'].apply(
- # lambda x: '${:,.2f}'.format(x)) #WORKS FOR SINGLE COLUMN
-
-df['C'] = df['C'].apply(lambda x: "${:.1f}k".format((x/1000)))
-
-df[["A", "B", "C"]] = df[["A", "B", "C"]].apply(
-    lambda series: series.apply(lambda value: f"{value:,}")
-)
-
-['Impressions', 'Clicks', 'Orders']
-"""
 #to save as multisheet xlsx
 file_location = ExcelWriter(config['file_locations']['output'])
 for key in d:
@@ -162,8 +138,5 @@ NOTE
 TO DO:
 -Figure out next steps - 
   -see email with notes on what needs to be done
-
-NOTE
-the CTR and ACOS are not in % form, need to multiply by 100 and add percent sign
 
 """
