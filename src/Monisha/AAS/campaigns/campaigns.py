@@ -27,17 +27,23 @@ all_campaigns = pd.read_csv(config['file_locations']['all_campaigns'])
 all_campaigns.drop(columns=['State', 'Status', 'Campaign bidding strategy',
 'Portfolio', 'Budget(USD)', 'Cost type', 'ROAS', 'Viewable impressions', 'VCPM(USD)'], inplace=True)
 
-print(all_campaigns)
+all_campaigns.columns = all_campaigns.columns.str.title().str.replace(' ', '_').str.replace('\(Usd\)', '')
+all_campaigns.rename(columns={'Ctr': 'CTR', 'Cpc': 'CPC', 'Acos': 'ACOS'}, inplace=True)
+aas_schedule.columns = aas_schedule.columns.str.replace(' ', '_')
+
+print(aas_schedule)
 
 """
 NOTE:
 TO DO:
+AAS SCHEDULE:
+-add underscores
+-rename cols
+-drop the unnamed cols, can leave the NaN rows I think
 ALL CAMPAIGNS:
--Add underscores to cp;s
 -Merging end dates
 -fix the rate cols
 -Change format of numeric cols
--Rename cols
 
 
 Need to add something about reading out from individual titles so I can merge this into that doc (or try to)
