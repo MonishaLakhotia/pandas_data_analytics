@@ -99,8 +99,7 @@ frontlist = reordered.loc[reordered.Pub_Date >= six_months]
 d['backlist'] = pd.DataFrame(backlist.groupby(['ASIN', 'Title', 'Author', 'Pub_Date'], dropna=False).sum())
 d['frontlist'] = pd.DataFrame(frontlist.groupby(['ASIN', 'Title', 'Author', 'Pub_Date'], dropna=False).sum())
 
-#sets index for reordered to Title
-reordered.set_index(reordered.Title, inplace=True)
+#adds raw data to dict
 d['raw'] = reordered
 
 #creates function to fix CTR, CPC, and ACOS when merging and sort by Orders/ACOS
