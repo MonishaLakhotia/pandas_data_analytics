@@ -24,27 +24,30 @@ u.set_full_paths(config, this_dir)
 aas_schedule = pd.read_csv(config['file_locations']['aas_schedule'])
 all_campaigns = pd.read_csv(config['file_locations']['all_campaigns'])
 
-#drops columns
+#drops columns from both dfs
 all_campaigns.drop(columns=['State', 'Status', 'Campaign bidding strategy',
 'Portfolio', 'Budget(USD)', 'Cost type', 'ROAS', 'Viewable impressions', 'VCPM(USD)'], inplace=True)
 aas_schedule.drop(columns=['Unnamed: 8', 'Unnamed: 9', 'Unnamed: 10'], inplace=True)
 
-#adds _ and deals with caps
+#adds underscore and deals with caps from both dfs
 all_campaigns.columns = all_campaigns.columns.str.title().str.replace(' ', '_').str.replace('\(Usd\)', '')
 all_campaigns.rename(columns={'Ctr': 'CTR', 'Cpc': 'CPC', 'Acos': 'ACOS'}, inplace=True)
 aas_schedule.columns = aas_schedule.columns.str.replace(' ', '_')
 
-print(aas_schedule)
+#formatting type and targeting for all_campaigns
+all_campaigns['Type'] = all_campaigns.Type.replace('SP', 'Sponsored Product')
+all_campaigns['Targeting'] = all_campaigns.Targeting.str.title()
+
+print(aas_schedule.dtypes)
+print(all_campaigns)
 
 """
 NOTE:
 TO DO:
 AAS SCHEDULE:
--add underscores
--rename cols
 -drop the unnamed cols, can leave the NaN rows I think
 ALL CAMPAIGNS:
--Merging end dates
+-Merging end dates (and do start dates for formatting)
 -fix the rate cols
 -Change format of numeric cols
 
