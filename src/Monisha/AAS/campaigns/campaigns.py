@@ -10,6 +10,8 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 from pandas import ExcelWriter
 import openpyxl
+from personal_functions import agg_functions, meeting_format
+#imports functions from personal_functions doc
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
@@ -46,8 +48,7 @@ for_merge.drop(for_merge.loc[for_merge.Campaign_Name.isna(), :].index, inplace=T
 for_merge.rename(columns={'Campaign_Name': 'Campaigns'}, inplace=True)
 merged_campaigns = pd.merge(all_campaigns, for_merge, on='Campaigns')
 
-#merged_campaigns.drop(['Start_Date_x', 'End_Date_x'])
-#merged_campaigns = pd.merge(all_campaigns, for_merge, how='left', left_on=['Campaigns', 'Start_Date', 'End_Date'], right_on=['Campaign_Name', 'Start_Date', 'End_Date'])
+#
 
 #print(for_merge.dtypes)
 #print(aas_schedule.dtypes)
@@ -71,4 +72,6 @@ Need to add something about reading out from individual titles so I can merge th
 
 Also - make sure you add the schedule as a tab to the cleaned data doc because i need that too
 -make sure to remove any unused libraries from the top too
+
+Make sure to check the email with To-Dos for anything too
 """
