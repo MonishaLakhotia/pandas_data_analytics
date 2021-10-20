@@ -48,9 +48,13 @@ for_merge.drop(for_merge.loc[for_merge.Campaign_Name.isna(), :].index, inplace=T
 for_merge.rename(columns={'Campaign_Name': 'Campaigns'}, inplace=True)
 merged_campaigns = pd.merge(all_campaigns, for_merge, on='Campaigns')
 
-#calls agg_functions and meeting_format on merged_campaigns
+#sorting merged_campaigns
+merged_campaigns.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
+
+#calling agg_functions and meeting_format on merged_campaigns
 agg_functions(merged_campaigns)
 meeting_format(merged_campaigns)
+#the above runs rate-based agg functions on CTR, CPC, and ACOS and formats doc for meeting
 
 #print(for_merge.dtypes)
 #print(aas_schedule.dtypes)
@@ -64,9 +68,8 @@ TO DO:
 AAS SCHEDULE:
 -drop the unnamed cols, can leave the NaN rows I think
 ALL CAMPAIGNS:
--fix the rate cols
--Change format of numeric cols
 -change order of cols
+-add a total line
 
 
 Need to add something about reading out from individual titles so I can merge this into that doc (or try to)
