@@ -21,12 +21,14 @@ config = toml.load(os.path.join(this_dir, 'config.toml'))
 # prefix partial file paths found in the config.toml with the full path
 u.set_full_paths(config, this_dir)
 
-aas_schedule = pd.read_csv(config['file_locations']['aas_schedule'])
 all_campaigns = pd.read_csv(config['file_locations']['all_campaigns'])
+aas_schedule = pd.read_csv(config['file_locations']['aas_schedule'])
 
 #drops columns from both dfs
 all_campaigns.drop(columns=['State', 'Status', 'Campaign bidding strategy',
-'Portfolio', 'Budget(USD)', 'Cost type', 'ROAS', 'Viewable impressions', 'VCPM(USD)'], inplace=True)
+'Portfolio', 'Budget(USD)', 'Cost type', 'ROAS', 'Viewable impressions', 
+'VCPM(USD)', 'Start date', 'End date'], 
+inplace=True)
 aas_schedule.drop(columns=['Unnamed: 8', 'Unnamed: 9', 'Unnamed: 10'], inplace=True)
 
 #adds underscore and deals with caps from both dfs
@@ -38,8 +40,20 @@ aas_schedule.columns = aas_schedule.columns.str.replace(' ', '_')
 all_campaigns['Type'] = all_campaigns.Type.replace('SP', 'Sponsored Product')
 all_campaigns['Targeting'] = all_campaigns.Targeting.str.title()
 
-print(aas_schedule.dtypes)
-print(all_campaigns)
+#merging start and end dates to all_campaigns
+for_merge = aas_schedule.loc[:, ['Campaign_Name', 'Start_Date', 'End_Date']]
+for_merge.drop(for_merge.loc[for_merge.Campaign_Name.isna(), :].index, inplace=True)
+for_merge.rename(columns={'Campaign_Name': 'Campaigns'}, inplace=True)
+merged_campaigns = pd.merge(all_campaigns, for_merge, on='Campaigns')
+
+#merged_campaigns.drop(['Start_Date_x', 'End_Date_x'])
+#merged_campaigns = pd.merge(all_campaigns, for_merge, how='left', left_on=['Campaigns', 'Start_Date', 'End_Date'], right_on=['Campaign_Name', 'Start_Date', 'End_Date'])
+
+#print(for_merge.dtypes)
+#print(aas_schedule.dtypes)
+print(merged_campaigns)
+#print(all_campaigns.dtypes)
+#ValueError: You are trying to merge on float64 and object columns. If you wish to proceed you should use pd.concat
 
 """
 NOTE:
@@ -47,9 +61,9 @@ TO DO:
 AAS SCHEDULE:
 -drop the unnamed cols, can leave the NaN rows I think
 ALL CAMPAIGNS:
--Merging end dates (and do start dates for formatting)
 -fix the rate cols
 -Change format of numeric cols
+-change order of cols
 
 
 Need to add something about reading out from individual titles so I can merge this into that doc (or try to)
