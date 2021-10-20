@@ -50,6 +50,7 @@ merged_campaigns = pd.merge(all_campaigns, for_merge, on='Campaigns')
 
 #sorting merged_campaigns
 merged_campaigns.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
+merged_campaigns.reset_index(inplace=True)
 
 #calling agg_functions and meeting_format on merged_campaigns
 agg_functions(merged_campaigns)
