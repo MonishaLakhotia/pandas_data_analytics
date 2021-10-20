@@ -23,3 +23,11 @@ u.set_full_paths(config, this_dir)
 
 aas_schedule = pd.read_csv(config['file_locations']['aas_schedule'])
 all_campaigns = pd.read_csv(config['file_locations']['campaigns'])
+
+"""
+NOTE:
+Need to add something about reading out from individual titles so I can merge this into that doc (or try to)
+--if that doesn't work, then can just copy paste whatever happens here into the individual doc and rename
+
+Also - make sure you add the schedule as a tab to the cleaned data doc because i need that too
+"""
