@@ -6,8 +6,6 @@ import numpy as np
 import src.utils as u
 import re
 import toml
-from datetime import date
-from dateutil.relativedelta import relativedelta
 from pandas import ExcelWriter
 import openpyxl
 from personal_functions import agg_functions, meeting_format
@@ -71,16 +69,15 @@ print(reordered)
 NOTE:
 TO DO:
 AAS SCHEDULE:
--drop the unnamed cols, can leave the NaN rows I think
+-drop the unnamed cols, can leave the NaN rows I think (try not having to do this one)
 ALL CAMPAIGNS:
 -add a total line
-
+THEN:
+-Save to doc
+-Send to self
+-double check
 
 Need to add something about reading out from individual titles so I can merge this into that doc (or try to)
 --if that doesn't work, then can just copy paste whatever happens here into the individual doc and rename
 
-Also - make sure you add the schedule as a tab to the cleaned data doc because i need that too
--make sure to remove any unused libraries from the top too
-
-Make sure to check the email with To-Dos for anything too
 """

@@ -134,11 +134,3 @@ file_location = ExcelWriter(config['file_locations']['output'])
 for key in d:
   d[key].to_excel(file_location, key)
 file_location.save()  
-
-"""
-NOTE
-TO DO:
--Figure out next steps - 
-  -see email with notes on what needs to be done
-
-"""
