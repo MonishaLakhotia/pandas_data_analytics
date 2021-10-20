@@ -24,12 +24,22 @@ u.set_full_paths(config, this_dir)
 aas_schedule = pd.read_csv(config['file_locations']['aas_schedule'])
 all_campaigns = pd.read_csv(config['file_locations']['all_campaigns'])
 
-#all_campaigns = pd.read_csv(config['file_locations']['all_campaigns'])
+all_campaigns.drop(columns=['State', 'Status', 'Campaign bidding strategy',
+'Portfolio', 'Budget(USD)', 'Cost type', 'ROAS', 'Viewable impressions', 'VCPM(USD)'], inplace=True)
 
 print(all_campaigns)
 
 """
 NOTE:
+TO DO:
+ALL CAMPAIGNS:
+-Add underscores to cp;s
+-Merging end dates
+-fix the rate cols
+-Change format of numeric cols
+-Rename cols
+
+
 Need to add something about reading out from individual titles so I can merge this into that doc (or try to)
 --if that doesn't work, then can just copy paste whatever happens here into the individual doc and rename
 
