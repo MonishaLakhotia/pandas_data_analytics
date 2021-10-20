@@ -114,22 +114,26 @@ for df in d.keys():
   agg_functions(d[df])
   d[df].sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
 
-#creates meeting_format function - adds $ to money, % to rates
+#creates meeting_format function - adds $ to money, % to rates, and comma to numeric vals
 def meeting_format(df):
   df[['Spend', 'Sales', 'CPC']] = df[['Spend', 'Sales', 'CPC']].apply(
     lambda series: series.apply(lambda x: '${:,.2f}'.format(x)))
+  df[['CTR', 'ACOS']] = df[['CTR', 'ACOS']].apply(
+    lambda series: series.apply(lambda x: '{:.2f}%'.format((x*100))))
 
 for df in d.keys():
   meeting_format(d[df])
 
-#d['raw'][['Spend', 'Sales', 'CPC']] = d['raw'][['Spend', 'Sales', 'CPC']].apply(
 
 
 
 
 #print('${:,.2f}'.format(1234.5))
-print(d['backlist'].Sales)
+print(d['backlist'].ACOS)
 """
+d['raw'][['CTR', 'ACOS']] = d['raw'][['CTR', 'ACOS']].apply(
+    lambda series: series.apply(lambda x: '{:.2f}%'.format((x*100)))) #WORKS FOR MULTIPLE COLUMNS
+
 #d['raw'][['Spend', 'Sales', 'CPC']] = d['raw'][['Spend', 'Sales', 'CPC']].apply(
  # lambda series: series.apply(lambda x: '${:,.2f}'.format(x))) #WORKS FOR MULTIPLE COLUMNS
 
@@ -142,9 +146,7 @@ df[["A", "B", "C"]] = df[["A", "B", "C"]].apply(
     lambda series: series.apply(lambda value: f"{value:,}")
 )
 
-['Impressions', 'Clicks', 'Orders', 
-'Spend','Sales', 'CPC', 
-'CTR', 'ACOS']
+['Impressions', 'Clicks', 'Orders']
 """
 #to save as multisheet xlsx
 file_location = ExcelWriter(config['file_locations']['output'])
