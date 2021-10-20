@@ -48,7 +48,9 @@ for_merge.drop(for_merge.loc[for_merge.Campaign_Name.isna(), :].index, inplace=T
 for_merge.rename(columns={'Campaign_Name': 'Campaigns'}, inplace=True)
 merged_campaigns = pd.merge(all_campaigns, for_merge, on='Campaigns')
 
-#
+#calls agg_functions and meeting_format on merged_campaigns
+agg_functions(merged_campaigns)
+meeting_format(merged_campaigns)
 
 #print(for_merge.dtypes)
 #print(aas_schedule.dtypes)
