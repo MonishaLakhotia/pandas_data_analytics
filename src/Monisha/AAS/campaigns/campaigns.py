@@ -57,9 +57,13 @@ agg_functions(merged_campaigns)
 meeting_format(merged_campaigns)
 #the above runs rate-based agg functions on CTR, CPC, and ACOS and formats doc for meeting
 
+#reordering columns
+reordered = merged_campaigns[['Campaigns', 'Start_Date', 'End_Date', 'Type', 'Targeting', 
+'Impressions', 'Clicks', 'Orders', 'Spend', 'Sales', 'CTR', 'CPC', 'ACOS']]
+
 #print(for_merge.dtypes)
 #print(aas_schedule.dtypes)
-print(merged_campaigns)
+print(reordered)
 #print(all_campaigns.dtypes)
 #ValueError: You are trying to merge on float64 and object columns. If you wish to proceed you should use pd.concat
 
@@ -69,7 +73,6 @@ TO DO:
 AAS SCHEDULE:
 -drop the unnamed cols, can leave the NaN rows I think
 ALL CAMPAIGNS:
--change order of cols
 -add a total line
 
 
