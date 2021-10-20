@@ -114,6 +114,38 @@ for df in d.keys():
   agg_functions(d[df])
   d[df].sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
 
+#creates meeting_format function - adds $ to money, % to rates
+def meeting_format(df):
+  df[['Spend', 'Sales', 'CPC']] = df[['Spend', 'Sales', 'CPC']].apply(
+    lambda series: series.apply(lambda x: '${:,.2f}'.format(x)))
+
+for df in d.keys():
+  meeting_format(d[df])
+
+#d['raw'][['Spend', 'Sales', 'CPC']] = d['raw'][['Spend', 'Sales', 'CPC']].apply(
+
+
+
+
+#print('${:,.2f}'.format(1234.5))
+print(d['backlist'].Sales)
+"""
+#d['raw'][['Spend', 'Sales', 'CPC']] = d['raw'][['Spend', 'Sales', 'CPC']].apply(
+ # lambda series: series.apply(lambda x: '${:,.2f}'.format(x))) #WORKS FOR MULTIPLE COLUMNS
+
+#d['raw']['Spend'] = d['raw']['Spend'].apply(
+ # lambda x: '${:,.2f}'.format(x)) #WORKS FOR SINGLE COLUMN
+
+df['C'] = df['C'].apply(lambda x: "${:.1f}k".format((x/1000)))
+
+df[["A", "B", "C"]] = df[["A", "B", "C"]].apply(
+    lambda series: series.apply(lambda value: f"{value:,}")
+)
+
+['Impressions', 'Clicks', 'Orders', 
+'Spend','Sales', 'CPC', 
+'CTR', 'ACOS']
+"""
 #to save as multisheet xlsx
 file_location = ExcelWriter(config['file_locations']['output'])
 for key in d:
