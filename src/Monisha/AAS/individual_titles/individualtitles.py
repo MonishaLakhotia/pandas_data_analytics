@@ -126,8 +126,9 @@ def meeting_format(df):
 for df in d.keys():
   meeting_format(d[df])
 
+#resets indec of raw data
 d['raw'].reset_index(drop=True, inplace=True)
-print(d['raw'])
+
 #to save as multisheet xlsx
 file_location = ExcelWriter(config['file_locations']['output'])
 for key in d:
