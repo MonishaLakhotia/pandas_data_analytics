@@ -120,6 +120,8 @@ def meeting_format(df):
     lambda series: series.apply(lambda x: '${:,.2f}'.format(x)))
   df[['CTR', 'ACOS']] = df[['CTR', 'ACOS']].apply(
     lambda series: series.apply(lambda x: '{:.2f}%'.format((x*100))))
+  df[['Impressions', 'Clicks', 'Orders']] = df[['Impressions', 'Clicks', 'Orders']].apply(
+    lambda series: series.apply(lambda x: '{:,}'.format(x)))
 
 for df in d.keys():
   meeting_format(d[df])
@@ -127,10 +129,11 @@ for df in d.keys():
 
 
 
-
 #print('${:,.2f}'.format(1234.5))
-print(d['backlist'].ACOS)
+print(d['backlist'].Impressions)
 """
+d['raw'][['Impressions', 'Clicks', 'Orders']] = d['raw'][['Impressions', 'Clicks', 'Orders']].apply(
+  lambda series: series.apply(lambda x: '{:,}'.format(x))) #WORKS FOR MULTIPLE COLUMNS
 d['raw'][['CTR', 'ACOS']] = d['raw'][['CTR', 'ACOS']].apply(
     lambda series: series.apply(lambda x: '{:.2f}%'.format((x*100)))) #WORKS FOR MULTIPLE COLUMNS
 
