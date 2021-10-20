@@ -22,7 +22,11 @@ config = toml.load(os.path.join(this_dir, 'config.toml'))
 u.set_full_paths(config, this_dir)
 
 aas_schedule = pd.read_csv(config['file_locations']['aas_schedule'])
-all_campaigns = pd.read_csv(config['file_locations']['campaigns'])
+all_campaigns = pd.read_csv(config['file_locations']['all_campaigns'])
+
+#all_campaigns = pd.read_csv(config['file_locations']['all_campaigns'])
+
+print(all_campaigns)
 
 """
 NOTE:
@@ -30,4 +34,5 @@ Need to add something about reading out from individual titles so I can merge th
 --if that doesn't work, then can just copy paste whatever happens here into the individual doc and rename
 
 Also - make sure you add the schedule as a tab to the cleaned data doc because i need that too
+-make sure to remove any unused libraries from the top too
 """

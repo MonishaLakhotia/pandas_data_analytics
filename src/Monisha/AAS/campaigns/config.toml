@@ -1,4 +1,4 @@
-file_locations.campaigns = "data/in/IndividualCampaigns/Campaigns_*.csv"
+file_locations.all_campaigns = "data/in/Campaigns_Sep_23_2021.csv"
 file_locations.aas_schedule = "data/in/AAS_Schedule.csv"
 file_locations.output = "data/out/AASData.xlsx"
 data_notes = "see AAS_DataCleaningNotes_2021 doc on work Mac"
