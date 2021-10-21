@@ -59,8 +59,13 @@ meeting_format(merged_campaigns)
 reordered = merged_campaigns[['Campaigns', 'Start_Date', 'End_Date', 'Type', 'Targeting', 
 'Impressions', 'Clicks', 'Orders', 'Spend', 'Sales', 'CTR', 'CPC', 'ACOS']]
 
+#changing index of both dfs
+reordered.set_index('Campaigns', inplace=True)
+aas_schedule.set_index('Campaign', inplace=True)
+
+
 #print(for_merge.dtypes)
-#print(aas_schedule.dtypes)
+print(aas_schedule)
 print(reordered)
 #print(all_campaigns.dtypes)
 #ValueError: You are trying to merge on float64 and object columns. If you wish to proceed you should use pd.concat
