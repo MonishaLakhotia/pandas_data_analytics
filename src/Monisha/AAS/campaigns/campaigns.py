@@ -48,7 +48,13 @@ merged_campaigns = pd.merge(all_campaigns, for_merge, on='Campaigns')
 
 #sorting merged_campaigns
 merged_campaigns.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
-merged_campaigns.reset_index(drop=True, inplace=True)
+
+#resetting index for both dfs 
+merged_campaigns.set_index('Campaigns', inplace=True)
+aas_schedule.set_index('Campaign', inplace=True)
+
+#adding total row to merged_columns
+merged_campaigns.loc['Total']= merged_campaigns.sum(numeric_only=True, axis=0)
 
 #calling agg_functions and meeting_format on merged_campaigns
 agg_functions(merged_campaigns)
@@ -56,27 +62,20 @@ meeting_format(merged_campaigns)
 #the above runs rate-based agg functions on CTR, CPC, and ACOS and formats doc for meeting
 
 #reordering columns
-reordered = merged_campaigns[['Campaigns', 'Start_Date', 'End_Date', 'Type', 'Targeting', 
+reordered = merged_campaigns[['Start_Date', 'End_Date', 'Type', 'Targeting', 
 'Impressions', 'Clicks', 'Orders', 'Spend', 'Sales', 'CTR', 'CPC', 'ACOS']]
-
-#changing index of both dfs
-reordered.set_index('Campaigns', inplace=True)
-aas_schedule.set_index('Campaign', inplace=True)
 
 
 #print(for_merge.dtypes)
-print(aas_schedule)
+#print(aas_schedule)
 print(reordered)
 #print(all_campaigns.dtypes)
-#ValueError: You are trying to merge on float64 and object columns. If you wish to proceed you should use pd.concat
 
 """
 NOTE:
 TO DO:
 AAS SCHEDULE:
 -drop the unnamed cols, can leave the NaN rows I think (try not having to do this one)
-ALL CAMPAIGNS:
--add a total line
 THEN:
 -Save to doc
 -Send to self
