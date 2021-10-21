@@ -54,6 +54,14 @@ merged_campaigns.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
 merged_campaigns.loc['Total'] = merged_campaigns.sum(numeric_only=True, axis=0)
 merged_campaigns.loc['Total', 'Campaigns'] = 'Total'
 
+#adding total row to aas schedule Spend col
+aas_schedule['Budget'] = aas_schedule.Budget.str.replace('\$|,', '')
+aas_schedule['Budget'] = aas_schedule.Budget.str.split('.').str[0]
+aas_schedule.dropna(how='all', inplace=True)
+aas_schedule['Budget'] = aas_schedule.Budget.astype(int)
+aas_schedule.loc['Total', 'Budget'] = aas_schedule.Budget.sum()
+aas_schedule.loc['Total', 'Campaign'] = 'Total'
+
 #calling agg_functions and meeting_format on merged_campaigns
 agg_functions(merged_campaigns)
 meeting_format(merged_campaigns)
@@ -87,13 +95,7 @@ file_location.save()
 """
 NOTE:
 TO DO:
-AAS SCHEDULE:
--drop the unnamed cols, can leave the NaN rows I think (try not having to do this one)
-THEN:
--Save to doc
--Send to self
--double check
--WAIT TO COMMIT THESE CHANGES TILL YOU'VE SENT TO SELF
+--see email
 
 Need to add something about reading out from individual titles so I can merge this into that doc (or try to)
 --if that doesn't work, then can just copy paste whatever happens here into the individual doc and rename
