@@ -127,10 +127,10 @@ for df in d.keys():
   meeting_format(d[df])
 
 #resets indec of raw data
-d['raw'].reset_index(drop=True, inplace=True)
+d['raw'].set_index('ASIN', inplace=True)
 
 #to save as multisheet xlsx
-file_location = ExcelWriter(config['file_locations']['output'])
+file_location = ExcelWriter(config['file_locations']['individual_titles_output'])
 for key in d:
   d[key].to_excel(file_location, key)
 file_location.save()  

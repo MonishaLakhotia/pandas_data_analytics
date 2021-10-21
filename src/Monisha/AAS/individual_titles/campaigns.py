@@ -23,6 +23,7 @@ u.set_full_paths(config, this_dir)
 
 all_campaigns = pd.read_csv(config['file_locations']['all_campaigns'])
 aas_schedule = pd.read_csv(config['file_locations']['aas_schedule'])
+individual_titles_output = pd.read_excel(config['file_locations']['individual_titles_output'], sheet_name=None)
 
 #drops columns from both dfs
 all_campaigns.drop(columns=['State', 'Status', 'Campaign bidding strategy',
@@ -49,10 +50,6 @@ merged_campaigns = pd.merge(all_campaigns, for_merge, on='Campaigns')
 #sorting merged_campaigns
 merged_campaigns.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
 
-#resetting index for both dfs 
-merged_campaigns.set_index('Campaigns', inplace=True)
-aas_schedule.set_index('Campaign', inplace=True)
-
 #adding total row to merged_columns
 merged_campaigns.loc['Total']= merged_campaigns.sum(numeric_only=True, axis=0)
 
@@ -62,13 +59,28 @@ meeting_format(merged_campaigns)
 #the above runs rate-based agg functions on CTR, CPC, and ACOS and formats doc for meeting
 
 #reordering columns
-reordered = merged_campaigns[['Start_Date', 'End_Date', 'Type', 'Targeting', 
+reordered = merged_campaigns[['Campaigns', 'Start_Date', 'End_Date', 'Type', 'Targeting', 
 'Impressions', 'Clicks', 'Orders', 'Spend', 'Sales', 'CTR', 'CPC', 'ACOS']]
 
+#add to the individual_titles_output dictionary
+individual_titles_output['aas_schedule'] = aas_schedule
+individual_titles_output['all_campaigns'] = reordered
 
+#reset the index of all sheets
+for sheet in individual_titles_output:
+  individual_titles_output[sheet].reset_index(drop=True, inplace=True)
+
+
+#to save onto the multisheet xlsx with the rest of the data
+file_location = ExcelWriter(config['file_locations']['all_data_output'])
+for key in individual_titles_output:
+  individual_titles_output[key].to_excel(file_location, key, index=False)
+file_location.save()  
+
+#print(individual_titles_output['aas_schedule'])
 #print(for_merge.dtypes)
 #print(aas_schedule)
-print(reordered)
+#print(reordered)
 #print(all_campaigns.dtypes)
 
 """
@@ -80,6 +92,7 @@ THEN:
 -Save to doc
 -Send to self
 -double check
+-WAIT TO COMMIT THESE CHANGES TILL YOU'VE SENT TO SELF
 
 Need to add something about reading out from individual titles so I can merge this into that doc (or try to)
 --if that doesn't work, then can just copy paste whatever happens here into the individual doc and rename
