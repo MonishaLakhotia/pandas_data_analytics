@@ -51,7 +51,8 @@ merged_campaigns = pd.merge(all_campaigns, for_merge, on='Campaigns')
 merged_campaigns.sort_values(['Orders', 'ACOS'], ascending=False, inplace=True)
 
 #adding total row to merged_columns
-merged_campaigns.loc['Total']= merged_campaigns.sum(numeric_only=True, axis=0)
+merged_campaigns.loc['Total'] = merged_campaigns.sum(numeric_only=True, axis=0)
+merged_campaigns.loc['Total', 'Campaigns'] = 'Total'
 
 #calling agg_functions and meeting_format on merged_campaigns
 agg_functions(merged_campaigns)
