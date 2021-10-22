@@ -85,19 +85,3 @@ file_location = ExcelWriter(config['file_locations']['all_data_output'])
 for key in individual_titles_output:
   individual_titles_output[key].to_excel(file_location, key, index=False)
 file_location.save()  
-
-#print(individual_titles_output['aas_schedule'])
-#print(for_merge.dtypes)
-#print(aas_schedule)
-#print(reordered)
-#print(all_campaigns.dtypes)
-
-"""
-NOTE:
-TO DO:
---see email
-
-Need to add something about reading out from individual titles so I can merge this into that doc (or try to)
---if that doesn't work, then can just copy paste whatever happens here into the individual doc and rename
-
-"""
