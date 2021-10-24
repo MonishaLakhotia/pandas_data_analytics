@@ -1,7 +1,7 @@
 import src.utils as u
 import toml
 import re
-from pandas_data_analytics import *
+from src import *
 import os
 import pandas as pd
 import matplotlib.pyplot as plt

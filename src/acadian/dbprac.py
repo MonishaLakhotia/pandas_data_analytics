@@ -1,5 +1,5 @@
 import pyodbc
-from pandas_data_analytics import *
+from src import *
 from py_linq import Enumerable
 import matplotlib.pyplot as plt
 import os

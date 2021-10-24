@@ -1,6 +1,6 @@
 import pdfplumber
 from py_linq import Enumerable
-from pandas_data_analytics.text_parser.parser import Parser
+from src.text_parser.parser import Parser
 
 
 def from_pdf_bulk_read(pdf_loc, parser_settings):

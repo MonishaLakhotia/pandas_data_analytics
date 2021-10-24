@@ -1,6 +1,6 @@
 import src.utils as u
 import toml
-from pandas_data_analytics import *
+from src import *
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
