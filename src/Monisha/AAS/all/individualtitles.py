@@ -96,8 +96,9 @@ d['title_author'] = pd.DataFrame(reordered.groupby(['Title', 'Author'], dropna=F
 six_months = date.today() - relativedelta(months=+6)
 backlist = reordered.loc[reordered.Pub_Date < six_months]
 frontlist = reordered.loc[reordered.Pub_Date >= six_months]
-d['backlist'] = pd.DataFrame(backlist.groupby(['ASIN', 'Title', 'Author', 'Pub_Date'], dropna=False).sum())
-d['frontlist'] = pd.DataFrame(frontlist.groupby(['ASIN', 'Title', 'Author', 'Pub_Date'], dropna=False).sum())
+col_names = ['ASIN', 'Title', 'Author', 'Pub_Date']
+d['backlist'] = pd.DataFrame(backlist.groupby(col_names, dropna=False).sum())
+d['frontlist'] = pd.DataFrame(frontlist.groupby(col_names, dropna=False).sum())
 
 #adds raw data to dict
 d['raw'] = reordered
