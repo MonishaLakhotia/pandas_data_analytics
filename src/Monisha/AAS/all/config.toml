@@ -1,6 +1,6 @@
 file_locations.individual_titles = "data/individual_titles/in/IndividualCampaigns/Sponsored_*.csv"
 file_locations.books_master_doc = "data/individual_titles/in/books_master_doc.csv"
-file_locations.all_campaigns = "data/all_campaigns/in/Campaigns_Sep_23_2021.csv"
+file_locations.all_campaigns = "data/all_campaigns/in/Campaigns_*.csv"
 file_locations.aas_schedule = "data/all_campaigns/in/AAS_Schedule.csv"
 file_locations.individual_titles_output = "data/individual_titles/out/individual_titles_output.xlsx"
 file_locations.all_data_output = "data/all_campaigns/out/all_data_output.xlsx"
