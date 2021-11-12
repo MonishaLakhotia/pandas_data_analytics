@@ -59,7 +59,7 @@ for col in reasons_columns:
 
 reasons_for_reading_t = reasons_for_reading.transpose()
 
-#how did you find out about books
+#filters out how did you find out about books
 find_out_about_books = prh_data.loc[:, prh_data.columns.str.contains('In the past month, how did you find out about books to read?')]
 find_out_about_books.columns = find_out_about_books.columns.str.replace('.*: ', '', regex=True)
 find_out_about_books.fillna('No', inplace=True)
@@ -78,7 +78,7 @@ for col in find_out_columns:
 
 find_out_about_books_t = find_out_about_books.transpose()
 
-#acquire books
+#filters out acquire books
 aquire_books = prh_data.loc[:, prh_data.columns.str.contains('In the past month, where did you acquire books for your household?')]
 aquire_books.columns = aquire_books.columns.str.replace('.*: ', '', regex=True)
 aquire_books.fillna('No', inplace=True)
@@ -92,6 +92,24 @@ for col in aquire_cols:
 
 aquire_books_t = aquire_books.transpose()
 
+#filters out after reading
+after_reading = prh_data.loc[:, prh_data.columns.str.contains('After reading a book last month, which of the following actions')]
+after_reading.columns = after_reading.columns.str.replace('.*: ', '', regex=True)
+after_reading.fillna('No', inplace=True)
+
+after_reading_cols = ['None of the above',
+       'Wrote a review online (e.g. on Amazon, Goodreads, etc.)',
+       'Gave stars/a rating to the book online (e.g. on Amazon, Barnes & Noble, etc.)',
+       'Posted on social media about the book',
+       'Discussed the book in person with others',
+       'Discussed the book in a virtual book club',
+       'Discussed the book on a blog or forum',
+       'Gave the book to someone else to read']
+
+for col in after_reading_cols:
+  after_reading.loc[after_reading[col] != 'No', col] = 'Yes'
+
+after_reading_t = after_reading.transpose()
 
 
 """
