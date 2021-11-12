@@ -30,7 +30,7 @@ prh_data = pd.read_csv(config['file_locations']['prh_data'])
 #print(prh_data['Which of the following best describes where you currently live?'].value_counts(normalize=True))
 #print(prh_data['If you had to guess, what is the exact number of books you read in your free time in the past month?'].value_counts(normalize=True))
 #print(prh_data['Please share with us the title and author of a book you read in the past month: Author'].value_counts())
-
+#print(prh_data['How likely are you to purchase a book in the next month?'].value_counts(normalize=True))
 #print(prh_data.loc[:, prh_data.columns.str.contains('What reasons best describe why you read or listened to books in the past month?')].value_counts())
 
 #function to format transposed df
@@ -111,11 +111,46 @@ for col in after_reading_cols:
 
 after_reading_t = after_reading.transpose()
 
+#types of fiction
+fiction = prh_data.loc[:, prh_data.columns.str.contains('What types of fiction are you planning to read next month?')]
+fiction.columns = fiction.columns.str.replace('.*: ', '', regex=True)
+fiction.fillna('No', inplace=True)
 
+fiction_cols = ['Not planning to read any fiction', 'Espionage/Thriller', 'Mystery',
+       'Horror', 'Science Fiction', 'Fantasy', 'Humor', 'Classics', 'Romance',
+       'Literary Fiction', 'Young Adult', 'Women\'s Fiction', 'Children�s',
+       'Historical Fiction', 'Poetry']
+
+for col in fiction_cols:
+  fiction.loc[fiction[col] != 'No', col] = 'Yes'
+
+fiction_t = fiction.transpose()
+
+#types of nonfiction
+nonfiction = prh_data.loc[:, prh_data.columns.str.contains('What types of non-fiction are you planning to read next month?')]
+nonfiction.columns = nonfiction.columns.str.replace('.*: ', '', regex=True)
+nonfiction.fillna('No', inplace=True)
+
+nonfiction_cols = ['Not planning to read any non-fiction', 'Biography/Autobiography',
+       'Cooking', 'Diet/Fitness', 'Health & Wellness',
+       'Music/Film/Performing Arts', 'Business/Management/Economics',
+       'History', 'Politics/Current events', 'Social justice/Antiracism',
+       'Self-help/Psychology', 'Study guides/Educational', 'Reference',
+       'Religion & Inspirational', 'Arts & Crafts']
+
+for col in nonfiction_cols:
+  nonfiction.loc[nonfiction[col] != 'No', col] = 'Yes'
+
+nonfiction_t = nonfiction.transpose()
+
+
+#print(prh_data.loc[prh_data['What types of fiction are you planning to read next month? Select all that apply: Romance'].notna(), :])
 """
 NOTE: Run format_transpose on all at end of thing
 
 reasons_for_reading_t
 find_out_about_books_t
 aquire_books_t
+after_reading
+fiction
 """
