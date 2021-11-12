@@ -23,6 +23,7 @@ u.set_full_paths(config, this_dir)
 
 prh_data = pd.read_csv(config['file_locations']['prh_data'])
 
+#to get value counts
 #print(prh_data.columns)
 #print(prh_data['What is your age?'].value_counts())
 #print(prh_data['Do you have children under the age of 18 living at home with you?'].value_counts(normalize=True))
@@ -55,4 +56,21 @@ reasons_for_reading_t['Total'] = reasons_for_reading_t.Yes + reasons_for_reading
 reasons_for_reading_t['Percent_Yes'] = reasons_for_reading_t.Yes / reasons_for_reading_t.Total
 reasons_for_reading_t.sort_values('Percent_Yes', inplace=True, ascending=False)
 
-print(reasons_for_reading_t)
+#how did you find out about books
+find_out_about_books = prh_data.loc[:, prh_data.columns.str.contains('In the past month, how did you find out about books to read?')]
+find_out_about_books.columns = find_out_about_books.columns.str.replace('.*: ', '', regex=True)
+find_out_about_books.fillna('No', inplace=True)
+
+columns = ['Recommendations from family/ friends',
+       'Recommendations from a media source (e.g., magazines, newspapers, etc.)',
+       'Professional book reviews', 'Customer reviews', 'Bestseller lists',
+       'Online author interview',
+       'Retailer recommendation based on what I�ve read before',
+       'Websites/blogs about books', 'In my bookcase/already had the book',
+       'Browsing in person in a physical store',
+       'Browsing in person in a library']
+
+for col in columns:
+  find_out_about_books.loc[find_out_about_books[col] != 'No', col] = 'Yes'
+
+print(find_out_about_books)
