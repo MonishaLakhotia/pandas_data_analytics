@@ -47,25 +47,24 @@ reasons_for_reading = prh_data.loc[:, prh_data.columns.str.contains('What reason
 reasons_for_reading.columns = reasons_for_reading.columns.str.replace('What reasons best describe why you read or listened to books in the past month\? Select all that apply: ', '')
 reasons_for_reading.fillna('No', inplace=True)
 
-columns = ['For pleasure/entertainment', 'To keep up with my hobbies/interests',
+reasons_columns = ['For pleasure/entertainment', 'To keep up with my hobbies/interests',
        'To connect with my favorite authors', 'To relax/unwind',
        'For self-improvement', 'To learn about new subjects/ideas',
        'To read with my child', 'To pass the time',
        'To connect with other people�s experiences',
        'To talk about them with friends/family']
 
-for col in columns:
+for col in reasons_columns:
   reasons_for_reading.loc[reasons_for_reading[col] != 'No', col] = 'Yes'
 
 reasons_for_reading_t = reasons_for_reading.transpose()
-format_transposed(reasons_for_reading_t)
 
 #how did you find out about books
 find_out_about_books = prh_data.loc[:, prh_data.columns.str.contains('In the past month, how did you find out about books to read?')]
 find_out_about_books.columns = find_out_about_books.columns.str.replace('.*: ', '', regex=True)
 find_out_about_books.fillna('No', inplace=True)
 
-columns = ['Recommendations from family/ friends',
+find_out_columns = ['Recommendations from family/ friends',
        'Recommendations from a media source (e.g., magazines, newspapers, etc.)',
        'Professional book reviews', 'Customer reviews', 'Bestseller lists',
        'Online author interview',
@@ -74,8 +73,31 @@ columns = ['Recommendations from family/ friends',
        'Browsing in person in a physical store',
        'Browsing in person in a library']
 
-for col in columns:
+for col in find_out_columns:
   find_out_about_books.loc[find_out_about_books[col] != 'No', col] = 'Yes'
 
 find_out_about_books_t = find_out_about_books.transpose()
-#print(find_out_about_books_t)
+
+#acquire books
+aquire_books = prh_data.loc[:, prh_data.columns.str.contains('In the past month, where did you acquire books for your household?')]
+aquire_books.columns = aquire_books.columns.str.replace('.*: ', '', regex=True)
+aquire_books.fillna('No', inplace=True)
+
+aquire_cols = ['Amazon', 'Audible', 'Barnes and Noble', 'Bookbub', 'Books-a-Million',
+       'Borrowed from family/friends', 'Costco', 'Kindle/Kindle Unlimited',
+       'Library', 'Local independent bookstore', 'Target', 'Walmart']
+
+for col in aquire_cols:
+  aquire_books.loc[aquire_books[col] != 'No', col] = 'Yes'
+
+aquire_books_t = aquire_books.transpose()
+
+
+
+"""
+NOTE: Run format_transpose on all at end of thing
+
+reasons_for_reading_t
+find_out_about_books_t
+aquire_books_t
+"""
