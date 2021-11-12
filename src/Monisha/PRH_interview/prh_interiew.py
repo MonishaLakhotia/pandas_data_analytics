@@ -23,4 +23,10 @@ u.set_full_paths(config, this_dir)
 
 prh_data = pd.read_csv(config['file_locations']['prh_data'])
 
-print(prh_data)
+print(prh_data.columns)
+#print(prh_data['What is your age?'].value_counts())
+#print(prh_data['Do you have children under the age of 18 living at home with you?'].value_counts(normalize=True))
+#print(prh_data['Which of the following best describes where you currently live?'].value_counts(normalize=True))
+
+#print(prh_data['If you had to guess, what is the exact number of books you read in your free time in the past month?'].value_counts(normalize=True))
+
