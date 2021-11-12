@@ -33,6 +33,15 @@ prh_data = pd.read_csv(config['file_locations']['prh_data'])
 
 #print(prh_data.loc[:, prh_data.columns.str.contains('What reasons best describe why you read or listened to books in the past month?')].value_counts())
 
+#function to format transposed df
+def format_transposed(df):
+  df['Yes'] = (df.iloc[:, :] == 'Yes').sum(axis=1)
+  df['No'] = (df.iloc[:, :] == 'No').sum(axis=1)
+  df.drop(df.loc[:, 0:149], axis=1, inplace=True)
+  df['Total'] = df.Yes + df.No
+  df['Percent_Yes'] = df.Yes / df.Total
+  df.sort_values('Percent_Yes', inplace=True, ascending=False)
+
 #to separate reasons for reading into a new dataframe
 reasons_for_reading = prh_data.loc[:, prh_data.columns.str.contains('What reasons best describe why you read or listened to books in the past month?')]
 reasons_for_reading.columns = reasons_for_reading.columns.str.replace('What reasons best describe why you read or listened to books in the past month\? Select all that apply: ', '')
@@ -49,12 +58,7 @@ for col in columns:
   reasons_for_reading.loc[reasons_for_reading[col] != 'No', col] = 'Yes'
 
 reasons_for_reading_t = reasons_for_reading.transpose()
-reasons_for_reading_t['Yes'] = (reasons_for_reading_t.iloc[:, :] == 'Yes').sum(axis=1)
-reasons_for_reading_t['No'] = (reasons_for_reading_t.iloc[:, :] == 'No').sum(axis=1)
-reasons_for_reading_t.drop(reasons_for_reading_t.loc[:, 0:149], axis=1, inplace=True)
-reasons_for_reading_t['Total'] = reasons_for_reading_t.Yes + reasons_for_reading_t.No
-reasons_for_reading_t['Percent_Yes'] = reasons_for_reading_t.Yes / reasons_for_reading_t.Total
-reasons_for_reading_t.sort_values('Percent_Yes', inplace=True, ascending=False)
+format_transposed(reasons_for_reading_t)
 
 #how did you find out about books
 find_out_about_books = prh_data.loc[:, prh_data.columns.str.contains('In the past month, how did you find out about books to read?')]
@@ -73,4 +77,5 @@ columns = ['Recommendations from family/ friends',
 for col in columns:
   find_out_about_books.loc[find_out_about_books[col] != 'No', col] = 'Yes'
 
-print(find_out_about_books)
+find_out_about_books_t = find_out_about_books.transpose()
+#print(find_out_about_books_t)
