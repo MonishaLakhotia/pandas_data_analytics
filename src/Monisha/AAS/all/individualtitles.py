@@ -64,8 +64,8 @@ for index in range(len(book_data.ASIN)):
     book_data.Format[index] = 'Print'
 
 #merges master doc to fill in missing info
-book_data_merge = pd.merge(book_data, master_doc, on=['ASIN', 'Title'])
-book_data_merge.drop(columns=['Unnamed: 6', 'Unnamed: 7', 'Unnamed: 8'], inplace=True)
+book_data_merge = pd.merge(book_data, master_doc, on=['ASIN', 'Title'], how='left')
+#book_data_merge.drop(columns=['Unnamed: 6', 'Unnamed: 7', 'Unnamed: 8'], inplace=True)
 
 #fixes issue with 44 Chapters//SexLife, Series_Number col
 book_data_merge.loc[book_data_merge.Title == 'Sex/Life', 'Additional_Info'] = NaN

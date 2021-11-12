@@ -1,0 +1,28 @@
+from glob import glob
+import os
+from numpy.core.numeric import NaN
+import pandas as pd
+import numpy as np
+import src.utils as u
+import re
+import toml
+from datetime import date
+from dateutil.relativedelta import relativedelta
+from pandas import ExcelWriter
+import openpyxl
+
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+
+# get the directory path where this script is
+this_dir = os.path.dirname(os.path.realpath(__file__))
+# grab the config file from this directory
+config = toml.load(os.path.join(this_dir, 'config.toml'))
+# prefix partial file paths found in the config.toml with the full path
+u.set_full_paths(config, this_dir)
+
+master_doc = pd.read_csv(config['file_locations']['books_master_doc'])
+individual_titles = config['file_locations']['individual_titles']
+files = sorted(glob(individual_titles))
+# reads every csv file that matches a text pattern and puts them all into 1 dataframe
+book_data: pd.DataFrame = pd.concat((pd.read_csv(file) for file in files), ignore_index=True)
