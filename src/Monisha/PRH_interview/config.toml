@@ -1,3 +1,3 @@
-file_locations.data_all = "data/individual_titles/in/PRJ_in.csv"
+file_locations.prh_data = "data/in/PRH_in.csv"
 file_locations.all_data_output = "data/all_campaigns/out/all_data_output.xlsx"
 data_notes = "see Consumer Insights Analyst Exercise_1021 doc"

@@ -21,8 +21,6 @@ config = toml.load(os.path.join(this_dir, 'config.toml'))
 # prefix partial file paths found in the config.toml with the full path
 u.set_full_paths(config, this_dir)
 
-master_doc = pd.read_csv(config['file_locations']['books_master_doc'])
-individual_titles = config['file_locations']['individual_titles']
-files = sorted(glob(individual_titles))
-# reads every csv file that matches a text pattern and puts them all into 1 dataframe
-book_data: pd.DataFrame = pd.concat((pd.read_csv(file) for file in files), ignore_index=True)
+prh_data = pd.read_csv(config['file_locations']['prh_data'])
+
+print(prh_data)
