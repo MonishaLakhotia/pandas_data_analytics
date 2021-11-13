@@ -143,14 +143,27 @@ for col in nonfiction_cols:
 
 nonfiction_t = nonfiction.transpose()
 
+dfs = [reasons_for_reading_t, find_out_about_books_t, aquire_books_t,
+after_reading_t, fiction_t, nonfiction_t]
 
+for df in dfs:
+  format_transposed(df)
+
+#print(dfs)
 #print(prh_data.loc[prh_data['What types of fiction are you planning to read next month? Select all that apply: Romance'].notna(), :])
-"""
-NOTE: Run format_transpose on all at end of thing
 
+
+#grouping answers by age
+age_grouped = prh_data.groupby('What is your age?').count()
+
+print(age_grouped)
+
+
+"""
 reasons_for_reading_t
 find_out_about_books_t
 aquire_books_t
 after_reading
 fiction
+nonfiction
 """
