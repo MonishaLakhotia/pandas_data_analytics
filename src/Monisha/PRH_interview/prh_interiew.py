@@ -156,21 +156,33 @@ for df in dfs:
 #grouping answers by age
 age_grouped = prh_data.groupby('What is your age?').count()
 
+age_reasons = age_grouped.loc[:, age_grouped.columns.str.contains('What reasons best describe why you read or listened to books in the past month?')]
 age_find_out = age_grouped.loc[:, age_grouped.columns.str.contains('In the past month, how did you find out about books to read?')]
 age_where_purchase = age_grouped.loc[:, age_grouped.columns.str.contains('In the past month, where did you acquire books for your household?')]
 age_after = age_grouped.loc[:, age_grouped.columns.str.contains('After reading a book last month, which of the following actions')]
+age_fiction = age_grouped.loc[:, age_grouped.columns.str.contains('What types of fiction are you planning to read next month?')]
+age_nonfiction = age_grouped.loc[:, age_grouped.columns.str.contains('What types of non-fiction are you planning to read next month?')]
 
-list_of_age_dfs = [age_find_out, age_where_purchase, age_after]
+
+list_of_age_dfs = [age_reasons, age_find_out, age_where_purchase, age_after,
+age_fiction, age_nonfiction]
 
 for df in list_of_age_dfs:
   df.columns = df.columns.str.replace('.*: ', '', regex=True)
   for series in df:
     df[series] = df[series] / 25
 
+path_age = ExcelWriter(config['file_locations']['age_output'])
+path_all = ExcelWriter(config['file_locations']['all_output'])
 
-#print(find_out_about_books_t)
+def save_xls(list_dfs, xls_path):
+    with ExcelWriter(xls_path) as writer:
+        for n, df in enumerate(list_dfs):
+            df.to_excel(writer,'sheet%s' % n)
+        writer.save()
 
-
+save_xls(list_of_age_dfs, path_age)
+save_xls(dfs, path_all)
 #print(age_grouped)
 
 

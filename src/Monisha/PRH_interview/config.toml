@@ -1,3 +1,4 @@
 file_locations.prh_data = "data/in/PRH_in.csv"
-file_locations.output = "data/out/PRH_out.xlsx"
+file_locations.age_output = "data/out/PRH_age_out.xlsx"
+file_locations.all_output = "data/out/PRH_all_out.xlsx"
 data_notes = "see Consumer Insights Analyst Exercise_1021 doc"
