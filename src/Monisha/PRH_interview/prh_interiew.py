@@ -156,7 +156,22 @@ for df in dfs:
 #grouping answers by age
 age_grouped = prh_data.groupby('What is your age?').count()
 
-print(age_grouped)
+age_find_out = age_grouped.loc[:, age_grouped.columns.str.contains('In the past month, how did you find out about books to read?')]
+age_where_purchase = age_grouped.loc[:, age_grouped.columns.str.contains('In the past month, where did you acquire books for your household?')]
+age_after = age_grouped.loc[:, age_grouped.columns.str.contains('After reading a book last month, which of the following actions')]
+
+list_of_age_dfs = [age_find_out, age_where_purchase, age_after]
+
+for df in list_of_age_dfs:
+  df.columns = df.columns.str.replace('.*: ', '', regex=True)
+  for series in df:
+    df[series] = df[series] / 25
+
+
+#print(find_out_about_books_t)
+
+
+#print(age_grouped)
 
 
 """
