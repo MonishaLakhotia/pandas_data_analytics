@@ -10,6 +10,8 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 from pandas import ExcelWriter
 import openpyxl
+import matplotlib.pyplot as plt
+import matplotlib.patches
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
@@ -172,8 +174,14 @@ for df in list_of_age_dfs:
   for series in df:
     df[series] = df[series] / 25
 
+test_groupby = prh_data.groupby(['How likely are you to purchase a book in the next month?', 'What is your age?']).count()
+
+print(test_groupby)
 path_age = ExcelWriter(config['file_locations']['age_output'])
 path_all = ExcelWriter(config['file_locations']['all_output'])
+
+"""
+age_find_out.plot(kind='bar', figsize=(8,8), stacked=True)
 
 def save_xls(list_dfs, xls_path):
     with ExcelWriter(xls_path) as writer:
@@ -185,7 +193,8 @@ save_xls(list_of_age_dfs, path_age)
 save_xls(dfs, path_all)
 #print(age_grouped)
 
-
+plt.show()
+"""
 """
 reasons_for_reading_t
 find_out_about_books_t
